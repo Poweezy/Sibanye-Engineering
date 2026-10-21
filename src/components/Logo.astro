@@ -1,0 +1,30 @@
+---
+/**
+ * SES logo lockup.
+ * NOTE: original placeholder mark designed for this project — official SES
+ * brand assets are awaited from SES (docs/content-open-items.md, item 4).
+ */
+interface Props {
+  /** `light` for dark backgrounds, `dark` for light backgrounds. */
+  variant?: 'light' | 'dark';
+}
+
+const { variant = 'light' } = Astro.props;
+const stroke = variant === 'light' ? '#ffffff' : '#0c1723';
+const wordColor = variant === 'light' ? 'text-white' : 'text-ink-900';
+const subColor = variant === 'light' ? 'text-ink-300' : 'text-muted';
+---
+
+<a href="/" class="group inline-flex items-center gap-3" aria-label="Sibanye Engineering Solutions — home">
+  <svg class="h-10 w-10 shrink-0" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+    <path d="M22 3 39 12.5v19L22 41 5 31.5v-19L22 3Z" stroke={stroke} stroke-width="2.4"></path>
+    <path d="M29 13.5H17.5L13 21.5h9.5" stroke="#2fb7c2" stroke-width="2.6"></path>
+    <path d="M15 30.5h11.5L31 22.5h-9.5" stroke={stroke} stroke-width="2.6"></path>
+  </svg>
+  <span class="flex flex-col leading-none">
+    <span class={`font-display text-lg font-bold tracking-[0.08em] ${wordColor}`}>SIBANYE</span>
+    <span class={`mt-1 text-[0.55rem] font-semibold uppercase tracking-[0.34em] ${subColor}`}>
+      Engineering Solutions
+    </span>
+  </span>
+</a>

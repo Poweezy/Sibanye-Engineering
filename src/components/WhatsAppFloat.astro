@@ -1,0 +1,17 @@
+---
+import Icon from './Icon.astro';
+
+/* WhatsApp number from the SES 2026 capability statement (+268 7802 4964) —
+   pending final SES confirmation (docs/content-open-items.md). */
+const waNumber = '26878024964';
+---
+
+<a
+  href={`https://wa.me/${waNumber}`}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Chat with Sibanye Engineering Solutions on WhatsApp"
+  class="fixed bottom-5 right-5 z-40 inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent-500 text-white shadow-lg shadow-ink-950/30 transition-transform hover:scale-105 focus-visible:scale-105"
+>
+  <Icon name="whatsapp" class="h-6 w-6" />
+</a>

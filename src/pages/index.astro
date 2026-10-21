@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomeHero from '../components/HomeHero.astro';
+import HomeAbout from '../components/HomeAbout.astro';
+import HomeServices from '../components/HomeServices.astro';
+import HomeProjects from '../components/HomeProjects.astro';
+import HomeSectors from '../components/HomeSectors.astro';
+import HomeCapabilities from '../components/HomeCapabilities.astro';
+import HomeStats from '../components/HomeStats.astro';
+import HomeLeadership from '../components/HomeLeadership.astro';
+import HomeEnquiry from '../components/HomeEnquiry.astro';
+import { getCollection } from 'astro:content';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const sectors = (await getCollection('sectors')).sort((a, b) => a.data.order - b.data.order);
+const sectorTitles = Object.fromEntries(sectors.map((s) => [s.id, s.data.title]));
+const projects = (await getCollection('projects'))
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
+const leaders = (await getCollection('leadership')).sort((a, b) => a.id.localeCompare(b.id));
+---
+
+<BaseLayout
+  title="Sibanye Engineering Solutions"
+  description="Multidisciplinary engineering, project management and infrastructure advisory services delivering practical solutions across Eswatini and Southern Africa."
+>
+  <HomeHero />
+  <HomeAbout />
+  <HomeServices services={services.map((s) => s.data)} />
+  <HomeStats />
+  <HomeProjects
+    projects={projects.map((p) => ({ id: p.id, title: p.data.title, sectors: p.data.sectors }))}
+    sectorTitles={sectorTitles}
+  />
+  <HomeSectors sectors={sectors.map((s) => s.data)} />
+  <HomeCapabilities />
+  <HomeLeadership leaders={leaders.map((l) => l.data)} />
+  <HomeEnquiry />
+</BaseLayout>

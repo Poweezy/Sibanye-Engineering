@@ -1,0 +1,204 @@
+---
+import Icon from './Icon.astro';
+
+/* Contact details from the SES 2026 capability statement — pending final SES
+   confirmation (docs/content-open-items.md, item 6). */
+const phonePrimary = { display: '+268 2404 5512', tel: '+26824045512' };
+const whatsappNumber = '26878024964';
+const email = 'info@sibanyeengineering.com';
+---
+
+<section id="enquiry" class="scroll-mt-24 bg-paper-2">
+  <div class="container-x grid gap-12 py-20 sm:py-24 lg:grid-cols-2 lg:gap-16">
+    <div class="reveal">
+      <p class="eyebrow">Discuss Your Project</p>
+      <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">Let's build something enduring</h2>
+      <p class="mt-5 max-w-md text-base leading-relaxed text-body">
+        Whether you're planning new infrastructure, upgrading existing assets or need experienced
+        programme delivery support, our team is ready to help.
+      </p>
+
+      <ul class="mt-8 space-y-5 text-sm">
+        <li class="flex items-start gap-4">
+          <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-line bg-white text-accent-600">
+            <Icon name="phone" class="h-5 w-5" />
+          </span>
+          <span>
+            <span class="block font-semibold text-ink-900">Call us</span>
+            <a href={`tel:${phonePrimary.tel}`} class="text-muted transition-colors hover:text-accent-600">{phonePrimary.display}</a>
+          </span>
+        </li>
+        <li class="flex items-start gap-4">
+          <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-line bg-white text-accent-600">
+            <Icon name="whatsapp" class="h-5 w-5" />
+          </span>
+          <span>
+            <span class="block font-semibold text-ink-900">WhatsApp</span>
+            <a
+              href={`https://wa.me/${whatsappNumber}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-muted transition-colors hover:text-accent-600"
+            >
+              Message us on WhatsApp
+            </a>
+          </span>
+        </li>
+        <li class="flex items-start gap-4">
+          <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-line bg-white text-accent-600">
+            <Icon name="mail" class="h-5 w-5" />
+          </span>
+          <span>
+            <span class="block font-semibold text-ink-900">Email</span>
+            <a href={`mailto:${email}`} class="text-muted transition-colors hover:text-accent-600">{email}</a>
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <form class="reveal card p-7 sm:p-9" method="POST" action="/api/enquiry.php" novalidate data-enquiry-form>
+      <h3 class="text-xl font-semibold">Start a conversation</h3>
+      <div class="mt-6 grid gap-5">
+<!-- SPLIT-MARKER -->
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="name" class="block text-sm font-medium text-ink-900">Full name <span class="text-accent-600" aria-hidden="true">*</span></label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+              maxlength="120"
+              class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-accent-500 focus:outline-none"
+              placeholder="Your name"
+            />
+          </div>
+          <div>
+            <label for="organisation" class="block text-sm font-medium text-ink-900">Organisation</label>
+            <input
+              id="organisation"
+              name="organisation"
+              type="text"
+              autocomplete="organization"
+              maxlength="160"
+              class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-accent-500 focus:outline-none"
+              placeholder="Company / institution"
+            />
+          </div>
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="email" class="block text-sm font-medium text-ink-900">Email <span class="text-accent-600" aria-hidden="true">*</span></label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              maxlength="200"
+              class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-accent-500 focus:outline-none"
+              placeholder="you@company.com"
+            />
+          </div>
+          <div>
+            <label for="phone" class="block text-sm font-medium text-ink-900">Phone</label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+              maxlength="40"
+              class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-accent-500 focus:outline-none"
+              placeholder="+268 …"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="sector" class="block text-sm font-medium text-ink-900">Sector of interest</label>
+          <select
+            id="sector"
+            name="sector"
+            class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 focus:border-accent-500 focus:outline-none"
+          >
+            <option value="">Select a sector (optional)</option>
+            <option>Water & Sanitation</option>
+            <option>Energy</option>
+            <option>Transportation</option>
+            <option>Mining</option>
+            <option>Infrastructure</option>
+            <option>Structures</option>
+            <option>Industrial & Commercial</option>
+            <option>Healthcare</option>
+            <option>Agriculture</option>
+            <option>Other / general enquiry</option>
+          </select>
+        </div>
+
+<!-- FIELDS-2 -->
+        <div>
+          <label for="message" class="block text-sm font-medium text-ink-900">Project details <span class="text-accent-600" aria-hidden="true">*</span></label>
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            required
+            minlength="20"
+            maxlength="4000"
+            class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-accent-500 focus:outline-none"
+            placeholder="Briefly describe your project, its location and what support you need."
+          ></textarea>
+          <p class="mt-2 text-xs text-muted" data-char-note>Minimum 20 characters.</p>
+        </div>
+
+        <!-- Honeypot: hidden from users, catches naive spam bots -->
+        <div class="hidden" aria-hidden="true">
+          <label for="website_url">Leave this field empty</label>
+          <input id="website_url" name="website_url" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <p class="text-xs leading-relaxed text-muted">
+          By submitting this form you agree that SES may contact you about your enquiry. We do not
+          share your details with third parties.
+        </p>
+
+        <button type="submit" class="btn-primary w-full sm:w-auto">
+          Send Enquiry
+          <Icon name="arrow" class="h-4 w-4" />
+        </button>
+
+        <p class="hidden text-sm font-medium text-accent-700" data-form-status role="status"></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-enquiry-form]');
+  const message = form?.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
+  const note = form?.querySelector('[data-char-note]');
+
+  if (message && note) {
+    const update = () => {
+      const len = message.value.trim().length;
+      note.textContent = len === 0 ? 'Minimum 20 characters.' : `${len} character${len === 1 ? '' : 's'}.`;
+    };
+    message.addEventListener('input', update);
+  }
+
+  if (form) {
+    form.addEventListener('submit', (event) => {
+      // Front-end validation only; submission handling is server-side (PHP endpoint).
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        form.reportValidity();
+      }
+    });
+  }
+</script>
+      </div>
+    </form>
+  </div>
+</section>

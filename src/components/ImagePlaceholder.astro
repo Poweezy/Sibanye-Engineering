@@ -1,0 +1,25 @@
+---
+/**
+ * Engineering-style placeholder for imagery that is awaited from SES.
+ * Renders a blueprint grid with a topographic contour motif — deliberately
+ * neutral so pending photography slots are obvious during design review.
+ */
+interface Props {
+  label?: string;
+  class?: string;
+}
+
+const { label = 'Project imagery', class: className = 'aspect-[16/10]' } = Astro.props;
+---
+
+<div class={`blueprint relative isolate overflow-hidden bg-ink-800 ${className}`} role="img" aria-label={`${label} — placeholder`}>
+  <svg class="absolute inset-0 h-full w-full" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path d="M0 380 220 240l150 90 170-150 260 170" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="2"></path>
+    <path d="M0 500 200 340l140 80 190-170 270 250" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2"></path>
+    <circle cx="400" cy="250" r="90" fill="none" stroke="rgba(47,183,194,0.25)" stroke-width="1.5"></circle>
+    <path d="M400 140v220M290 250h220" stroke="rgba(47,183,194,0.35)" stroke-width="1"></path>
+  </svg>
+  <span class="absolute bottom-3 left-4 text-[0.6rem] font-semibold uppercase tracking-[0.22em] text-ink-300">
+    {label} · awaiting SES imagery
+  </span>
+</div>

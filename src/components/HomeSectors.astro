@@ -1,0 +1,43 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  sectors: { id: string; title: string; icon: string; blurb: string }[];
+}
+
+const { sectors } = Astro.props;
+---
+
+<section class="bg-white">
+  <div class="container-x py-20 sm:py-24">
+    <div class="reveal max-w-2xl">
+      <p class="eyebrow">Market Sectors</p>
+      <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">Driving development across key sectors</h2>
+      <p class="mt-4 text-base leading-relaxed text-muted">
+        We bring engineering expertise to the sectors that power growth, support communities and
+        build a more sustainable future.
+      </p>
+    </div>
+
+    <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        sectors.map((s) => (
+          <li class="reveal">
+            <a
+              href={`/sectors/#${s.id}`}
+              class="card group flex h-full items-start gap-5 p-6 transition-colors hover:border-accent-500"
+            >
+              <span class="inline-flex h-12 w-12 shrink-0 items-center justify-center border border-accent-200 bg-accent-100 text-accent-600 transition-colors group-hover:bg-accent-500 group-hover:text-white">
+                <Icon name={s.icon} class="h-6 w-6" />
+              </span>
+              <span>
+                <h3 class="text-lg font-semibold">{s.title}</h3>
+                <p class="mt-1.5 text-sm leading-relaxed text-muted">{s.blurb}</p>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

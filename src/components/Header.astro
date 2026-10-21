@@ -1,0 +1,82 @@
+---
+import Logo from './Logo.astro';
+
+const path = Astro.url.pathname;
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/about/', label: 'About' },
+  { href: '/services/', label: 'Services' },
+  { href: '/sectors/', label: 'Sectors' },
+  { href: '/projects/', label: 'Projects' },
+  { href: '/capabilities/', label: 'Capabilities' },
+  { href: '/leadership/', label: 'Leadership' },
+  { href: '/contact/', label: 'Contact' },
+];
+
+const isActive = (href: string): boolean =>
+  href === '/' ? path === '/' : path.startsWith(href.replace(/\/$/, ''));
+---
+
+<header class="sticky top-0 z-40 border-b border-white/10 bg-ink-950/95 backdrop-blur">
+  <div class="container-x flex h-20 items-center justify-between gap-6">
+    <Logo variant="light" />
+
+    <nav class="hidden items-center gap-7 lg:flex" aria-label="Primary">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            aria-current={isActive(link.href) ? 'page' : undefined}
+            class={`text-sm font-medium transition-colors hover:text-white ${
+              isActive(link.href) ? 'text-accent-300' : 'text-ink-200'
+            }`}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a
+        href="/contact/#enquiry"
+        class="hidden items-center gap-2 bg-accent-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-600 sm:inline-flex"
+      >
+        Discuss Your Project
+      </a>
+      <button
+        type="button"
+        class="inline-flex h-10 w-10 items-center justify-center border border-white/20 text-white lg:hidden"
+        data-nav-toggle
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="Toggle navigation menu"
+      >
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path d="M3.5 6.5h17M3.5 12h17M3.5 17.5h17"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <nav id="mobile-nav" data-mobile-nav class="hidden border-t border-white/10 bg-ink-950 lg:hidden" aria-label="Mobile">
+    <div class="container-x flex flex-col py-4">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            aria-current={isActive(link.href) ? 'page' : undefined}
+            class={`border-b border-white/5 py-3.5 text-sm font-medium ${
+              isActive(link.href) ? 'text-accent-300' : 'text-ink-200'
+            }`}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a href="/contact/#enquiry" class="mt-5 inline-flex items-center justify-center gap-2 bg-accent-500 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-accent-600">
+        Discuss Your Project
+      </a>
+    </div>
+  </nav>
+</header>

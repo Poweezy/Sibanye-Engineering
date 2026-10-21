@@ -1,0 +1,104 @@
+---
+import Icon from './Icon.astro';
+import ImagePlaceholder from './ImagePlaceholder.astro';
+
+interface Props {
+  projects: { id: string; title: string; sectors: string[] }[];
+  sectorTitles: Record<string, string>;
+}
+
+const { projects, sectorTitles } = Astro.props;
+---
+
+<section class="blueprint bg-ink-950 text-white">
+  <div class="container-x py-20 sm:py-24">
+    <div class="reveal flex flex-wrap items-end justify-between gap-6">
+      <div class="max-w-2xl">
+        <p class="eyebrow eyebrow--light">Featured Projects</p>
+        <h2 class="mt-4 text-3xl font-semibold text-white sm:text-4xl">Real projects. Lasting impact.</h2>
+        <p class="mt-4 text-base leading-relaxed text-ink-300">
+          Our project portfolio showcases a selection of major infrastructure and engineering
+          assignments across the region.
+        </p>
+      </div>
+      <a href="/projects/" class="btn-outline-light">View Our Projects</a>
+    </div>
+
+    <div class="relative mt-12">
+      <ul
+        data-carousel
+        class="-mx-5 flex snap-x snap-mandatory gap-6 overflow-x-auto px-5 pb-4 sm:mx-0 sm:px-0"
+        tabindex="0"
+        aria-label="Featured projects carousel"
+      >
+        {
+          projects.map((p) => (
+            <li class="w-[85%] shrink-0 snap-start sm:w-[60%] lg:w-[calc((100%-3rem)/3)]">
+              <article class="group h-full border border-white/10 bg-ink-900">
+                <a href={`/projects/${p.id}/`} class="block h-full">
+                  <ImagePlaceholder label={p.title} class="aspect-[16/10]" />
+                  <div class="p-6">
+                    <p class="flex flex-wrap gap-2 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-accent-300">
+                      {p.sectors.map((s) => (
+                        <span class="border border-white/10 px-2 py-1">{sectorTitles[s] ?? s}</span>
+                      ))}
+                    </p>
+                    <h3 class="mt-3 text-xl font-semibold text-white">{p.title}</h3>
+                    <p class="mt-2 text-sm text-ink-300">Case study in preparation — pending SES confirmation.</p>
+                  </div>
+                </a>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-6 flex items-center justify-between">
+        <p class="text-xs uppercase tracking-[0.22em] text-ink-300" data-carousel-count aria-live="polite">
+          01 / {String(projects.length).padStart(2, '0')}
+        </p>
+        <div class="flex gap-3">
+          <button
+            type="button"
+            data-carousel-prev
+            class="inline-flex h-11 w-11 items-center justify-center border border-white/20 text-white transition-colors hover:border-accent-400 hover:text-accent-300"
+            aria-label="Previous project"
+          >
+            <Icon name="arrow" class="h-4 w-4 rotate-180" />
+          </button>
+          <button
+            type="button"
+            data-carousel-next
+            class="inline-flex h-11 w-11 items-center justify-center border border-white/20 text-white transition-colors hover:border-accent-400 hover:text-accent-300"
+            aria-label="Next project"
+          >
+            <Icon name="arrow" class="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const carousel = document.querySelector<HTMLElement>('[data-carousel]');
+  const prev = document.querySelector('[data-carousel-prev]');
+  const next = document.querySelector('[data-carousel-next]');
+  const count = document.querySelector('[data-carousel-count]');
+
+  if (carousel) {
+    const cards = Array.from(carousel.children) as HTMLElement[];
+    const step = () => (cards[0]?.offsetWidth ?? 0) + 24;
+
+    const update = () => {
+      if (!count || cards.length === 0) return;
+      const i = Math.round(carousel.scrollLeft / step()) + 1;
+      const clamped = Math.min(Math.max(i, 1), cards.length);
+      count.textContent = `${String(clamped).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}`;
+    };
+
+    prev?.addEventListener('click', () => carousel.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next?.addEventListener('click', () => carousel.scrollBy({ left: step(), behavior: 'smooth' }));
+    carousel.addEventListener('scroll', update, { passive: true });
+  }
+</script>

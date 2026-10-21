@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   SES design tokens — original identity for Sibanye Engineering Solutions.
+   Deep engineering navy + instrument teal on paper neutrals.
+   (Design tokens defined here; official brand assets pending from SES —
+   see docs/content-open-items.md)
+--------------------------------------------------------------------------- */
+@theme {
+  --font-display: "Space Grotesk Variable", "Space Grotesk", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", "Inter", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+
+  /* Ink — engineering navy ramp */
+  --color-ink-950: #070d14;
+  --color-ink-900: #0c1723;
+  --color-ink-800: #122233;
+  --color-ink-700: #1a3045;
+  --color-ink-600: #24425c;
+  --color-ink-500: #35597a;
+  --color-ink-400: #5e7e9c;
+  --color-ink-300: #93aabf;
+  --color-ink-200: #c3d0db;
+  --color-ink-100: #e2e9ef;
+
+  /* Accent — instrument teal */
+  --color-accent-700: #086673;
+  --color-accent-600: #0a7f8c;
+  --color-accent-500: #0e9aa7;
+  --color-accent-400: #2fb7c2;
+  --color-accent-300: #7cd3da;
+  --color-accent-200: #b9ebee;
+  --color-accent-100: #e0f6f7;
+
+  /* Paper neutrals */
+  --color-paper: #f7f9fa;
+  --color-paper-2: #eff3f5;
+  --color-line: #d9e1e7;
+  --color-body: #35495c;
+  --color-muted: #64798c;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white font-sans text-body antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight text-ink-900;
+  }
+
+  ::selection {
+    background: var(--color-accent-500);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-500);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Layout -------------------------------------------------------------- */
+  .container-x {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-accent-600;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply h-px w-8 shrink-0 bg-accent-500;
+  }
+  .eyebrow--light {
+    @apply text-accent-300;
+  }
+
+  /* Buttons -------------------------------------------------------------- */
+  .btn,
+  .btn-primary,
+  .btn-dark,
+  .btn-outline-light,
+  .btn-outline-dark {
+    @apply inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-sm font-semibold tracking-wide transition-colors duration-200;
+  }
+  .btn-primary {
+    @apply bg-accent-500 text-white hover:bg-accent-600;
+  }
+  .btn-dark {
+    @apply bg-ink-900 text-white hover:bg-ink-700;
+  }
+  .btn-outline-light {
+    @apply border border-white/40 text-white hover:border-white hover:bg-white/10;
+  }
+  .btn-outline-dark {
+    @apply border border-ink-900/25 text-ink-900 hover:border-ink-900 hover:bg-ink-900 hover:text-white;
+  }
+
+  /* Cards & rules -------------------------------------------------------- */
+  .card {
+    @apply border border-line bg-white;
+  }
+  .hairline {
+    @apply h-px w-full bg-line;
+  }
+
+  /* Blueprint grid texture for dark bands / image placeholders ------------ */
+  .blueprint {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  /* Scroll reveal --------------------------------------------------------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s ease,
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.in-view {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}

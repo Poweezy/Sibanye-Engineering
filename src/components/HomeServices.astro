@@ -1,0 +1,43 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  services: { id: string; title: string; tagline: string; icon: string }[];
+}
+
+const { services } = Astro.props;
+---
+
+<section class="bg-paper-2">
+  <div class="container-x py-20 sm:py-24">
+    <div class="reveal flex flex-wrap items-end justify-between gap-6">
+      <div class="max-w-2xl">
+        <p class="eyebrow">Our Services</p>
+        <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">Comprehensive engineering across multiple disciplines</h2>
+      </div>
+      <a
+        href="/services/"
+        class="inline-flex items-center gap-2 text-sm font-semibold text-accent-600 transition-colors hover:text-accent-700"
+      >
+        View all services
+        <Icon name="arrow" class="h-4 w-4" />
+      </a>
+    </div>
+
+    <ul class="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+      {
+        services.map((s) => (
+          <li class="group bg-white">
+            <a href={`/services/${s.id}/`} class="block h-full p-7 transition-colors group-hover:bg-ink-950">
+              <Icon name={s.icon} class="h-7 w-7 text-accent-500" />
+              <h3 class="mt-5 text-lg font-semibold transition-colors group-hover:text-white">{s.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted transition-colors group-hover:text-ink-300">
+                {s.tagline}
+              </p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

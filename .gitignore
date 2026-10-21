@@ -1,0 +1,14 @@
+# build output
+node_modules/
+dist/
+.astro/
+
+# environment / secrets
+.env
+.env.*
+*.local
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini

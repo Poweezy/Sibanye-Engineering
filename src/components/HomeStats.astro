@@ -1,0 +1,28 @@
+---
+/* Statistics structure from the approved design concept. No figures are
+   published until SES supplies approved numbers — values render as em dashes. */
+const stats = [
+  { label: 'Years of engineering experience' },
+  { label: 'Projects & assignments delivered' },
+  { label: 'Core infrastructure sectors' },
+  { label: 'African markets supported' },
+];
+---
+
+<section class="border-y border-line bg-paper">
+  <div class="container-x py-14">
+    <dl class="grid grid-cols-2 gap-8 lg:grid-cols-4">
+      {
+        stats.map((s) => (
+          <div class="reveal flex flex-col items-center text-center">
+            <dd class="font-display text-4xl font-semibold text-ink-900 sm:text-5xl">—</dd>
+            <dt class="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted">{s.label}</dt>
+          </div>
+        ))
+      }
+    </dl>
+    <p class="mt-8 text-center text-xs text-muted">
+      Statistics pending SES confirmation — figures will be published only from approved sources.
+    </p>
+  </div>
+</section>

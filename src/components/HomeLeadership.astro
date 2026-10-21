@@ -1,0 +1,66 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  leaders: { id: string; name: string; role: string; credentials: string[] }[];
+}
+
+const { leaders } = Astro.props;
+
+const initials = (name: string): string =>
+  name
+    .split(' ')
+    .map((part) => part[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+---
+
+<section class="bg-white">
+  <div class="container-x py-20 sm:py-24">
+    <div class="reveal flex flex-wrap items-end justify-between gap-6">
+      <div class="max-w-2xl">
+        <p class="eyebrow">Leadership</p>
+        <h2 class="mt-4 text-3xl font-semibold sm:text-4xl">Experienced. Qualified. Committed.</h2>
+        <p class="mt-4 text-base leading-relaxed text-muted">
+          Our leadership team brings deep industry experience and a shared commitment to delivering
+          engineering excellence.
+        </p>
+      </div>
+      <a
+        href="/leadership/"
+        class="inline-flex items-center gap-2 text-sm font-semibold text-accent-600 transition-colors hover:text-accent-700"
+      >
+        Meet our leadership
+        <Icon name="arrow" class="h-4 w-4" />
+      </a>
+    </div>
+
+    <ul class="mt-12 grid gap-6 md:grid-cols-2">
+      {
+        leaders.map((l) => (
+          <li class="reveal">
+            <article class="card flex h-full flex-col gap-5 p-7 sm:flex-row sm:items-start">
+              <span
+                class="inline-flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-ink-950 font-display text-xl font-semibold text-accent-300"
+                aria-hidden="true"
+              >
+                {initials(l.name)}
+              </span>
+              <div>
+                <h3 class="text-xl font-semibold">{l.name}</h3>
+                <p class="mt-1 text-sm font-medium text-accent-600">{l.role}</p>
+                <ul class="mt-4 flex flex-wrap gap-2" aria-label="Credentials">
+                  {l.credentials.map((c) => (
+                    <li class="border border-line bg-paper px-2.5 py-1 text-xs font-medium text-body">{c}</li>
+                  ))}
+                </ul>
+                <p class="mt-4 text-xs text-muted">Full profile pending SES approval and photograph.</p>
+              </div>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

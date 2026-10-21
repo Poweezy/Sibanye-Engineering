@@ -1,0 +1,116 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+
+const year = new Date().getFullYear();
+
+const companyLinks = [
+  { href: '/about/', label: 'About' },
+  { href: '/leadership/', label: 'Leadership' },
+  { href: '/approach/', label: 'Our Approach' },
+  { href: '/capabilities/', label: 'Capabilities' },
+  { href: '/contact/', label: 'Contact' },
+];
+const expertiseLinks = [
+  { href: '/services/', label: 'Services' },
+  { href: '/sectors/', label: 'Market Sectors' },
+  { href: '/projects/', label: 'Projects' },
+];
+
+/* Contact details sourced from the SES 2026 capability statement (via the
+   approved proposal) — final confirmation with SES outstanding. */
+const phonePrimary = { display: '+268 2404 5512', tel: '+26824045512' };
+const phoneSecondary = { display: '+268 7802 4964', tel: '+26878024964' };
+const whatsappNumber = '26878024964';
+---
+
+<footer class="bg-ink-950 text-ink-300">
+  <div class="container-x grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-12">
+    <div class="lg:col-span-5">
+      <Logo variant="light" />
+      <p class="mt-6 max-w-sm text-sm leading-relaxed text-ink-300">
+        Multidisciplinary engineering, project management and infrastructure advisory services
+        delivering practical solutions across Eswatini and Southern Africa.
+      </p>
+      <p class="mt-5 text-xs uppercase tracking-[0.22em] text-ink-400">
+        Engineering Infrastructure. Sustainable Progress.
+      </p>
+    </div>
+
+    <nav class="lg:col-span-2" aria-label="Company">
+      <h2 class="text-xs font-semibold uppercase tracking-[0.22em] text-white">Company</h2>
+      <ul class="mt-5 space-y-3 text-sm">
+        {
+          companyLinks.map((link) => (
+            <li>
+              <a href={link.href} class="transition-colors hover:text-white">
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <nav class="lg:col-span-2" aria-label="Expertise">
+      <h2 class="text-xs font-semibold uppercase tracking-[0.22em] text-white">Expertise</h2>
+      <ul class="mt-5 space-y-3 text-sm">
+        {
+          expertiseLinks.map((link) => (
+            <li>
+              <a href={link.href} class="transition-colors hover:text-white">
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="lg:col-span-3">
+      <h2 class="text-xs font-semibold uppercase tracking-[0.22em] text-white">Connect</h2>
+      <ul class="mt-5 space-y-4 text-sm">
+        <li class="flex gap-3">
+          <Icon name="phone" class="mt-0.5 h-4 w-4 shrink-0 text-accent-400" />
+          <span>
+            <a href={`tel:${phonePrimary.tel}`} class="transition-colors hover:text-white">{phonePrimary.display}</a><br />
+            <a href={`tel:${phoneSecondary.tel}`} class="transition-colors hover:text-white">{phoneSecondary.display}</a>
+          </span>
+        </li>
+        <li class="flex gap-3">
+          <Icon name="mail" class="mt-0.5 h-4 w-4 shrink-0 text-accent-400" />
+          <a href="mailto:info@sibanyeengineering.com" class="transition-colors hover:text-white">info@sibanyeengineering.com</a>
+        </li>
+        <li class="flex gap-3">
+          <Icon name="pin" class="mt-0.5 h-4 w-4 shrink-0 text-accent-400" />
+          <span>
+            Suite NC202/203C, Nedbank Centre,<br />
+            cnr Sozisa & Dr Sishayi Road,<br />
+            Mbabane, Eswatini
+          </span>
+        </li>
+        <li class="flex gap-3">
+          <Icon name="whatsapp" class="mt-0.5 h-4 w-4 shrink-0 text-accent-400" />
+          <a
+            href={`https://wa.me/${whatsappNumber}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="transition-colors hover:text-white"
+          >
+            Chat on WhatsApp
+          </a>
+        </li>
+      </ul>
+      <p class="mt-5 text-xs leading-relaxed text-ink-400">
+        Contact details pending final SES confirmation.
+      </p>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="container-x flex flex-col items-center justify-between gap-3 py-6 text-xs text-ink-400 sm:flex-row">
+      <p>© {year} Sibanye Engineering Solutions. All rights reserved.</p>
+      <p>Regional presence: Bryanston, Sandton, South Africa</p>
+    </div>
+  </div>
+</footer>
