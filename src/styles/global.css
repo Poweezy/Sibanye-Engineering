@@ -1,42 +1,47 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   SES design tokens — original identity for Sibanye Engineering Solutions.
-   Deep engineering navy + instrument teal on paper neutrals.
-   (Design tokens defined here; official brand assets pending from SES —
-   see docs/content-open-items.md)
+   SES design tokens — official brand palette (provisional reference values
+   sampled from the capability-statement cover; awaiting the SES brand guide —
+   docs/content-open-items.md item 14). Governed by the ses-brand-identity agent:
+   amber gold + engineering orange on warm near-black ink and warm paper.
+   Extended ramps are derived tints/shades of the sampled anchors.
 --------------------------------------------------------------------------- */
 @theme {
   --font-display: "Space Grotesk Variable", "Space Grotesk", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter Variable", "Inter", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
 
-  /* Ink — engineering navy ramp */
-  --color-ink-950: #070d14;
-  --color-ink-900: #0c1723;
-  --color-ink-800: #122233;
-  --color-ink-700: #1a3045;
-  --color-ink-600: #24425c;
-  --color-ink-500: #35597a;
-  --color-ink-400: #5e7e9c;
-  --color-ink-300: #93aabf;
-  --color-ink-200: #c3d0db;
-  --color-ink-100: #e2e9ef;
+  /* Ink — warm near-black ramp anchored on official #12100F */
+  --color-ink-950: #12100f;
+  --color-ink-900: #1d1a17;
+  --color-ink-800: #2a2521;
+  --color-ink-700: #3b342e;
+  --color-ink-600: #554b42;
+  --color-ink-500: #75685c;
+  --color-ink-400: #9c8f82;
+  --color-ink-300: #c4bab0;
+  --color-ink-200: #ded7ce;
+  --color-ink-100: #f0ebe4;
 
-  /* Accent — instrument teal */
-  --color-accent-700: #086673;
-  --color-accent-600: #0a7f8c;
-  --color-accent-500: #0e9aa7;
-  --color-accent-400: #2fb7c2;
-  --color-accent-300: #7cd3da;
-  --color-accent-200: #b9ebee;
-  --color-accent-100: #e0f6f7;
+  /* Accent — amber gold ramp anchored on official #EA9F12 */
+  --color-accent-700: #9a6100; /* bronze — accent text on light (5.1:1) */
+  --color-accent-600: #c07c05; /* deep amber — icons / hover fills */
+  --color-accent-500: #ea9f12; /* amber gold — primary (official) */
+  --color-accent-400: #f0b540; /* light amber — text/icons on dark (10.5:1) */
+  --color-accent-300: #f6ce85;
+  --color-accent-200: #fbe4bc;
+  --color-accent-100: #fdf3de;
 
-  /* Paper neutrals */
-  --color-paper: #f7f9fa;
-  --color-paper-2: #eff3f5;
-  --color-line: #d9e1e7;
-  --color-body: #35495c;
-  --color-muted: #64798c;
+  /* Secondary brand colours (official sampled anchors) */
+  --color-flare: #e2631b;  /* engineering orange — hovers, gradient partner */
+  --color-bright: #f0d711; /* bright yellow — non-text signature marks only */
+
+  /* Paper neutrals — official light grey #DCDFE4 + warm support */
+  --color-paper: #f8f7f4;
+  --color-paper-2: #efeeea;
+  --color-line: #dcdfe4;
+  --color-body: #40454b;
+  --color-muted: #575b61; /* official slate grey (6.8:1 on white) */
 }
 
 @layer base {
@@ -54,11 +59,11 @@
 
   ::selection {
     background: var(--color-accent-500);
-    color: #fff;
+    color: var(--color-ink-950);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent-500);
+    outline: 2px solid var(--color-accent-700);
     outline-offset: 2px;
   }
 }
@@ -70,14 +75,14 @@
   }
 
   .eyebrow {
-    @apply flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-accent-600;
+    @apply flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-accent-700;
   }
   .eyebrow::before {
     content: "";
     @apply h-px w-8 shrink-0 bg-accent-500;
   }
   .eyebrow--light {
-    @apply text-accent-300;
+    @apply text-accent-400;
   }
 
   /* Buttons -------------------------------------------------------------- */
@@ -89,7 +94,7 @@
     @apply inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-sm font-semibold tracking-wide transition-colors duration-200;
   }
   .btn-primary {
-    @apply bg-accent-500 text-white hover:bg-accent-600;
+    @apply bg-accent-500 text-ink-950 hover:bg-flare;
   }
   .btn-dark {
     @apply bg-ink-900 text-white hover:bg-ink-700;
@@ -107,6 +112,13 @@
   }
   .hairline {
     @apply h-px w-full bg-line;
+  }
+
+  /* Signature heat gradient — bright→amber→orange energy bar (use sparingly:
+     one per viewport, non-text decoration only) */
+  .flare-bar {
+    @apply h-1 w-full;
+    background: linear-gradient(90deg, var(--color-bright), var(--color-accent-500), var(--color-flare));
   }
 
   /* Blueprint grid texture for dark bands / image placeholders ------------ */

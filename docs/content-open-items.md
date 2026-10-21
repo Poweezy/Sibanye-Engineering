@@ -20,6 +20,8 @@ or `[CONFIRM WITH SES]` and are never fabricated.
 | 12 | **Regional presence** — SES Engineering Solutions, 02 Bruton Road, Bryanston, Sandton, South Africa (statement p17) | ✅ From statement | Footer |
 | 13 | **Unapproved third-party marks** — any client/partner logos not covered by item 7 must not appear anywhere | 🚫 Standing rule | Whole site |
 
+| 14 | **Official SES brand guide** — verified HEX/CMYK specifications, vector logo, reversed/mono variants | ⏳ Outstanding — six provisional reference values (client-sampled from the statement cover) adopted as working tokens 2026-10-21 (ADR-010); governed by `ses-brand-identity` agent | Full theming confidence; print assets; removing "provisional" labels |
+
 ## Verification notes from the capability statement (2026-10-21)
 
 Discrepancies and ambiguities found during transcription — **do not resolve by invention; ask SES**:
@@ -40,6 +42,14 @@ Discrepancies and ambiguities found during transcription — **do not resolve by
 7. **Nsoko capacity** — reference says 13.34 MWp; photo caption says "13 MW". Use 13.34 MWp.
 8. **Values page (p6) is graphical** — value wording could not be extracted; homepage values line
    remains pending SES sign-off.
+
+## Old-website reconciliation (appsystemsz.com/sibanyeengineering)
+
+The old site is itself an Ander-styled rebuild carrying **unverified marketing copy**. Per Phase 4, only statement-corroborated items may be adopted:
+
+- ✅ **Corroborated by the capability statement:** phone +268 7906 1000 (statement p17 also lists it — candidate third number, SES to confirm placement), email info@sibanyeengineering.com, Mbabane location, the four statistics *labels*.
+- 🚫 **Not adopted (unverified):** taglines ("Engineering progress. Building possibility.", "Engineering solutions for a brighter Africa"), footer motto "We are one · Innovation · Inspire", Geotechnical Engineering as a service, "digital capability / BIM / GIS / data" claims, generic project cards, and the "0+" statistics values.
+- 🚫 **Out of initial scope:** the old site's "Sibanye AI Assist" chatbot — a future enhancement per the commercial constraints.
 
 ## Photographic permissions note
 

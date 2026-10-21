@@ -52,3 +52,10 @@
 - **Why:** The supplied file is opaque and shows upscaling artefacts, so it cannot sit directly on the navy surfaces; black lettering is unreadable on dark backgrounds, so the mark rides on a white chip in header/footer. The original supplied file stays untouched as the brand reference.
 - **Constraint:** Derivatives are raster from an upscaled source — fine at web sizes, not print quality. Vector artwork (AI/EPS/SVG/PDF) plus reversed/mono variants have been requested from SES; derivatives must be replaced when supplied.
 - **Status:** Implemented 2026-10-21. Placeholder SVG logo and favicon retired.
+
+### ADR-010 — Brand retheme to the provisional SES palette + branding agent
+- **Decision:** Adopt the six client-supplied reference values sampled from the capability-statement cover — amber gold `#EA9F12`, bright yellow `#F0D711`, engineering orange `#E2631B`, near-black `#12100F`, slate grey `#575B61`, light grey `#DCDFE4` — as the token foundation, explicitly labelled **provisional** (verified official specs pending: content-open-items item 14). Warm ink/accent ramps derived from the anchors; bronze `#9A6100` derived for accent text on light.
+- **Contrast mapping (WCAG AA):** dark-on-amber CTAs (8.7:1) — white-on-amber (2.2:1) banned; bronze accent text on light (5.1:1); light-amber accent text on dark (10.5:1); orange as hover-only motion colour; yellow confined to non-text signature marks; bronze focus rings; one `flare-bar` per viewport (implemented at the footer's top edge).
+- **Branding agent:** `agents/sibanye-website-agents/.github/agents/ses-brand-identity.agent.md` created as brand guardian (palette law, contrast law, logo treatment, typography, Ander-principle transfer list, acceptance checklist). On conflict, contrast and logo law win.
+- **Old-website policy:** only capability-statement-corroborated items adopted from appsystemsz.com/sibanyeengineering; unverified taglines/motto/services and the AI assistant excluded (see content-open-items).
+- **Status:** Implemented 2026-10-21; automatic retheme triggers when the official brand guide arrives.

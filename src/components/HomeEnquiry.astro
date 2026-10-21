@@ -20,16 +20,16 @@ const email = 'info@sibanyeengineering.com';
 
       <ul class="mt-8 space-y-5 text-sm">
         <li class="flex items-start gap-4">
-          <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-line bg-white text-accent-600">
+          <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-line bg-white text-accent-700">
             <Icon name="phone" class="h-5 w-5" />
           </span>
           <span>
             <span class="block font-semibold text-ink-900">Call us</span>
-            <a href={`tel:${phonePrimary.tel}`} class="text-muted transition-colors hover:text-accent-600">{phonePrimary.display}</a>
+            <a href={`tel:${phonePrimary.tel}`} class="text-muted transition-colors hover:text-accent-700">{phonePrimary.display}</a>
           </span>
         </li>
         <li class="flex items-start gap-4">
-          <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-line bg-white text-accent-600">
+          <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-line bg-white text-accent-700">
             <Icon name="whatsapp" class="h-5 w-5" />
           </span>
           <span>
@@ -38,19 +38,19 @@ const email = 'info@sibanyeengineering.com';
               href={`https://wa.me/${whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-muted transition-colors hover:text-accent-600"
+              class="text-muted transition-colors hover:text-accent-700"
             >
               Message us on WhatsApp
             </a>
           </span>
         </li>
         <li class="flex items-start gap-4">
-          <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-line bg-white text-accent-600">
+          <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-line bg-white text-accent-700">
             <Icon name="mail" class="h-5 w-5" />
           </span>
           <span>
             <span class="block font-semibold text-ink-900">Email</span>
-            <a href={`mailto:${email}`} class="text-muted transition-colors hover:text-accent-600">{email}</a>
+            <a href={`mailto:${email}`} class="text-muted transition-colors hover:text-accent-700">{email}</a>
           </span>
         </li>
       </ul>
@@ -59,10 +59,9 @@ const email = 'info@sibanyeengineering.com';
     <form class="reveal card p-7 sm:p-9" method="POST" action="/api/enquiry.php" novalidate data-enquiry-form>
       <h3 class="text-xl font-semibold">Start a conversation</h3>
       <div class="mt-6 grid gap-5">
-<!-- SPLIT-MARKER -->
         <div class="grid gap-5 sm:grid-cols-2">
           <div>
-            <label for="name" class="block text-sm font-medium text-ink-900">Full name <span class="text-accent-600" aria-hidden="true">*</span></label>
+            <label for="name" class="block text-sm font-medium text-ink-900">Full name <span class="text-accent-700" aria-hidden="true">*</span></label>
             <input
               id="name"
               name="name"
@@ -70,7 +69,7 @@ const email = 'info@sibanyeengineering.com';
               autocomplete="name"
               required
               maxlength="120"
-              class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-accent-500 focus:outline-none"
+              class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-accent-700 focus:outline-none"
               placeholder="Your name"
             />
           </div>
@@ -82,7 +81,7 @@ const email = 'info@sibanyeengineering.com';
               type="text"
               autocomplete="organization"
               maxlength="160"
-              class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-accent-500 focus:outline-none"
+              class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-accent-700 focus:outline-none"
               placeholder="Company / institution"
             />
           </div>
@@ -90,7 +89,7 @@ const email = 'info@sibanyeengineering.com';
 
         <div class="grid gap-5 sm:grid-cols-2">
           <div>
-            <label for="email" class="block text-sm font-medium text-ink-900">Email <span class="text-accent-600" aria-hidden="true">*</span></label>
+            <label for="email" class="block text-sm font-medium text-ink-900">Email <span class="text-accent-700" aria-hidden="true">*</span></label>
             <input
               id="email"
               name="email"
@@ -98,7 +97,7 @@ const email = 'info@sibanyeengineering.com';
               autocomplete="email"
               required
               maxlength="200"
-              class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-accent-500 focus:outline-none"
+              class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-accent-700 focus:outline-none"
               placeholder="you@company.com"
             />
           </div>
@@ -110,7 +109,7 @@ const email = 'info@sibanyeengineering.com';
               type="tel"
               autocomplete="tel"
               maxlength="40"
-              class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-accent-500 focus:outline-none"
+              class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-accent-700 focus:outline-none"
               placeholder="+268 …"
             />
           </div>
@@ -121,7 +120,7 @@ const email = 'info@sibanyeengineering.com';
           <select
             id="sector"
             name="sector"
-            class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 focus:border-accent-500 focus:outline-none"
+            class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 focus:border-accent-700 focus:outline-none"
           >
             <option value="">Select a sector (optional)</option>
             <option>Water & Sanitation</option>
@@ -137,9 +136,8 @@ const email = 'info@sibanyeengineering.com';
           </select>
         </div>
 
-<!-- FIELDS-2 -->
         <div>
-          <label for="message" class="block text-sm font-medium text-ink-900">Project details <span class="text-accent-600" aria-hidden="true">*</span></label>
+          <label for="message" class="block text-sm font-medium text-ink-900">Project details <span class="text-accent-700" aria-hidden="true">*</span></label>
           <textarea
             id="message"
             name="message"
@@ -147,7 +145,7 @@ const email = 'info@sibanyeengineering.com';
             required
             minlength="20"
             maxlength="4000"
-            class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-accent-500 focus:outline-none"
+            class="mt-2 w-full border border-line bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-300 focus:border-accent-700 focus:outline-none"
             placeholder="Briefly describe your project, its location and what support you need."
           ></textarea>
           <p class="mt-2 text-xs text-muted" data-char-note>Minimum 20 characters.</p>
@@ -198,7 +196,3 @@ const email = 'info@sibanyeengineering.com';
     });
   }
 </script>
-      </div>
-    </form>
-  </div>
-</section>

@@ -17,7 +17,7 @@ const { services } = Astro.props;
       </div>
       <a
         href="/services/"
-        class="inline-flex items-center gap-2 text-sm font-semibold text-accent-600 transition-colors hover:text-accent-700"
+        class="inline-flex items-center gap-2 text-sm font-semibold text-accent-700 transition-colors hover:text-ink-900"
       >
         View all services
         <Icon name="arrow" class="h-4 w-4" />
@@ -29,7 +29,7 @@ const { services } = Astro.props;
         services.map((s) => (
           <li class="group bg-white">
             <a href={`/services/${s.id}/`} class="block h-full p-7 transition-colors group-hover:bg-ink-950">
-              <Icon name={s.icon} class="h-7 w-7 text-accent-500" />
+              <Icon name={s.icon} class="h-7 w-7 text-accent-600" />
               <h3 class="mt-5 text-lg font-semibold transition-colors group-hover:text-white">{s.title}</h3>
               <p class="mt-2 text-sm leading-relaxed text-muted transition-colors group-hover:text-ink-300">
                 {s.tagline}
