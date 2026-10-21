@@ -1,0 +1,138 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+
+/* Engagement phases map the SES capabilities recorded in the 2026 capability
+   statement (advisory, PM, supervision, QA/QC, controls, contract management)
+   onto a delivery narrative. No new service claims are introduced. */
+const phases = [
+  {
+    n: '01',
+    title: 'Advise',
+    text: 'Engineering advisory grounded in the relevant discipline — civil, water, transportation, energy, structural or mining — so decisions start from sound technical ground.',
+  },
+  {
+    n: '02',
+    title: 'Plan & structure',
+    text: 'Project and programme management with disciplined project controls: scope, schedule and budget baselines established before delivery begins.',
+  },
+  {
+    n: '03',
+    title: 'Deliver',
+    text: 'Construction supervision with quality assurance and quality control embedded on site, keeping execution aligned with the design intent.',
+  },
+  {
+    n: '04',
+    title: 'Control',
+    text: 'Budget management, risk assessment and contract management applied continuously — under FIDIC, JBCC, GCC, NEC and EPC forms of contract.',
+  },
+  {
+    n: '05',
+    title: 'Sustain',
+    text: 'Handover with a focus on quality, safety and sustainability, so the infrastructure keeps delivering value beyond practical completion.',
+  },
+];
+
+const principles = [
+  {
+    icon: 'check',
+    title: 'Quality first',
+    text: 'QA and QC run through every engagement, from documentation review to site supervision.',
+  },
+  {
+    icon: 'gantt',
+    title: 'Disciplined controls',
+    text: 'Project controls give clients visibility of cost, time and risk at every stage.',
+  },
+  {
+    icon: 'leaf',
+    title: 'Sustainable outcomes',
+    text: 'Sustainability is treated as an engineering requirement, not an afterthought.',
+  },
+];
+---
+
+<BaseLayout
+  title="Our Approach"
+  description="How Sibanye Engineering Solutions delivers: engineering advisory, disciplined project controls, construction supervision and contract management under FIDIC, JBCC, GCC, NEC and EPC forms of contract."
+>
+  <PageHero
+    eyebrow="Our Approach"
+    title="Disciplined delivery, from advisory to handover"
+    intro="A consistent way of working across disciplines and sectors — built on the capabilities recorded in our capability statement."
+  />
+
+  <section class="bg-white">
+    <div class="container-x py-20 sm:py-24">
+      <div class="reveal max-w-2xl">
+        <p class="eyebrow">How We Work</p>
+        <h2 class="mt-4 text-3xl font-semibold">Five phases, one accountable team</h2>
+      </div>
+      <ol class="mt-12 space-y-px overflow-hidden border border-line bg-line">
+        {
+          phases.map((p) => (
+            <li class="reveal bg-white">
+              <div class="flex flex-col gap-4 p-7 sm:flex-row sm:items-baseline sm:gap-10 sm:p-9">
+                <span class="font-display text-3xl font-semibold text-accent-600 sm:w-20 sm:shrink-0">{p.n}</span>
+                <div>
+                  <h3 class="text-xl font-semibold">{p.title}</h3>
+                  <p class="mt-2 max-w-2xl text-base leading-relaxed text-body">{p.text}</p>
+                </div>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="mt-6 text-xs leading-relaxed text-muted">
+        Phase framing maps the capabilities listed in the SES 2026 capability statement; detailed
+        methodology documentation is available on request.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-paper-2">
+    <div class="container-x py-20 sm:py-24">
+      <div class="reveal max-w-2xl">
+        <p class="eyebrow">Working Principles</p>
+        <h2 class="mt-4 text-3xl font-semibold">What clients can expect on every engagement</h2>
+      </div>
+      <ul class="mt-12 grid gap-5 md:grid-cols-3">
+        {
+          principles.map((p) => (
+            <li class="reveal card p-7">
+              <span class="inline-flex h-12 w-12 items-center justify-center border border-accent-200 bg-accent-100 text-accent-700">
+                <Icon name={p.icon} class="h-6 w-6" />
+              </span>
+              <h3 class="mt-5 text-lg font-semibold">{p.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">{p.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="blueprint bg-ink-950 text-white">
+    <div class="container-x py-16 sm:py-20">
+      <div class="reveal flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+        <div class="max-w-xl">
+          <p class="eyebrow eyebrow--light">Forms of Contract</p>
+          <h2 class="mt-4 text-3xl font-semibold text-white">Fluent across standard contract frameworks</h2>
+          <p class="mt-3 text-base leading-relaxed text-ink-300">
+            Contract management experience spans the standard forms used across the region's
+            infrastructure projects.
+          </p>
+        </div>
+        <ul class="flex flex-wrap gap-3" aria-label="Forms of contract">
+          {['FIDIC', 'JBCC', 'GCC', 'NEC', 'EPC'].map((f) => (
+            <li class="border border-white/15 px-6 py-4 font-display text-lg font-semibold text-white">{f}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

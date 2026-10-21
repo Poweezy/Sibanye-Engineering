@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<BaseLayout
+  title="Page Not Found"
+  description="The page you requested could not be found on the Sibanye Engineering Solutions website."
+>
+  <section class="blueprint bg-ink-950 text-white">
+    <div class="container-x flex flex-col items-center py-28 text-center sm:py-36">
+      <p class="font-display text-7xl font-semibold text-accent-400 sm:text-8xl">404</p>
+      <h1 class="mt-6 text-3xl font-semibold text-white sm:text-4xl">This page could not be found</h1>
+      <p class="mt-4 max-w-md text-base leading-relaxed text-ink-300">
+        The link may be outdated or the address mistyped. Start again from the homepage, or tell
+        us what you were looking for.
+      </p>
+      <div class="mt-10 flex flex-wrap justify-center gap-4">
+        <a href="/" class="btn-primary">
+          Back to Home
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+        <a href="/contact/" class="btn-outline-light">Contact Us</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,128 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/Icon.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((service) => ({
+    params: { id: service.id },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+const services = await getCollection('services');
+const projects = await getCollection('projects');
+const sectorTitles = Object.fromEntries((await getCollection('sectors')).map((s) => [s.id, s.data.title]));
+
+/* Statement-backed support list — the capability suite SES records for all
+   engagements. Per-discipline wording is not invented. */
+const supportList = [
+  'Engineering advisory',
+  'Project management',
+  'Programme management',
+  'Construction supervision',
+  'Quality assurance & quality control',
+  'Budget management',
+  'Risk assessment',
+  'Contract management',
+  'Project controls',
+];
+
+/* Map each service to the sectors whose projects best demonstrate it. */
+const relatedSectors: Record<string, string[]> = {
+  'civil-engineering': ['infrastructure', 'water-sanitation', 'transportation'],
+  'water-sanitation': ['water-sanitation'],
+  transportation: ['transportation'],
+  energy: ['energy'],
+  'structural-engineering': ['structures'],
+  'mining-engineering': ['mining'],
+  'project-programme-management': ['water-sanitation', 'energy', 'transportation', 'healthcare', 'infrastructure', 'structures', 'industrial-commercial'],
+  'industrial-commercial-buildings': ['industrial-commercial', 'structures'],
+};
+
+const sectorsForService = relatedSectors[service.id] ?? [];
+const related = projects
+  .filter((p) => p.data.sectors.some((s) => sectorsForService.includes(s)))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 6);
+---
+
+<BaseLayout title={service.data.title} description={service.data.tagline}>
+  <PageHero eyebrow="Service" title={service.data.title} intro={service.data.tagline} />
+
+  <section class="bg-white">
+    <div class="container-x grid gap-12 py-20 sm:py-24 lg:grid-cols-12 lg:gap-16">
+      <div class="reveal lg:col-span-7">
+        <p class="eyebrow">The Discipline</p>
+        <h2 class="mt-4 text-3xl font-semibold">{service.data.title} at SES</h2>
+        <p class="mt-6 text-base leading-relaxed text-body">
+          {service.data.tagline} This discipline sits within SES's multidisciplinary practice and
+          is delivered alongside our engineering advisory, project management and construction
+          supervision capabilities.
+        </p>
+        <p class="mt-4 text-sm text-muted">
+          Detailed scope wording for this discipline is pending SES sign-off and will replace this
+          summary — no unverified claims are published.
+        </p>
+      </div>
+
+      <div class="lg:col-span-5">
+        <div class="reveal card p-7">
+          <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-muted">How we support this discipline</h3>
+          <ul class="mt-5 space-y-3">
+            {
+              supportList.map((c) => (
+                <li class="flex items-center gap-3 border-b border-line pb-3 text-sm text-body">
+                  <Icon name="check" class="h-4 w-4 shrink-0 text-accent-700" />
+                  {c}
+                </li>
+              ))
+            }
+          </ul>
+          <a
+            href="/capabilities/"
+            class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-accent-700 transition-colors hover:text-accent-600"
+          >
+            Full capability statement
+            <Icon name="arrow" class="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-paper-2">
+    <div class="container-x py-20 sm:py-24">
+      <div class="reveal flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <p class="eyebrow">Related Projects</p>
+          <h2 class="mt-4 text-3xl font-semibold">Selected project references</h2>
+        </div>
+        <a href="/projects/" class="btn-outline-dark">View all projects</a>
+      </div>
+      {
+        related.length > 0 ? (
+          <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((p) => (
+              <li class="reveal">
+                <ProjectCard project={p.data} sectorTitles={sectorTitles} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="mt-8 text-sm text-muted">
+            Project references for this discipline are being prepared with SES. In the meantime,
+            <a href="/projects/" class="font-semibold text-accent-700 hover:text-accent-600">browse the full portfolio</a>.
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const preferredOrder = ['nkonyane-musa', 'frans-pienaar'];
+const leaders = (await getCollection('leadership')).sort(
+  (a, b) => preferredOrder.indexOf(a.id) - preferredOrder.indexOf(b.id),
+);
+
+const initials = (name: string): string =>
+  name
+    .split(' ')
+    .map((part) => part[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+---
+
+<BaseLayout
+  title="Leadership"
+  description="Meet the leadership of Sibanye Engineering Solutions — registered engineers with experience across water, transportation, energy, structures and programme delivery."
+>
+  <PageHero
+    eyebrow="Leadership"
+    title="Experienced. Qualified. Committed."
+    intro="Our leadership team carries professional registrations and decades of combined experience across the disciplines we practise."
+  />
+
+  <section class="bg-white">
+    <div class="container-x py-20 sm:py-24">
+      <ul class="grid gap-6 md:grid-cols-2">
+        {
+          leaders.map((l) => (
+            <li class="reveal">
+              <article class="card flex h-full flex-col gap-6 p-8 sm:flex-row sm:items-start">
+                <span
+                  class="inline-flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-ink-950 font-display text-xl font-semibold text-accent-300"
+                  aria-hidden="true"
+                >
+                  {initials(l.data.name)}
+                </span>
+                <div>
+                  <h2 class="text-xl font-semibold">{l.data.name}</h2>
+                  <p class="mt-1 text-sm font-medium text-accent-700">{l.data.role}</p>
+                  <ul class="mt-4 flex flex-wrap gap-2" aria-label="Credentials">
+                    {l.data.credentials.map((c) => (
+                      <li class="border border-line bg-paper px-2.5 py-1 text-xs font-medium text-body">{c}</li>
+                    ))}
+                  </ul>
+                  <p class="mt-4 text-xs text-muted">Full profile pending SES approval and photograph.</p>
+                </div>
+              </article>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="reveal mt-12 border border-dashed border-line bg-paper p-6 text-sm leading-relaxed text-muted">
+        <p>
+          <strong class="text-ink-900">Content integrity note.</strong> Leadership biographies,
+          photographs and the final wording of professional credentials are pending SES approval.
+          The names, roles and registrations shown above are drawn from the SES 2026 capability
+          statement; nothing beyond that source is published here.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Want to discuss a project with our team?" />
+</BaseLayout>

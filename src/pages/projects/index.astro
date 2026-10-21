@@ -1,0 +1,94 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => Number(b.data.featured) - Number(a.data.featured) || a.data.order - b.data.order,
+);
+const sectors = (await getCollection('sectors')).sort((a, b) => a.data.order - b.data.order);
+const sectorTitles = Object.fromEntries(sectors.map((s) => [s.id, s.data.title]));
+---
+
+<BaseLayout
+  title="Projects"
+  description="Selected engineering and infrastructure projects delivered by SES across water, energy, transportation, healthcare, structures and commercial sectors in Eswatini and Southern Africa."
+>
+  <PageHero
+    eyebrow="Our Projects"
+    title="Real projects. Lasting impact."
+    intro="A selection of major infrastructure and engineering assignments across the region, as recorded in the SES 2026 capability statement."
+  />
+
+  <section class="bg-white">
+    <div class="container-x py-20 sm:py-24">
+      <div class="reveal flex flex-wrap items-center gap-2" data-filter-bar role="group" aria-label="Filter projects by sector">
+        <button
+          type="button"
+          class="border border-ink-900 bg-ink-900 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-white"
+          data-filter="all"
+          aria-pressed="true"
+        >
+          All
+        </button>
+        {
+          sectors.map((s) => (
+            <button
+              type="button"
+              class="border border-line bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-body transition-colors hover:border-ink-900"
+              data-filter={s.id}
+              aria-pressed="false"
+            >
+              {s.data.title}
+            </button>
+          ))
+        }
+      </div>
+
+      <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-project-grid>
+        {
+          projects.map((p) => (
+            <li class="reveal" data-sectors={p.data.sectors.join(' ')}>
+              <ProjectCard project={p.data} sectorTitles={sectorTitles} />
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-8 text-xs leading-relaxed text-muted">
+        All project references are drawn from the SES 2026 capability statement. Contract values
+        shown are as printed in the statement; full case studies, imagery and per-project
+        sign-off are pending SES confirmation.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<script>
+  const bar = document.querySelector('[data-filter-bar]');
+  const grid = document.querySelector('[data-project-grid]');
+  if (bar && grid) {
+    const items = Array.from(grid.children) as HTMLElement[];
+    bar.addEventListener('click', (event) => {
+      const btn = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-filter]');
+      if (!btn) return;
+      const filter = btn.dataset.filter ?? 'all';
+      for (const b of bar.querySelectorAll('[data-filter]')) {
+        const active = b === btn;
+        b.setAttribute('aria-pressed', String(active));
+        b.classList.toggle('bg-ink-900', active);
+        b.classList.toggle('text-white', active);
+        b.classList.toggle('border-ink-900', active);
+        b.classList.toggle('bg-white', !active);
+        b.classList.toggle('border-line', !active);
+      }
+      for (const item of items) {
+        const show = filter === 'all' || (item.dataset.sectors ?? '').split(' ').includes(filter);
+        item.classList.toggle('hidden', !show);
+      }
+    });
+  }
+</script>

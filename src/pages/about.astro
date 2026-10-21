@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import HomeStats from '../components/HomeStats.astro';
+
+/* All copy grounded in the SES 2026 capability statement. Values wording is
+   graphical in the statement and pending SES sign-off — chips show placeholders. */
+const pillars = [
+  {
+    icon: 'compass',
+    title: 'Our Mission',
+    text: 'Provide cutting-edge and innovative solutions, for creating shared value for all our clients and stakeholders.',
+  },
+  {
+    icon: 'eye',
+    title: 'Our Vision',
+    text: 'To be an internationally respected engineering advisory firm offering sustainable solutions.',
+  },
+];
+
+const valuePlaceholders = ['Integrity', 'Excellence', 'Collaboration', 'Sustainability', 'Professionalism'];
+
+const facts = [
+  { label: 'Headquarters', value: 'Mbabane, Eswatini' },
+  { label: 'Regional presence', value: 'Bryanston, Sandton, South Africa' },
+  { label: 'Disciplines', value: 'Civil · Water · Transportation · Energy · Structural · Mining' },
+  { label: 'Engagement models', value: 'Advisory · Project & programme management · Design & supervision' },
+];
+---
+
+<BaseLayout
+  title="About"
+  description="Sibanye Engineering Solutions is a multidisciplinary engineering advisory and project management practice based in Mbabane, Eswatini, serving clients across Eswatini and Southern Africa."
+>
+  <PageHero
+    eyebrow="About SES"
+    title="A multidisciplinary engineering practice"
+    intro="Engineering advisory and project delivery services, rooted in Eswatini and active across Southern Africa."
+  />
+
+  <section class="bg-white">
+    <div class="container-x grid gap-12 py-20 sm:py-24 lg:grid-cols-12 lg:gap-16">
+      <div class="reveal lg:col-span-7">
+        <p class="eyebrow">Who We Are</p>
+        <h2 class="mt-4 text-3xl font-semibold">Practical engineering. Enduring infrastructure.</h2>
+        <div class="mt-6 space-y-5 text-base leading-relaxed text-body">
+          <p>
+            Sibanye Engineering Solutions (SES) is a multidisciplinary engineering advisory and
+            project management practice headquartered in Mbabane, Eswatini, with a regional
+            presence in Bryanston, Sandton. Our capabilities span civil engineering advisory
+            services, project management, water infrastructure, transportation, mining
+            engineering, structures and energy.
+          </p>
+          <p>
+            We work with public institutions, state-owned enterprises and private clients on
+            infrastructure that supports communities and economic growth — from national water
+            augmentation programmes and renewable energy plants to roads, buildings and
+            industrial facilities.
+          </p>
+          <p class="text-sm text-muted">
+            Full company profile, history and team composition are being finalised with SES — no
+            unverified details are published.
+          </p>
+        </div>
+      </div>
+
+      <aside class="lg:col-span-5">
+        <div class="reveal card divide-y divide-line">
+          {
+            facts.map((f) => (
+              <div class="flex flex-col gap-1 p-6 sm:flex-row sm:items-baseline sm:justify-between">
+                <dt class="text-xs font-semibold uppercase tracking-[0.18em] text-muted">{f.label}</dt>
+                <dd class="text-sm font-medium text-ink-900 sm:text-right">{f.value}</dd>
+              </div>
+            ))
+          }
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="bg-paper-2">
+    <div class="container-x grid gap-px overflow-hidden border border-line bg-line py-20 sm:grid-cols-2 sm:py-24">
+      {
+        pillars.map((p) => (
+          <div class="reveal bg-white p-8 sm:p-10">
+            <Icon name={p.icon} class="h-7 w-7 text-accent-500" />
+            <h3 class="mt-5 text-2xl font-semibold">{p.title}</h3>
+            <p class="mt-3 text-base leading-relaxed text-body">{p.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="bg-white">
+    <div class="container-x py-16">
+      <div class="reveal">
+        <p class="eyebrow">Our Values</p>
+        <h2 class="mt-4 text-3xl font-semibold">What we hold ourselves to</h2>
+        <p class="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+          The values page of the capability statement is graphical; final wording is pending SES
+          sign-off. The themes below reflect the statement's stated focus and will be confirmed
+          before launch.
+        </p>
+      </div>
+      <ul class="mt-8 flex flex-wrap gap-3">
+        {
+          valuePlaceholders.map((v) => (
+            <li class="border border-dashed border-line bg-paper px-4 py-2 text-sm font-medium text-body">
+              {v} <span class="text-xs text-muted">· pending</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <HomeStats />
+  <CtaBand title="Want to work with us?" />
+</BaseLayout>

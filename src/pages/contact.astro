@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import HomeEnquiry from '../components/HomeEnquiry.astro';
+import Icon from '../components/Icon.astro';
+
+/* Contact details sourced from the SES 2026 capability statement (p17) and
+   corroborated by the approved proposal — see docs/content-open-items.md. */
+const channels = [
+  {
+    icon: 'phone',
+    label: 'Call us',
+    lines: [
+      { text: '+268 2404 5512', href: 'tel:+26824045512' },
+      { text: '+268 7802 4964', href: 'tel:+26878024964' },
+    ],
+  },
+  {
+    icon: 'whatsapp',
+    label: 'WhatsApp',
+    lines: [{ text: '+268 7802 4964', href: 'https://wa.me/26878024964' }],
+  },
+  {
+    icon: 'mail',
+    label: 'Email',
+    lines: [{ text: 'info@sibanyeengineering.com', href: 'mailto:info@sibanyeengineering.com' }],
+  },
+  {
+    icon: 'pin',
+    label: 'Head office',
+    lines: [
+      { text: 'Suite NC202/203C, Nedbank Centre, Swazi Plaza', href: undefined },
+      { text: 'cnr Sozisa & Dr Sishayi Road, Mbabane, Eswatini', href: undefined },
+      { text: 'P O Box 7433, Mbabane H100', href: undefined },
+    ],
+  },
+  {
+    icon: 'building',
+    label: 'Regional presence',
+    lines: [{ text: 'SES Engineering Solutions, 02 Bruton Road, Bryanston, Sandton, South Africa', href: undefined }],
+  },
+];
+---
+
+<BaseLayout
+  title="Contact"
+  description="Contact Sibanye Engineering Solutions in Mbabane, Eswatini — phone, WhatsApp, email or the project enquiry form. Regional presence in Bryanston, Sandton, South Africa."
+>
+  <PageHero
+    eyebrow="Contact"
+    title="Let's talk about your project"
+    intro="Reach us directly by phone, WhatsApp or email — or use the project enquiry form and our team will respond."
+  />
+
+  <section class="bg-white">
+    <div class="container-x py-20 sm:py-24">
+      <ul class="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+        {
+          channels.map((c) => (
+            <li class="reveal bg-white p-7">
+              <div class="flex items-center gap-3">
+                <span class="inline-flex h-11 w-11 items-center justify-center border border-accent-200 bg-accent-100 text-accent-700">
+                  <Icon name={c.icon} class="h-5 w-5" />
+                </span>
+                <h2 class="text-xs font-semibold uppercase tracking-[0.18em] text-muted">{c.label}</h2>
+              </div>
+              <div class="mt-4 space-y-1.5 text-sm leading-relaxed">
+                {c.lines.map((line) =>
+                  line.href ? (
+                    <a href={line.href} class="block font-medium text-accent-700 transition-colors hover:text-accent-600" {...(line.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+                      {line.text}
+                    </a>
+                  ) : (
+                    <p class="text-body">{line.text}</p>
+                  ),
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <HomeEnquiry />
+</BaseLayout>

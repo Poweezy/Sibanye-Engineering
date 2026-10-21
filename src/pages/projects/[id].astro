@@ -1,0 +1,85 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/Icon.astro';
+import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
+
+export async function getStaticPaths() {
+  const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+  return projects.map((project, index) => ({
+    params: { id: project.id },
+    props: {
+      project,
+      prev: projects[index - 1] ?? projects[projects.length - 1],
+      next: projects[index + 1] ?? projects[0],
+    },
+  }));
+}
+
+const { project, prev, next } = Astro.props;
+const sectors = await getCollection('sectors');
+const sectorTitles = Object.fromEntries(sectors.map((s) => [s.id, s.data.title]));
+
+const facts = [
+  { label: 'Client', value: project.data.client || 'To be confirmed' },
+  { label: 'Location', value: project.data.location || 'To be confirmed' },
+  { label: 'Contract value', value: project.data.value || 'To be confirmed' },
+  { label: 'Sectors', value: project.data.sectors.map((s) => sectorTitles[s] ?? s).join(' · ') },
+];
+---
+
+<BaseLayout title={project.data.title} description={project.data.summary}>
+  <PageHero eyebrow="Project" title={project.data.title} />
+
+  <section class="bg-white">
+    <div class="container-x grid gap-12 py-16 sm:py-20 lg:grid-cols-12 lg:gap-16">
+      <div class="reveal lg:col-span-8">
+        <ImagePlaceholder label={project.data.title} class="aspect-[16/9]" />
+        <h2 class="mt-10 text-2xl font-semibold">Scope & role</h2>
+        <p class="mt-4 text-base leading-relaxed text-body">{project.data.summary}</p>
+        <p class="mt-6 border-l-2 border-accent-500 pl-4 text-sm leading-relaxed text-muted">
+          Full case study — including imagery, programme detail and outcomes — is in preparation
+          and subject to SES confirmation and project-owner permissions. Where a field above reads
+          "To be confirmed", the capability statement does not publish that detail.
+        </p>
+      </div>
+
+      <aside class="lg:col-span-4">
+        <div class="reveal card divide-y divide-line">
+          {
+            facts.map((f) => (
+              <div class="p-6">
+                <dt class="text-xs font-semibold uppercase tracking-[0.18em] text-muted">{f.label}</dt>
+                <dd class="mt-1.5 text-sm font-medium text-ink-900">{f.value}</dd>
+              </div>
+            ))
+          }
+          <div class="p-6">
+            <dt class="text-xs font-semibold uppercase tracking-[0.18em] text-muted">Source</dt>
+            <dd class="mt-1.5 text-sm text-body">SES 2026 capability statement</dd>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="bg-paper-2">
+    <div class="container-x flex items-center justify-between gap-6 py-10">
+      <a href={`/projects/${prev.id}/`} class="group inline-flex items-center gap-3 text-sm font-semibold text-ink-900">
+        <Icon name="arrow" class="h-4 w-4 rotate-180 text-accent-700 transition-transform group-hover:-translate-x-1" />
+        <span class="max-w-[12rem] truncate sm:max-w-none">{prev.data.title}</span>
+      </a>
+      <a href="/projects/" class="hidden text-xs font-semibold uppercase tracking-[0.18em] text-muted hover:text-accent-700 sm:inline">
+        All projects
+      </a>
+      <a href={`/projects/${next.id}/`} class="group inline-flex items-center gap-3 text-right text-sm font-semibold text-ink-900">
+        <span class="max-w-[12rem] truncate sm:max-w-none">{next.data.title}</span>
+        <Icon name="arrow" class="h-4 w-4 text-accent-700 transition-transform group-hover:translate-x-1" />
+      </a>
+    </div>
+  </section>
+
+  <CtaBand title="Working on something similar?" />
+</BaseLayout>

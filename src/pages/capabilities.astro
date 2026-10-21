@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+
+/* Capability list from the SES 2026 capability statement. */
+const capabilities = [
+  'Engineering advisory',
+  'Project management',
+  'Programme management',
+  'Construction supervision',
+  'Quality assurance',
+  'Quality control',
+  'Budget management',
+  'Risk assessment',
+  'Contract management',
+  'Project controls',
+  'Renewable energy',
+  'Infrastructure development',
+];
+
+const contractForms = ['FIDIC', 'JBCC', 'GCC', 'NEC', 'EPC'];
+---
+
+<BaseLayout
+  title="Capabilities"
+  description="SES capabilities span engineering advisory, project and programme management, construction supervision, quality assurance, budget management, risk, contracts and project controls."
+>
+  <PageHero
+    eyebrow="Our Capabilities"
+    title="From advisory to delivery"
+    intro="A full suite of engineering and project delivery capabilities, supported by proven processes, global standards and a focus on quality, safety and sustainability."
+  />
+
+  <section class="bg-white">
+    <div class="container-x py-20 sm:py-24">
+      <div class="reveal max-w-2xl">
+        <p class="eyebrow">Capability Suite</p>
+        <h2 class="mt-4 text-3xl font-semibold">What we do, end to end</h2>
+      </div>
+      <ul class="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+        {
+          capabilities.map((c) => (
+            <li class="flex items-center gap-4 bg-white p-6 text-sm font-medium text-ink-900">
+              <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center border border-accent-200 bg-accent-100 text-accent-700">
+                <Icon name="check" class="h-4 w-4" />
+              </span>
+              {c}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="bg-paper-2">
+    <div class="container-x grid gap-12 py-20 sm:py-24 lg:grid-cols-2 lg:gap-16">
+      <div class="reveal">
+        <p class="eyebrow">Forms of Contract</p>
+        <h2 class="mt-4 text-3xl font-semibold">Contract experience</h2>
+        <p class="mt-4 text-base leading-relaxed text-body">
+          Our teams manage engagements under the major standard forms of contract used across the
+          region, as recorded in the SES 2026 capability statement.
+        </p>
+        <ul class="mt-6 flex flex-wrap gap-3">
+          {
+            contractForms.map((f) => (
+              <li class="border border-line bg-white px-4 py-2 font-display text-sm font-semibold tracking-wide text-ink-900">
+                {f}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="reveal">
+        <div class="card flex h-full flex-col p-8">
+          <p class="eyebrow">Download</p>
+          <h2 class="mt-4 text-2xl font-semibold">SES capability statement 2026</h2>
+          <p class="mt-3 flex-1 text-sm leading-relaxed text-muted">
+            The full document covering our services, experience, project references and team
+            qualifications (PDF, approx. 2 MB).
+          </p>
+          <a
+            href="/downloads/ses-capability-statement-2026.pdf"
+            class="btn-primary mt-6 w-full sm:w-auto"
+            download
+          >
+            Download PDF
+            <Icon name="arrow" class="h-4 w-4 -rotate-45" />
+          </a>
+          <p class="mt-4 text-xs text-muted">
+            Published copy pending SES approval of the final version.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

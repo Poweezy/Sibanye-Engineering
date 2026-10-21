@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/Icon.astro';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Services"
+  description="Engineering services across civil, water and sanitation, transportation, energy, structural, mining, project management and industrial & commercial disciplines."
+>
+  <PageHero
+    eyebrow="Our Services"
+    title="Comprehensive engineering across multiple disciplines"
+    intro="Multidisciplinary capability, delivered with proven processes and a focus on quality, safety and sustainability."
+  />
+
+  <section class="bg-white">
+    <div class="container-x py-20 sm:py-24">
+      <ul class="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+        {
+          services.map((s) => (
+            <li class="group bg-white">
+              <a href={`/services/${s.id}/`} class="block h-full p-7 transition-colors group-hover:bg-ink-950">
+                <Icon name={s.data.icon} class="h-7 w-7 text-accent-500" />
+                <h2 class="mt-5 text-lg font-semibold transition-colors group-hover:text-white">{s.data.title}</h2>
+                <p class="mt-2 text-sm leading-relaxed text-muted transition-colors group-hover:text-ink-300">
+                  {s.data.tagline}
+                </p>
+                <span class="mt-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent-700 transition-colors group-hover:text-accent-300">
+                  Explore
+                  <Icon name="arrow" class="h-3.5 w-3.5" />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-8 text-xs leading-relaxed text-muted">
+        Service descriptions are drawn from the SES 2026 capability statement. Detailed
+        discipline-specific scope wording is pending SES sign-off.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

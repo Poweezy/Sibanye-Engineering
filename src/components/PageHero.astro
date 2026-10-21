@@ -1,0 +1,25 @@
+---
+/**
+ * Interior page hero — dark band with blueprint texture and amber flare,
+ * consistent with the homepage hero treatment.
+ */
+interface Props {
+  eyebrow: string;
+  title: string;
+  intro?: string;
+}
+
+const { eyebrow, title, intro } = Astro.props;
+---
+
+<section class="relative isolate overflow-hidden bg-ink-950 text-white">
+  <div class="blueprint absolute inset-0" aria-hidden="true"></div>
+  <svg class="absolute inset-x-0 bottom-0 h-40 w-full" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 120 360 60l360 44 360-64 360 76" fill="none" stroke="rgba(234,159,18,0.28)" stroke-width="2"></path>
+  </svg>
+  <div class="container-x relative pb-16 pt-20 sm:pb-20 sm:pt-24">
+    <p class="reveal eyebrow eyebrow--light">{eyebrow}</p>
+    <h1 class="reveal mt-5 max-w-3xl text-4xl font-semibold leading-[1.08] sm:text-5xl">{title}</h1>
+    {intro && <p class="reveal mt-5 max-w-2xl text-base leading-relaxed text-ink-300 sm:text-lg">{intro}</p>}
+  </div>
+</section>

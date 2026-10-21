@@ -25,6 +25,25 @@ const pageTitle =
     : `${title} | ${SITE_NAME}`;
 const site = Astro.site ?? new URL('https://www.sibanyeengineering.com');
 const canonical = new URL(Astro.url.pathname, site).href;
+
+/* JSON-LD Organization — all fields from the SES 2026 capability statement. */
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE_NAME,
+  url: site.href,
+  logo: new URL('/logo-ses.png', site).href,
+  description,
+  email: 'info@sibanyeengineering.com',
+  telephone: ['+268 2404 5512', '+268 7802 4964'],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Suite NC202/203C, Nedbank Centre, Swazi Plaza, cnr Sozisa & Dr Sishayi Road',
+    addressLocality: 'Mbabane',
+    addressCountry: 'SZ',
+  },
+  areaServed: 'Eswatini and Southern Africa',
+};
 ---
 
 <!doctype html>
@@ -43,7 +62,9 @@ const canonical = new URL(Astro.url.pathname, site).href;
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/logo-ses.png', site).href} />
     <meta name="twitter:card" content="summary" />
+    <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} is:inline />
     <meta name="generator" content={Astro.generator} />
   </head>
   <body>
