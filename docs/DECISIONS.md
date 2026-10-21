@@ -44,3 +44,11 @@
 
 - npm here blocks install scripts by default; `esbuild` and `sharp` post-installs were approved (`npm approve-scripts`) — required for Astro's build tooling.
 - Windows/PowerShell environment: files with leading `{`/`[` must be written via shell (`[IO.File]::WriteAllText`) or pretty-printed to avoid editor JSON parsing.
+
+## Brand assets
+
+### ADR-009 — Official SES logo integration
+- **Decision:** The supplied raster `public/logo.png` (official SES gear mark on an opaque olive/orange sunburst background) is processed — never hand-edited — by `scripts/process-logo.mjs` (sharp): warm-background knockout, fringe/despeckle passes, red-debris pass, connected-component cleanup of detached fragments, alpha bounding-box trim. Derivatives: `public/logo-ses.png` (web, 360px), `public/favicon.png` (128, gear mark on white chip), `public/apple-touch-icon.png` (180).
+- **Why:** The supplied file is opaque and shows upscaling artefacts, so it cannot sit directly on the navy surfaces; black lettering is unreadable on dark backgrounds, so the mark rides on a white chip in header/footer. The original supplied file stays untouched as the brand reference.
+- **Constraint:** Derivatives are raster from an upscaled source — fine at web sizes, not print quality. Vector artwork (AI/EPS/SVG/PDF) plus reversed/mono variants have been requested from SES; derivatives must be replaced when supplied.
+- **Status:** Implemented 2026-10-21. Placeholder SVG logo and favicon retired.
