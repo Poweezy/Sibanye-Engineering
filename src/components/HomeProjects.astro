@@ -3,7 +3,7 @@ import Icon from './Icon.astro';
 import ImagePlaceholder from './ImagePlaceholder.astro';
 
 interface Props {
-  projects: { id: string; title: string; sectors: string[] }[];
+  projects: { id: string; title: string; sectors: string[]; location?: string; value?: string }[];
   sectorTitles: Record<string, string>;
 }
 
@@ -44,7 +44,9 @@ const { projects, sectorTitles } = Astro.props;
                       ))}
                     </p>
                     <h3 class="mt-3 text-xl font-semibold text-white">{p.title}</h3>
-                    <p class="mt-2 text-sm text-ink-300">Case study in preparation — pending SES confirmation.</p>
+                    <p class="mt-2 text-sm text-ink-300">
+                      {[p.location, p.value].filter(Boolean).join(' · ') || 'Details on the project page'}
+                    </p>
                   </div>
                 </a>
               </article>
@@ -77,6 +79,10 @@ const { projects, sectorTitles } = Astro.props;
         </div>
       </div>
     </div>
+    <p class="mt-8 text-xs leading-relaxed text-ink-400">
+      Project data sourced from the SES 2026 capability statement. Case-study pages and project
+      photography are pending SES confirmation and image permissions.
+    </p>
   </div>
 </section>
 

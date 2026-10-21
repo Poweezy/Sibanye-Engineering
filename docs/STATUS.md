@@ -16,6 +16,7 @@
 - **Phase 2 (2a — Scaffold):** repo initialised (git `main`); Astro + Tailwind v4 + Fontsource; tokens, BaseLayout, Header/Footer, Logo, Icon set, SectionHead, ImagePlaceholder, content collections + seed data.
 - **Phase 2 (2b — Homepage prototype):** hero, about, services, stats, featured-projects carousel, sectors, capabilities, leadership, enquiry section. Responsive, scroll-reveal (reduced-motion safe), carousel with counter, honeypot-protected enquiry form (front-end validation; server endpoint pending Stage 3).
 - **Phase 2 (2c — Brand integration):** official SES logo received (`public/logo.png`). Processing pipeline `scripts/process-logo.mjs` (sharp): background knockout, debris/connected-component cleanup, trim → `logo-ses.png`, `favicon.png`, `apple-touch-icon.png`. Placeholder logo and favicon retired; white-chip treatment on dark surfaces.
+- **Phase 4 (early pass — capability statement received):** `ses-capability-statement-2026.pdf` identified, filed under `docs/00-brief/source-documents/` and text-extracted (`scripts/extract-pdf-text.mjs`). Projects data rebuilt from statement references (21 entries with clients/values/locations/roles); mission, vision, addresses, phones, domain and contract forms verified; footer and homepage copy aligned. Discrepancies logged in `docs/content-open-items.md` verification notes — none resolved by invention.
 - **Phase 3 —** not started (gated on design approval).
 - **Phase 4/5 —** ongoing registers: `docs/content-open-items.md`, `docs/GATES.md`.
 
