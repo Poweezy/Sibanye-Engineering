@@ -13,7 +13,10 @@ declare(strict_types=1);
 const RECIPIENT = 'info@sibanyeengineering.com';
 const SUBJECT_PREFIX = '[Website enquiry]';
 const RATE_WINDOW_SECONDS = 30;
-const RATE_FILE = __DIR__ . '/../.enquiry-ratecheck';
+// Rate-limit state lives ABOVE the document root (the cPanel home directory
+// in production; the repo root locally): it survives static redeploys and is
+// never web-readable regardless of server software. See docs/DECISIONS.md ADR-016.
+const RATE_FILE = __DIR__ . '/../../.enquiry-ratecheck';
 
 header('X-Content-Type-Options: nosniff');
 header('Referrer-Policy: strict-origin-when-cross-origin');

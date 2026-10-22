@@ -21,8 +21,9 @@ const walk = (dir) => {
 };
 walk(DIST);
 
-// Collect every internal href/src target from the built HTML.
-const refs = new Set();
+// Collect every internal href/src target from the built HTML, remembering
+// which page(s) referenced each one so failures can be traced.
+const refs = new Map(); // ref -> Set of referencing pages (dist-relative paths)
 const attrRe = /(?:href|src)="([^"]+)"/g;
 for (const page of pages) {
   const html = readFileSync(page, 'utf8');
@@ -30,12 +31,14 @@ for (const page of pages) {
     let ref = m[1].trim();
     if (!ref || ref.startsWith('#') || /^(https?:|mailto:|tel:|data:|javascript:)/.test(ref)) continue;
     ref = ref.split('#')[0].split('?')[0];
-    if (ref) refs.add(ref);
+    if (!ref) continue;
+    if (!refs.has(ref)) refs.set(ref, new Set());
+    refs.get(ref).add(page.slice(DIST.length + 1).replaceAll('\\', '/'));
   }
 }
 
 let broken = 0;
-for (const ref of [...refs].sort()) {
+for (const ref of [...refs.keys()].sort()) {
   const target = resolve(DIST, '.' + decodeURIComponent(ref));
   const candidates = [
     target,
@@ -44,7 +47,8 @@ for (const ref of [...refs].sort()) {
   ];
   if (!candidates.some((c) => existsSync(c))) {
     // Also flag fragment-only misses on known pages? Keep to file existence.
-    console.error(`BROKEN  ${ref}   (referenced from ${pages.length} scanned pages)`);
+    const from = [...refs.get(ref)].sort().join(', ');
+    console.error(`BROKEN  ${ref}   (referenced from ${from})`);
     broken++;
   }
 }

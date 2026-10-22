@@ -8,6 +8,9 @@ dist/
 .env.*
 *.local
 
+# runtime state (enquiry rate limiting — written next to the web root at runtime, ADR-016)
+.enquiry-ratecheck
+
 # OS noise
 .DS_Store
 Thumbs.db

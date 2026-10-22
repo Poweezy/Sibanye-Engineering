@@ -89,6 +89,21 @@ const orgJsonLd = {
     <WhatsAppFloat />
 
     <script>
+      // Escape-to-close for the mobile navigation. Registered ONCE at module
+      // scope: `document` persists across view transitions, so a listener
+      // added inside astro:page-load would stack on every client-side
+      // navigation. It queries the live DOM, so it always sees the current nav.
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        const toggle = document.querySelector<HTMLElement>('[data-nav-toggle]');
+        const nav = document.querySelector('[data-mobile-nav]');
+        if (toggle && nav && toggle.getAttribute('aria-expanded') === 'true') {
+          nav.classList.add('hidden');
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.focus();
+        }
+      });
+
       // Runs on initial load AND after every client-side (view-transition)
       // navigation: re-queries the swapped DOM, so listeners never go stale.
       document.addEventListener('astro:page-load', () => {

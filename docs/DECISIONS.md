@@ -92,3 +92,8 @@
 - **Why:** The client wants their complete brand artwork — monogram, wordmark and tagline — as the mark, not an extracted emblem.
 - **Open item:** At header scale (h-12) the lockup's wordmark/tagline fall below legible size; a compact/horizontal variant plus vector/reversed artwork are requested (content-open-items item 4). SES to confirm.
 - **Status:** Implemented 2026-10-22.
+
+### ADR-016 — Hygiene amendments (2026-10-22)
+- **Decision:** (1) Enquiry rate-limit state moved above the document root (`__DIR__ . '/../../.enquiry-ratecheck'` — the cPanel home directory in production, repo root locally): it survives static redeploys and is never web-readable regardless of server software; amends ADR-012's in-web-root location. (2) `scripts/link-check.mjs` broken-reference diagnostics now name the actual referencing page(s) (ref → pages map) instead of the misleading total page count. (3) Mobile navigation closes on Escape with focus returned to the toggle; the listener is registered once at module scope because `document` persists across view transitions (`astro:page-load`-scoped listeners would stack).
+- **Why:** Zero-cost reliability, DX and a11y fixes for three P3 findings from the Phase-1 audit; no scope, budget or client-supplied content impact.
+- **Status:** Implemented 2026-10-22; build + link-check re-verified after the change.
