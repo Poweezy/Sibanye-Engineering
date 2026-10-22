@@ -104,8 +104,8 @@ $body = "New project enquiry from the SES website.\n\n"
     . "IP: {$ip}\n\n"
     . "Message:\n{$message}\n";
 
-// mail() envelope sender should be a real mailbox on the hosting domain
-// (SPF/DKIM setup documented in the handover runbook).
+// mail() envelope sender should be a real mailbox on the hosting domain.
+// SPF/DKIM/DMARC setup is documented in docs/HANDOVER.md §3.
 $headers = [
     'From: SES Website <no-reply@sibanyeengineering.com>',
     'Reply-To: ' . $name . ' <' . $email . '>',

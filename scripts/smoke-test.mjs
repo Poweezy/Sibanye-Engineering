@@ -1,0 +1,126 @@
+/**
+ * SES website — post-build smoke test (artifact integrity gate).
+ *
+ * Verifies dist/ is complete and coherent after `astro build`:
+ * route counts, sitemap/robots, the PHP endpoint, dotfile copy, brand assets
+ * (official lockup per ADR-015), retired-asset regression guard, SEO meta on
+ * key pages, the enquiry success-state handler, and the official amber token
+ * in compiled CSS.
+ *
+ * Zero dependencies. Exit 0 = all checks pass; exit 1 = failures listed.
+ * Invoked by `npm test` (which runs the build first) — see package.json and
+ * docs/HANDOVER.md §1.
+ */
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
+const DIST = join(ROOT, 'dist');
+
+const results = [];
+const failures = [];
+function check(name, ok, detail = '') {
+  results.push({ name, ok });
+  if (!ok) failures.push(`✗ ${name}${detail ? ` — ${detail}` : ''}`);
+}
+
+// 0. dist must exist — fail fast with a clear instruction.
+if (!existsSync(DIST)) {
+  console.error('FAIL dist/ not found — run `npm run build` first (or use `npm test`).');
+  process.exit(1);
+}
+
+// 1. Route inventory — 38 index.html files (7 core + 9 services + 22 projects,
+//    including their indexes) + 404.html = 39 routes.
+const indexPages = [];
+const walk = (dir) => {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const p = join(dir, entry.name);
+    if (entry.isDirectory()) walk(p);
+    else if (entry.name === 'index.html') indexPages.push(p);
+  }
+};
+walk(DIST);
+check('route count (index.html files)', indexPages.length === 38, `found ${indexPages.length}, expected 38`);
+check('404 page present', existsSync(join(DIST, '404.html')));
+
+// 2. Infrastructure artifacts
+check('sitemap-index.xml', existsSync(join(DIST, 'sitemap-index.xml')));
+check('sitemap-0.xml', existsSync(join(DIST, 'sitemap-0.xml')));
+const robots = existsSync(join(DIST, 'robots.txt')) ? readFileSync(join(DIST, 'robots.txt'), 'utf8') : '';
+check('robots.txt references sitemap', /sitemap-index\.xml/i.test(robots));
+check('api/enquiry.php shipped', existsSync(join(DIST, 'api', 'enquiry.php')));
+check('.htaccess shipped (dotfile copy)', existsSync(join(DIST, '.htaccess')));
+
+// 3. Brand assets — ADR-015: the official lockup is the only site logo.
+for (const asset of [
+  'logo-official.jpg',
+  'favicon.png',
+  'apple-touch-icon.png',
+  'og.jpg',
+  'SIBANYE-LOGO-(OFFICIAL).jpg',
+]) {
+  const p = join(DIST, asset);
+  const ok = existsSync(p) && statSync(p).size > 1024;
+  check(`asset ${asset}`, ok);
+}
+check('retired monogram absent (ADR-015 regression guard)', !existsSync(join(DIST, 'logo-ses.png')));
+check('capability PDF shipped', existsSync(join(DIST, 'downloads', 'ses-capability-statement-2026.pdf')));
+
+// 4. SEO meta on key pages — one core page, one service, one case study, contact.
+const firstDir = (parent) =>
+  readdirSync(join(DIST, parent), { withFileTypes: true }).find((e) => e.isDirectory())?.name;
+const servicePage = firstDir('services');
+const caseStudy = firstDir('projects');
+const metaTargets = [
+  'index.html',
+  join('about', 'index.html'),
+  servicePage ? join('services', servicePage, 'index.html') : null,
+  caseStudy ? join('projects', caseStudy, 'index.html') : null,
+  join('contact', 'index.html'),
+].filter(Boolean);
+for (const rel of metaTargets) {
+  const html = readFileSync(join(DIST, rel), 'utf8');
+  check(`canonical on ${rel}`, html.includes('rel="canonical"'));
+  check(`og:image on ${rel}`, html.includes('property="og:image"') && html.includes('/og.jpg'));
+}
+const homeHtml = readFileSync(join(DIST, 'index.html'), 'utf8');
+check(
+  'large social-card meta (1200×630, summary_large_image)',
+  homeHtml.includes('og:image:width" content="1200"') && homeHtml.includes('summary_large_image'),
+);
+
+// 5. Enquiry form surface + compiled success-state handler.
+const contactHtml = readFileSync(join(DIST, 'contact', 'index.html'), 'utf8');
+check(
+  'enquiry form anchor + status element on contact',
+  contactHtml.includes('id="enquiry"') && contactHtml.includes('data-form-status'),
+);
+const astroDir = join(DIST, '_astro');
+const jsFiles = existsSync(astroDir) ? readdirSync(astroDir).filter((f) => f.endsWith('.js')) : [];
+// Astro inlines small component scripts into the page HTML and emits larger
+// ones as _astro/*.js modules — the handler is legitimate in either place.
+// Signature: reads the `sent` query param via URLSearchParams (quoted literal).
+const hasHandler = (s) => s.includes('URLSearchParams') && /(["'])sent\1/.test(s);
+const handlerInBundles = jsFiles.some((f) => hasHandler(readFileSync(join(astroDir, f), 'utf8')));
+check(
+  'enquiry success-state handler compiled (inline or bundle)',
+  hasHandler(contactHtml) || handlerInBundles,
+);
+
+// 6. Token sanity in compiled CSS — official amber present, retired teal absent.
+const cssFiles = existsSync(astroDir) ? readdirSync(astroDir).filter((f) => f.endsWith('.css')) : [];
+const cssText = cssFiles.map((f) => readFileSync(join(astroDir, f), 'utf8')).join('');
+check('official amber #D69C1F in compiled CSS', cssFiles.length > 0 && cssText.toLowerCase().includes('#d69c1f'));
+check('retired teal #2FB7C2 absent (retheme regression guard)', !cssText.toLowerCase().includes('#2fb7c2'));
+
+// Result -------------------------------------------------------------------
+const passed = results.filter((r) => r.ok).length;
+console.log(`SES smoke test — ${passed}/${results.length} checks passed (${indexPages.length} pages scanned in dist/).`);
+if (failures.length > 0) {
+  console.error('\nFailures:');
+  for (const f of failures) console.error(`  ${f}`);
+  process.exit(1);
+}
+console.log('✓ Artifact integrity verified.');
