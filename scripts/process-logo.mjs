@@ -14,11 +14,14 @@
  *  3. Fringe pass — drop warm halo pixels adjacent to transparency.
  *  4. Despeckle — remove isolated survivors and tiny stray components.
  *  5. Monogram crop — extract the S-gear-S emblem band (calibrated 2026-10-22
- *     by pixel-density scan: x≈496–1576, y≈16–766) and alpha-trim.
- *  6. Emit: public/logo-ses.png (web monogram, h=360), public/favicon.png and
- *     public/apple-touch-icon.png (monogram on the official amber chip), and
- *     public/og.jpg (1200×630 social card composed from the real monogram and
- *     wordmark strips on the amber field — no third-party fonts involved).
+ *     by pixel-density scan: x≈496–1576, y≈16–766) and alpha-trim. The
+ *     monogram stays INTERNAL to this script (favicon chip + OG composition
+ *     only) — it is no longer shipped as a standalone logo file.
+ *  6. Emit: public/logo-official.jpg (full official lockup, amber field
+ *     intact, 1080px wide — the site logo per client directive 2026-10-22),
+ *     public/favicon.png and public/apple-touch-icon.png (monogram on the
+ *     official amber chip), and public/og.jpg (1200×630 social card composed
+ *     from the real monogram and wordmark strips — no third-party fonts).
  *
  * If SES later supplies vector artwork (AI/EPS/SVG/PDF), replace these
  * derivatives — see docs/content-open-items.md item 4.
@@ -186,10 +189,14 @@ const monogram = await sharp(m.data, { raw: { width: m.info.width, height: m.inf
   .extract(monoBox)
   .png()
   .toBuffer();
-await sharp(monogram)
-  .resize({ height: 360 })
-  .png({ compressionLevel: 9 })
-  .toFile('public/logo-ses.png');
+// 6) Full official lockup — the site logo per client directive 2026-10-22
+//    ("that is the right logo — no logo-ses.png"). The amber field is part of
+//    the artwork, so the asset rides on any surface without a chip. Flat
+//    colour compresses extremely well; the 2160×1088 master is never modified.
+await sharp(SRC)
+  .resize({ width: 1080 })
+  .jpeg({ quality: 88, mozjpeg: true })
+  .toFile('public/logo-official.jpg');
 
 // 7) Favicon + Apple touch icon — monogram centred on the official amber chip
 const chip = (size, inset) => {
@@ -241,13 +248,13 @@ await sharp({
   .jpeg({ quality: 90 })
   .toFile('public/og.jpg');
 
-const outMeta = await sharp('public/logo-ses.png').metadata();
+const outMeta = await sharp('public/logo-official.jpg').metadata();
 console.log(
   JSON.stringify(
     {
       source: { width: W, height: H, amber: '#D69C1F' },
-      monogram: { crop: monoCrop, box: monoBox },
-      logo: { out: 'public/logo-ses.png', width: outMeta.width, height: outMeta.height },
+      monogram: { crop: monoCrop, box: monoBox, note: 'internal only (favicon/OG)' },
+      logo: { out: 'public/logo-official.jpg', width: outMeta.width, height: outMeta.height },
       favicon: 'public/favicon.png (128, amber chip)',
       appleTouchIcon: 'public/apple-touch-icon.png (180, amber chip)',
       og: 'public/og.jpg (1200×630)',

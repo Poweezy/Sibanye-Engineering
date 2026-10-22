@@ -86,3 +86,9 @@
 - **Decision:** Astro `<ClientRouter />` in `BaseLayout`. All behavioural JS lives in one `astro:page-load` listener that re-queries the swapped DOM each navigation (nav toggle, enquiry feedback, scroll reveals) — no stale listeners, no per-component script duplication. Reveal observer is disabled entirely under `prefers-reduced-motion` (content shows immediately). Form success/failure is read from the `?sent` query parameter into `[data-form-status]`, focused for screen readers, then removed via `history.replaceState`.
 - **Why:** One init path for first load and every client-side navigation; keeps per-route `<title>`/meta intact because pages are still statically rendered.
 - **Status:** Implemented 2026-10-22.
+
+### ADR-015 — Official lockup adopted as the site logo (client directive)
+- **Decision:** Per client directive 2026-10-22 ("that is the right logo — no logo-ses.png"), `Logo.astro` now displays the **full official lockup exactly as supplied** — optimized to `public/logo-official.jpg` (1080×544, mozjpeg q88) by `scripts/process-logo.mjs`, amber field intact, riding on any surface without a chip or typeset substitutes. The monogram derivative `logo-ses.png` is retired (file deleted); the monogram remains internal to the pipeline for the favicon/apple-icon chips and the OG card composition. JSON-LD Organization logo updated to `/logo-official.jpg`.
+- **Why:** The client wants their complete brand artwork — monogram, wordmark and tagline — as the mark, not an extracted emblem.
+- **Open item:** At header scale (h-12) the lockup's wordmark/tagline fall below legible size; a compact/horizontal variant plus vector/reversed artwork are requested (content-open-items item 4). SES to confirm.
+- **Status:** Implemented 2026-10-22.
