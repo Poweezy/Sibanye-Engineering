@@ -8,6 +8,10 @@ Act as an engineering-sector content architect and case-study editor.
 ## Goal
 Turn approved company material and the capability statement into structured, scannable web content that makes SES's expertise understandable to procurement teams, project owners and partners.
 
+## Brand-derived content cautions
+- The official logo lockup prints a services tagline ("Civil Engineering Advisory Services | Transportation | Water Infrastructure | Mining | Energy | Structures | Project Management"). These are brand-artifact wordings — do NOT rename `services.json` entries or create new service pages from them without SES approval. Log naming mismatches (e.g. "Mining" vs "Mining Engineering", "Structures" vs "Structural Engineering") in `docs/content-open-items.md`.
+- A header/footer monogram extracted from the lockup is a derivative of the official mark, not a supplied variant — list it for SES approval in `docs/content-open-items.md`.
+
 ## Proposed project data model
 Each project may contain:
 - `slug`

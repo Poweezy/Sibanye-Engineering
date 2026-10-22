@@ -1,22 +1,24 @@
 /**
  * SES logo processing pipeline.
  *
- * Source: public/logo.png (supplied by SES 2026-10-21 — official mark).
- * Issue:  the supplied raster carries an opaque olive/orange sunburst
- *         background and upscaling artefacts, so it cannot be placed
- *         directly on the site's dark navy surfaces.
+ * Source: public/SIBANYE-LOGO-(OFFICIAL).jpg — official lockup supplied by SES
+ *         on 2026-10-22 (2160×1088 JPG: black "S…S" lettering with a silver 3D
+ *         gear as the E, on a flat amber field sampled at #D69C1F).
+ *         Supersedes the 2026-10-21 capability-statement mark (public/logo.png,
+ *         now retained as an archive reference only).
  *
  * Strategy (non-destructive — the original file is never modified):
  *  1. Load raw RGBA.
- *  2. Knockout pass — remove warm, saturated background pixels
- *     (olive/orange/gold family). The mark itself is neutral
- *     (black letters, silver gear, navy outlines) and survives.
+ *  2. Knockout pass — remove the flat amber field (warm, saturated pixels).
+ *     The artwork itself is neutral (black letters, silver gear) and survives.
  *  3. Fringe pass — drop warm halo pixels adjacent to transparency.
- *  4. Despeckle — remove isolated survivors.
- *  5. Erase the small secondary gear (top-right) so the favicon crops clean.
- *  6. Manual alpha bounding-box trim.
- *  7. Emit: public/logo-ses.png (web, h=360) and public/favicon.png
- *     (gear mark on white chip, 128px) + public/apple-touch-icon.png (180px).
+ *  4. Despeckle — remove isolated survivors and tiny stray components.
+ *  5. Monogram crop — extract the S-gear-S emblem band (calibrated 2026-10-22
+ *     by pixel-density scan: x≈496–1576, y≈16–766) and alpha-trim.
+ *  6. Emit: public/logo-ses.png (web monogram, h=360), public/favicon.png and
+ *     public/apple-touch-icon.png (monogram on the official amber chip), and
+ *     public/og.jpg (1200×630 social card composed from the real monogram and
+ *     wordmark strips on the amber field — no third-party fonts involved).
  *
  * If SES later supplies vector artwork (AI/EPS/SVG/PDF), replace these
  * derivatives — see docs/content-open-items.md item 4.
@@ -24,7 +26,7 @@
 import sharp from 'sharp';
 import { fileURLToPath } from 'node:url';
 
-const SRC = fileURLToPath(new URL('../public/logo.png', import.meta.url));
+const SRC = fileURLToPath(new URL('../public/SIBANYE-LOGO-(OFFICIAL).jpg', import.meta.url));
 const { data, info } = await sharp(SRC).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
 const W = info.width;
 const H = info.height;
@@ -83,12 +85,8 @@ for (let y = 0; y < H; y++) {
   }
 }
 
-// 4) Erase the small secondary gear (top-right) for a clean favicon crop
-for (let y = 0; y < H; y++) {
-  for (let x = Math.round(W * 0.63); x < W; x++) {
-    if (y < Math.round(H * 0.3)) data[px(x, y) + 3] = 0;
-  }
-}
+// 4) The official 2026-10-22 artwork needs no secondary-gear erasure — the
+//    favicon is now the full monogram on an amber chip (see emit section).
 
 // Red/maroon debris pass (saturation peak in the red channel)
 for (let y = 0; y < H; y++) {
@@ -160,60 +158,99 @@ const bbox = () => {
 
 const raw = (buf, w, h) => sharp(buf, { raw: { width: w, height: h, channels: 4 } });
 
-// 6) Web logo — full lockup
-const logoBox = bbox();
-const logo = await raw(data, W, H).extract(logoBox).png().toBuffer();
-await sharp(logo).resize({ height: 360 }).png({ compressionLevel: 9 }).toFile('public/logo-ses.png');
+const AMBER = { r: 214, g: 156, b: 31 }; // official field colour sampled from the supplied JPG
 
-// 7) Favicon — main gear mark on a white chip
-const gearLeft = Math.round(W * 0.215);
-const gearWidth = Math.round(W * 0.49);
-const gearBuf = await raw(data, W, H)
-  .extract({ left: gearLeft, top: 0, width: gearWidth, height: H })
-  .png()
-  .toBuffer();
-const g = await sharp(gearBuf).raw().toBuffer({ resolveWithObject: true });
-const GW = g.info.width;
-const GH = g.info.height;
-removeSmallComponents(g.data, GW, GH, 1500);
-
-let gx0 = GW;
-let gy0 = GH;
-let gx1 = -1;
-let gy1 = -1;
-for (let y = 0; y < GH; y++) {
-  for (let x = 0; x < GW; x++) {
-    if (g.data[(y * GW + x) * 4 + 3] > 8) {
-      if (x < gx0) gx0 = x;
-      if (x > gx1) gx1 = x;
-      if (y < gy0) gy0 = y;
-      if (y > gy1) gy1 = y;
+// Trim helper: alpha bounding box of an arbitrary raw buffer
+const alphaBBox = (buf, w, h) => {
+  let minX = w, minY = h, maxX = -1, maxY = -1;
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      if (buf[(y * w + x) * 4 + 3] > 8) {
+        if (x < minX) minX = x;
+        if (x > maxX) maxX = x;
+        if (y < minY) minY = y;
+        if (y > maxY) maxY = y;
+      }
     }
   }
-}
-const gearBox = { left: gx0, top: gy0, width: gx1 - gx0 + 1, height: gy1 - gy0 + 1 };
-const gearTrim = await sharp(g.data, { raw: { width: GW, height: GH, channels: 4 } })
-  .extract(gearBox)
+  return { left: minX, top: minY, width: maxX - minX + 1, height: maxY - minY + 1 };
+};
+
+// 6) Monogram — the S-gear-S emblem band for header/footer use
+const monoCrop = { left: 470, top: 0, width: 1130, height: 785 };
+const monoBuf = await raw(data, W, H).extract(monoCrop).png().toBuffer();
+const m = await sharp(monoBuf).raw().toBuffer({ resolveWithObject: true });
+removeSmallComponents(m.data, m.info.width, m.info.height, 1200);
+const monoBox = alphaBBox(m.data, m.info.width, m.info.height);
+const monogram = await sharp(m.data, { raw: { width: m.info.width, height: m.info.height, channels: 4 } })
+  .extract(monoBox)
+  .png()
+  .toBuffer();
+await sharp(monogram)
+  .resize({ height: 360 })
+  .png({ compressionLevel: 9 })
+  .toFile('public/logo-ses.png');
+
+// 7) Favicon + Apple touch icon — monogram centred on the official amber chip
+const chip = (size, inset) => {
+  const inner = Math.round(size * inset);
+  const pad = Math.round((size - inner) / 2);
+  return sharp(monogram)
+    .resize({ width: inner, height: inner, fit: 'contain', background: { ...AMBER, alpha: 1 } })
+    .extend({ top: pad, bottom: pad, left: pad, right: pad, background: { ...AMBER, alpha: 1 } })
+    .flatten({ background: AMBER })
+    .png({ compressionLevel: 9 });
+};
+
+await chip(128, 0.84).toFile('public/favicon.png');
+await chip(180, 0.84).toFile('public/apple-touch-icon.png');
+
+// 8) Open Graph card — 1200×630, composed entirely from the real artwork
+const stripBuf = await raw(data, W, H)
+  .extract({ left: 0, top: 795, width: W, height: 145 }) // wordmark band (rows ≈824–920)
+  .png()
+  .toBuffer();
+const s = await sharp(stripBuf).raw().toBuffer({ resolveWithObject: true });
+removeSmallComponents(s.data, s.info.width, s.info.height, 800);
+const stripBox = alphaBBox(s.data, s.info.width, s.info.height);
+const stripTrim = await sharp(s.data, { raw: { width: s.info.width, height: s.info.height, channels: 4 } })
+  .extract(stripBox)
   .png()
   .toBuffer();
 
-const chip = (size) =>
-  sharp(gearTrim)
-    .resize({ width: size, height: size, fit: 'contain', background: { r: 255, g: 255, b: 255, alpha: 1 } })
-    .flatten({ background: '#ffffff' })
-    .png({ compressionLevel: 9 });
+const stripResized = await sharp(stripTrim).resize({ width: 1000 }).png().toBuffer();
+const stripMeta = await sharp(stripResized).metadata();
+const monoScaled = await sharp(monogram).resize({ height: 330 }).png().toBuffer();
+const monoMeta = await sharp(monoScaled).metadata();
+const inkBar = await sharp({
+  create: { width: 1200, height: 12, channels: 4, background: { r: 18, g: 16, b: 15, alpha: 1 } },
+})
+  .png()
+  .toBuffer();
 
-await chip(128).toFile('public/favicon.png');
-await chip(180).toFile('public/apple-touch-icon.png');
+const monoY = 64;
+const stripY = monoY + 330 + 44;
+await sharp({
+  create: { width: 1200, height: 630, channels: 4, background: { ...AMBER, alpha: 1 } },
+})
+  .composite([
+    { input: monoScaled, left: Math.round((1200 - monoMeta.width) / 2), top: monoY },
+    { input: stripResized, left: Math.round((1200 - stripMeta.width) / 2), top: stripY },
+    { input: inkBar, left: 0, top: 618 },
+  ])
+  .jpeg({ quality: 90 })
+  .toFile('public/og.jpg');
 
+const outMeta = await sharp('public/logo-ses.png').metadata();
 console.log(
   JSON.stringify(
     {
-      source: { width: W, height: H },
-      logo: { box: logoBox, out: 'public/logo-ses.png', height: 360 },
-      gear: { box: gearBox },
-      favicon: 'public/favicon.png (128)',
-      appleTouchIcon: 'public/apple-touch-icon.png (180)',
+      source: { width: W, height: H, amber: '#D69C1F' },
+      monogram: { crop: monoCrop, box: monoBox },
+      logo: { out: 'public/logo-ses.png', width: outMeta.width, height: outMeta.height },
+      favicon: 'public/favicon.png (128, amber chip)',
+      appleTouchIcon: 'public/apple-touch-icon.png (180, amber chip)',
+      og: 'public/og.jpg (1200×630)',
     },
     null,
     2,

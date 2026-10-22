@@ -59,3 +59,30 @@
 - **Branding agent:** `agents/sibanye-website-agents/.github/agents/ses-brand-identity.agent.md` created as brand guardian (palette law, contrast law, logo treatment, typography, Ander-principle transfer list, acceptance checklist). On conflict, contrast and logo law win.
 - **Old-website policy:** only capability-statement-corroborated items adopted from appsystemsz.com/sibanyeengineering; unverified taglines/motto/services and the AI assistant excluded (see content-open-items).
 - **Status:** Implemented 2026-10-21; automatic retheme triggers when the official brand guide arrives.
+
+### ADR-011 — Full-sitemap implementation stage (Phase 3)
+- **Decision:** All 39 routes generated from the typed JSON collections — About, Services index + 8 detail pages, Sectors, Projects index (client-side sector filter) + 21 statement-sourced case studies, Capabilities, Approach, Leadership, Contact, 404. Shared patterns: `PageHero`, `CtaBand`, `ProjectCard`. QA automated via `scripts/link-check.mjs` (scans built `dist/`, verifies every internal href/src resolves).
+- **Why:** Static generation keeps hosting PHP-free except the enquiry endpoint; link-check makes broken internal references a build-time failure rather than a launch surprise.
+- **Status:** Implemented 2026-10-21; build green, 43/43 references resolve.
+
+### ADR-012 — Enquiry endpoint (`public/api/enquiry.php`)
+- **Decision:** Single selective-PHP endpoint for cPanel hosting. POST-only (405 otherwise); honeypot field; per-IP rate limit (one submission per 30 s, hourly pruning, state in a dotfile); header-injection stripping via control-character removal; server-side validation; dual response modes — JSON when requested with `Accept: application/json` (fetch path), otherwise a 303 redirect to `/contact/?sent=1#enquiry` (success) or `?sent=0#enquiry` (failure). Recipient constant `info@sibanyeengineering.com`, pending SES confirmation of the production mailbox (content item 6).
+- **Why:** Progressive enhancement — the form works without JavaScript; the redirect target carries the success state, which `BaseLayout` surfaces in the `[data-form-status]` element and then cleans from the URL.
+- **Accepted risk:** No CSRF token (public enquiry form; honeypot + rate limiting deemed proportionate). Rate-limit state is a mutable dotfile inside the web root — denied by `.htaccess`; revisit if hosting is not Apache.
+- **Status:** Implemented; end-to-end delivery blocked on item 6 (mailbox/SMTP).
+
+### ADR-012b — `.htaccess` scope
+- **Decision:** Ship only what Apache needs: dotfile denial (including the rate-limit file), security headers (nosniff, referrer policy, framing), expires caching for static assets, custom 404.
+- **Why (honest scope):** Clean URLs need no rewrite rules — Astro's directory build format (`/contact/index.html`) serves `/contact/` natively. HTTPS redirect is deferred to the hosting layer (cPanel AutoSSL/force-HTTPS) to avoid conflicting with the host's own rules; must be verified at deployment.
+- **Status:** Implemented. Earlier STATUS wording overclaimed clean-URL/HTTPS rules — corrected 2026-10-22.
+
+### ADR-013 — Official SES logo (2026-10-22) + authoritative amber retheme
+- **Decision:** SES supplied the official lockup `public/SIBANYE-LOGO-(OFFICIAL).jpg` (2160×1088: flat amber field, black "S…S" lettering with silver 3D gear "E", secondary gear, hex nuts, black/silver wordmark, services tagline). The logo field — sampled `#D69C1F` across three flat regions — supersedes the provisional `#EA9F12` as the **official** `accent-500` anchor; derived ramp recalibrated to WCAG targets (700 `#8b6514` ≥5:1 on white; 600 `#af8019` ≥3:1 on white; 400 `#ddac43` ≥9:1 on ink-950; 300 `#e5c172` ≥11:1). `flare`/`bright` remain provisional (item 14). Pipeline rebuilt: amber knockout → monogram crop (calibrated x≈496–1576, y≈16–766) → `logo-ses.png` 517×360, amber-chip `favicon.png`/`apple-touch-icon.png`, and a 1200×630 `og.jpg` social card composed purely from the real monogram + wordmark band + ink bar (no third-party fonts). OG meta upgraded to a large card with accurate dimensions. Amber CTA hover moved `accent-600`→`flare` (ink-950 on flare = 5.2:1; 600 was reserved for icons on light). Old `public/logo.png` retained as archive only.
+- **Why:** The logo is the first verified official brand artifact; the palette must match it exactly. Header keeps the white-chip treatment (black lettering on dark surfaces).
+- **Open items:** Vector artwork + reversed/mono variant still outstanding (item 4); the header/footer monogram is a derivative of the official mark and needs SES approval (item 16); the lockup's printed services tagline is brand evidence, not site copy (item 15).
+- **Status:** Implemented 2026-10-22; build verified after token change.
+
+### ADR-014 — View transitions + progressive-enhancement JS pattern
+- **Decision:** Astro `<ClientRouter />` in `BaseLayout`. All behavioural JS lives in one `astro:page-load` listener that re-queries the swapped DOM each navigation (nav toggle, enquiry feedback, scroll reveals) — no stale listeners, no per-component script duplication. Reveal observer is disabled entirely under `prefers-reduced-motion` (content shows immediately). Form success/failure is read from the `?sent` query parameter into `[data-form-status]`, focused for screen readers, then removed via `history.replaceState`.
+- **Why:** One init path for first load and every client-side navigation; keeps per-route `<title>`/meta intact because pages are still statically rendered.
+- **Status:** Implemented 2026-10-22.

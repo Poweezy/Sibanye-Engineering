@@ -1,0 +1,31 @@
+---
+/**
+ * GearWatermark — signature decorative mark echoing the SES gear-E monogram
+ * (ring + hub + 12 teeth). Decorative only: aria-hidden, pointer-events none.
+ * Spins over 90s via `.gear-watermark--spin`; renders static under
+ * `prefers-reduced-motion` (see global.css). Colour comes from the parent's
+ * `text-*` utility (currentColor) — use `text-accent-400` on dark surfaces.
+ */
+interface Props {
+  class?: string;
+  spin?: boolean;
+}
+
+const { class: className = '', spin = true } = Astro.props;
+const teeth = Array.from({ length: 12 }, (_, i) => i * 30);
+const maskId = `gear-hub-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class:list={['gear-watermark', spin && 'gear-watermark--spin', className]} aria-hidden="true">
+  <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <mask id={maskId}>
+      <rect width="500" height="500" fill="white"></rect>
+      <circle cx="250" cy="250" r="118" fill="black"></circle>
+    </mask>
+    <g fill="currentColor">
+      {teeth.map((angle) => <rect x="228" y="4" width="44" height="70" rx="8" transform={`rotate(${angle} 250 250)`} />)}
+      <circle cx="250" cy="250" r="198" mask={`url(#${maskId})`}></circle>
+      <circle cx="250" cy="250" r="56"></circle>
+    </g>
+  </svg>
+</div>

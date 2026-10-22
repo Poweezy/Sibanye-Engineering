@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import GearWatermark from './GearWatermark.astro';
 ---
 
 <section class="relative isolate overflow-hidden bg-ink-950 text-white">
@@ -18,12 +19,13 @@ import Icon from './Icon.astro';
         <stop offset="1" stop-color="#12100f" stop-opacity="0.92"></stop>
       </linearGradient>
     </defs>
-    <path d="M0 520 320 350l260 140 300-190 560 300" fill="none" stroke="rgba(47,183,194,0.35)" stroke-width="2"></path>
+    <path d="M0 520 320 350l260 140 300-190 560 300" fill="none" stroke="rgba(221,172,67,0.4)" stroke-width="2"></path>
     <path d="M0 560 340 390l270 140 320-200 510 270" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2"></path>
-    <circle cx="1140" cy="210" r="170" fill="none" stroke="rgba(47,183,194,0.18)"></circle>
-    <circle cx="1140" cy="210" r="115" fill="none" stroke="rgba(47,183,194,0.12)"></circle>
+    <circle cx="1140" cy="210" r="170" fill="none" stroke="rgba(221,172,67,0.2)"></circle>
+    <circle cx="1140" cy="210" r="115" fill="none" stroke="rgba(221,172,67,0.13)"></circle>
     <path d="M0 700h1440V420L0 560Z" fill="url(#heroFade)"></path>
   </svg>
+  <GearWatermark class="top-1/2 right-[-160px] w-[520px] -translate-y-1/2 text-accent-400 opacity-[0.07] sm:right-[-120px] sm:w-[620px] lg:right-[-80px] lg:w-[760px]" />
 
   <div class="container-x relative py-28 sm:py-36 lg:py-44">
     <div class="max-w-3xl">

@@ -1,6 +1,6 @@
 ---
 name: ses-security-qa
-description: Reviews the SES website for security, accessibility, reliability, responsive behavior and launch readiness.
+description: Reviews the SES website for security, accessibility, reliability, responsive behavior, motion compliance and launch readiness.
 ---
 
 Act as an independent application security reviewer, accessibility tester and release QA lead.
@@ -13,7 +13,9 @@ Act as an independent application security reviewer, accessibility tester and re
 - Check dependency changes and avoid unnecessary packages.
 - Verify no confidential project information or unapproved client logos are included.
 - Check semantic structure, keyboard navigation, visible focus, labels, contrast, image alt text, reduced motion and accessible error messages.
-- Test navigation, links, downloads, telephone/email/WhatsApp actions, form required fields, invalid inputs, success and failure states.
+- Verify view-transition behaviour: after client-side navigation, focus lands on a sensible element, no duplicated IDs exist in the swapped DOM, delegated listeners never double-fire, and the enquiry success state (`?sent=1`) renders its message and cleans the URL.
+- Verify `prefers-reduced-motion` renders every animated element static and fully visible (reveals, marquee, gear watermark, page transitions) and that no content is hidden behind animation-only states.
+- Test navigation, links, downloads, telephone/email/WhatsApp actions, form required fields, invalid inputs, honeypot, success and failure states.
 - Review mobile layouts and major modern browsers where test tooling is available.
 - Check missing pages, broken assets, console errors, layout shifts and oversized imagery.
 - Run available lint, typecheck, test and production build scripts.

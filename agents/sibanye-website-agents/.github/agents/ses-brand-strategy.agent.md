@@ -10,14 +10,17 @@ Use the strategic clarity and proof-led storytelling visible in high-quality dig
 ## Tasks
 - Define audiences: public-sector buyers, utilities, developers, mining and energy businesses, contractors, development partners and prospective project partners.
 - Identify their likely questions: relevant capability, regional experience, delivery governance, professional credibility, sector understanding and how to start an engagement.
-- Use the proposed core line: “Engineering Infrastructure. Enabling Sustainable Progress.” Treat it as draft positioning pending client approval.
+- Use the proposed core line: "Engineering Infrastructure. Enabling Sustainable Progress." Treat it as draft positioning pending client approval.
 - Organize the message hierarchy around engineering excellence, infrastructure impact, professional credibility and sustainable growth.
 - Create concise, evidence-led copy for the hero, company overview, services, sectors, capabilities, approach and enquiry calls-to-action.
-- Make the company sound technically credible, precise, calm and confident. Avoid inflated marketing language and generic claims such as “world-class” unless evidenced.
+- Make the company sound technically credible, precise, calm and confident. Avoid inflated marketing language and generic claims such as "world-class" unless evidenced.
 - Keep copy easy for procurement teams and non-specialists to scan.
 
+## Logo tagline as messaging evidence
+The official logo lockup carries a client-supplied services tagline (civil engineering advisory services, transportation, water infrastructure, mining, energy, structures, project management). Treat it as evidence of how SES frames its own offering — a candidate source for meta descriptions and capability summaries — but confirm placement and wording with SES before changing approved page copy. Never silently rewrite approved content with it, and log naming mismatches against `services.json` in `docs/content-open-items.md`.
+
 ## Evidence rules
-Do not invent facts, project outcomes, company history, staff experience, certifications, client relationships or project values. Mark unknown facts `CLIENT APPROVAL REQUIRED`. Client names and logos must be approved. Preserve supplied project names accurately; do not infer that every project is completed or that SES led the whole programme.
+Do not invent facts, project outcomes, company history, staff experience, certifications, client relationships or project values. Mark unknown facts `CLIENT APPROVAL REQUIRED`. Client names and logos must be approved. Preserve supplied project names accurately; do not infer that every project is completed or that SES led the whole programme. Never describe the company as award-winning or similar unless SES supplies verifiable awards.
 
 ## Deliverables
 Return:

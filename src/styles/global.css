@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   SES design tokens — official brand palette (provisional reference values
-   sampled from the capability-statement cover; awaiting the SES brand guide —
-   docs/content-open-items.md item 14). Governed by the ses-brand-identity agent:
-   amber gold + engineering orange on warm near-black ink and warm paper.
-   Extended ramps are derived tints/shades of the sampled anchors.
+   SES design tokens — official brand palette. Primary amber is the official
+   logo field #D69C1F (SIBANYE-LOGO-(OFFICIAL).jpg, supplied 2026-10-22);
+   flare/bright remain provisional references sampled from the capability-
+   statement cover (docs/content-open-items.md item 14). Governed by the
+   ses-brand-identity agent: amber gold + engineering orange on warm near-black
+   ink and warm paper. Extended ramps are contrast-derived tints/shades.
 --------------------------------------------------------------------------- */
 @theme {
   --font-display: "Space Grotesk Variable", "Space Grotesk", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
@@ -23,14 +24,16 @@
   --color-ink-200: #ded7ce;
   --color-ink-100: #f0ebe4;
 
-  /* Accent — amber gold ramp anchored on official #EA9F12 */
-  --color-accent-700: #9a6100; /* bronze — accent text on light (5.1:1) */
-  --color-accent-600: #c07c05; /* deep amber — icons / hover fills */
-  --color-accent-500: #ea9f12; /* amber gold — primary (official) */
-  --color-accent-400: #f0b540; /* light amber — text/icons on dark (10.5:1) */
-  --color-accent-300: #f6ce85;
-  --color-accent-200: #fbe4bc;
-  --color-accent-100: #fdf3de;
+  /* Accent — amber gold ramp anchored on the official logo field #D69C1F
+     (supplied 2026-10-22). Derived steps meet WCAG targets:
+     700 ≥5:1 on white · 600 ≥3:1 on white · 400/300 ≥9:1 on ink-950. */
+  --color-accent-700: #8b6514; /* bronze — accent text on light (5.3:1) */
+  --color-accent-600: #af8019; /* deep amber — icons on light (3.5:1) */
+  --color-accent-500: #d69c1f; /* amber gold — primary (official logo field; 7.8:1 with ink-950) */
+  --color-accent-400: #ddac43; /* light amber — text/icons on dark (9.1:1) */
+  --color-accent-300: #e5c172; /* (11:1 on ink-950) */
+  --color-accent-200: #efd9aa;
+  --color-accent-100: #f9f0dd;
 
   /* Secondary brand colours (official sampled anchors) */
   --color-flare: #e2631b;  /* engineering orange — hovers, gradient partner */
@@ -136,6 +139,7 @@
     transition:
       opacity 0.7s ease,
       transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
   }
   .reveal.in-view {
     opacity: 1;
@@ -151,5 +155,72 @@
       transform: none;
       transition: none;
     }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   View transitions (Astro ClientRouter) — honour reduced motion.
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Gear watermark — signature mark echoing the SES gear-E monogram.
+   Decorative only: aria-hidden, pointer-events none, non-text colour.
+--------------------------------------------------------------------------- */
+.gear-watermark {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+.gear-watermark--spin svg {
+  animation: gear-spin 90s linear infinite;
+  transform-origin: 50% 50%;
+}
+@keyframes gear-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gear-watermark--spin svg {
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Services marquee — one idea, quiet motion. Pauses on hover/focus;
+   renders as a static wrapped list under reduced motion.
+--------------------------------------------------------------------------- */
+.marquee {
+  overflow: hidden;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 48s linear infinite;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .marquee-copy--dupe {
+    display: none;
   }
 }

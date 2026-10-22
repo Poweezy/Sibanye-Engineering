@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeHero from '../components/HomeHero.astro';
+import ServiceMarquee from '../components/ServiceMarquee.astro';
 import HomeAbout from '../components/HomeAbout.astro';
 import HomeServices from '../components/HomeServices.astro';
 import HomeProjects from '../components/HomeProjects.astro';
@@ -25,6 +26,7 @@ const leaders = (await getCollection('leadership')).sort((a, b) => a.id.localeCo
   description="Multidisciplinary engineering, project management and infrastructure advisory services delivering practical solutions across Eswatini and Southern Africa."
 >
   <HomeHero />
+  <ServiceMarquee />
   <HomeAbout />
   <HomeServices services={services.map((s) => s.data)} />
   <HomeStats />

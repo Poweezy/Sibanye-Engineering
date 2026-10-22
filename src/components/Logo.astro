@@ -1,11 +1,12 @@
 ---
 /**
- * Official SES logo.
- * Source: public/logo.png (supplied by SES, 2026-10-21) — processed into
- * public/logo-ses.png by scripts/process-logo.mjs (background knockout).
- * On dark surfaces the black lettering cannot read on navy, so the mark
- * sits on a white chip (light variant). Vector artwork + a reversed
- * variant remain requested — see docs/content-open-items.md item 4.
+ * Official SES logo (monogram).
+ * Source: public/SIBANYE-LOGO-(OFFICIAL).jpg (supplied by SES, 2026-10-22) —
+ * processed into public/logo-ses.png by scripts/process-logo.mjs (amber-field
+ * knockout, monogram crop 517×360).
+ * On dark surfaces the black lettering cannot read, so the mark sits on a
+ * white chip (light variant). Vector artwork + a reversed variant remain
+ * requested — see docs/content-open-items.md item 4.
  */
 interface Props {
   /** `light` for dark backgrounds (white chip), `dark` for light backgrounds. */
@@ -13,18 +14,25 @@ interface Props {
 }
 
 const { variant = 'light' } = Astro.props;
+const onDark = variant === 'light';
 ---
 
-<a href="/" class="group inline-flex items-center" aria-label="Sibanye Engineering Solutions — home">
-  <span class={variant === 'light' ? 'inline-flex items-center bg-white px-3 py-1.5' : 'inline-flex items-center'}>
+<a href="/" class="group inline-flex items-center gap-3" aria-label="Sibanye Engineering Solutions — home">
+  <span class={onDark ? 'inline-flex items-center bg-white px-2.5 py-2' : 'inline-flex items-center'}>
     <img
       src="/logo-ses.png"
       alt="Sibanye Engineering Solutions logo"
-      width="566"
+      width="517"
       height="360"
-      class="h-10 w-auto"
+      class="h-9 w-auto"
       loading="eager"
       decoding="async"
     />
+  </span>
+  <span class={`hidden flex-col leading-tight sm:flex ${onDark ? 'text-white' : 'text-ink-900'}`}>
+    <span class="font-display text-sm font-bold tracking-[0.08em]">SIBANYE</span>
+    <span class={`text-[10px] font-medium uppercase tracking-[0.3em] ${onDark ? 'text-accent-400' : 'text-accent-700'}`}>
+      Engineering Solutions
+    </span>
   </span>
 </a>
