@@ -77,6 +77,10 @@ resolve them by guesswork; answers may adjust case-study data before publication
   actual SES project, person, credential or client, and will never replace the official logo or
   brand colours. Any approved AI asset is logged in `docs/content-open-items.md` with its tool,
   prompt and intended slot.
+  **First proposals are ready for your review:** two abstract hero-texture candidates
+  (A: topographic contours — recommended; B: technical grid — alternative with caveats) are in
+  `docs/creative-proposals/` with their full provenance register. They are not used anywhere on
+  the site until you approve them here or in writing.
 - **No-fabrication rule:** no invented values, clients, credentials, testimonials, awards or
   statistics — the site shows blanks/placeholders rather than guesses.
 
