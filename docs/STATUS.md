@@ -35,3 +35,7 @@
 1. SES design review of the full site using `docs/gate2-design-review.md` (Gate 2 → Gate 3 sign-off decision; decisions D1–D13 + questions Q1–Q6).
 2. SES to supply: official brand guide (flare/bright specs + vector logo + reversed/mono variant — amber now official per ADR-013), a compact/horizontal logo variant for small-size legibility (item 4 — full lockup used per directive, ADR-015), canonical service naming vs the logo tagline (item 15), photography permissions, statistics approval, mail recipient address (enables end-to-end form test), approved capability-statement PDF version (enables the download link).
 3. On content arrival: resolve `[CONFIRM WITH SES]` placeholders (Gate 4), then QA pass (Gate 5) — Lighthouse, cross-browser, live form submission. At deployment: verify hosting-layer HTTPS redirect (ADR-012b).
+
+### 2026-10-23 - Homepage statistics activated (SES approval)
+
+- SES approved the statistics section this cycle. Per ADR-007 the capability statement holds no company-level statistics, so figures are evidence-matched only: 21 documented projects (references section), 8 engineering disciplines, 2 markets (Eswatini and South Africa, documented project locations), 30+ years director-level experience (statement p.5, labelled director-level, never company-wide). Project values stay unaggregated (flagged discrepancies). See ADR-020.

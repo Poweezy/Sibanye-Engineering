@@ -1,28 +1,48 @@
 ---
-/* Statistics structure from the approved design concept. No figures are
-   published until SES supplies approved numbers — values render as em dashes. */
+/**
+ * Homepage statistics band. ACTIVATED following SES approval of the
+ * statistics section (recorded 2026-10-23).
+ *
+ * Integrity (ADR-007, ADR-020): the 2026 capability statement contains no
+ * company-level statistics (no founding year, aggregate experience or
+ * market count), so every figure is evidence-matched to the statement:
+ *   21   projects documented in the statement's references section
+ *   8    engineering disciplines (the SES services practice)
+ *   2    markets: Eswatini and South Africa (documented project locations)
+ *   30+  years DIRECTOR-LEVEL experience (statement p.5); labelled
+ *        director-level, never presented as company-wide
+ * Aggregating project values remains prohibited (flagged discrepancies).
+ */
 const stats = [
-  { label: 'Years of engineering experience' },
-  { label: 'Projects & assignments delivered' },
-  { label: 'Core infrastructure sectors' },
-  { label: 'African markets supported' },
+  { value: '21', label: 'Projects documented', note: '2026 capability statement' },
+  { value: '8', label: 'Engineering disciplines', note: 'One integrated practice' },
+  { value: '2', label: 'Markets served', note: 'Eswatini & South Africa' },
+  { value: '30+', label: 'Years of director-level experience', note: 'Pr Eng leadership' },
 ];
 ---
 
-<section class="border-y border-line bg-paper">
-  <div class="container-x py-14">
-    <dl class="grid grid-cols-2 gap-8 lg:grid-cols-4">
-      {
-        stats.map((s) => (
-          <div class="reveal flex flex-col items-center text-center">
-            <dd class="font-display text-4xl font-semibold text-ink-900 sm:text-5xl">—</dd>
-            <dt class="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted">{s.label}</dt>
-          </div>
-        ))
-      }
+<section class="blueprint bg-ink-950 py-16 text-white sm:py-24" aria-labelledby="home-stats-heading">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="reveal">
+      <p class="text-xs font-semibold uppercase tracking-[0.25em] text-accent-400">Track record</p>
+      <h2 id="home-stats-heading" class="mt-3 font-display text-3xl font-bold tracking-tight sm:text-4xl">
+        A record you can verify
+      </h2>
+    </div>
+    <dl class="reveal mt-10 grid grid-cols-2 gap-px bg-white/10 lg:grid-cols-4" style="--reveal-delay: 120ms">
+      {stats.map((stat) => (
+        <div class="flex flex-col bg-ink-950 p-6 sm:p-8">
+          <dt class="order-2 mt-3 text-sm font-semibold text-white">{stat.label}</dt>
+          <dd class="order-1">
+            <span class="block font-display text-4xl font-bold text-accent-400 sm:text-5xl">{stat.value}</span>
+            <span class="mt-2 block text-xs uppercase tracking-[0.15em] text-white/60">{stat.note}</span>
+          </dd>
+        </div>
+      ))}
     </dl>
-    <p class="mt-8 text-center text-xs text-muted">
-      Statistics pending SES confirmation — figures will be published only from approved sources.
+    <p class="reveal mt-8 text-xs text-white/60" style="--reveal-delay: 200ms">
+      Figures sourced from the SES 2026 capability statement. Director-level experience refers to the Pr Eng director profiled in the statement.
+      <a href="/projects/" class="ml-1 text-accent-400 underline underline-offset-4 hover:text-accent-300">Review the documented projects</a>
     </p>
   </div>
 </section>
