@@ -14,8 +14,10 @@ const { eyebrow, title, intro } = Astro.props;
 
 <section class="relative isolate overflow-hidden bg-ink-950 text-white">
   <div class="blueprint absolute inset-0" aria-hidden="true"></div>
-  <svg class="absolute inset-x-0 bottom-0 h-40 w-full" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 120 360 60l360 44 360-64 360 76" fill="none" stroke="rgba(234,159,18,0.28)" stroke-width="2"></path>
+  <svg class="pointer-events-none absolute inset-x-0 bottom-0 h-40 w-full" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
+    <!-- Contour line: accent-400 rgb(221,172,67) at low opacity — kept in sync
+         with src/styles/global.css tokens (brand law: no retired hex values). -->
+    <path d="M0 120 360 60l360 44 360-64 360 76" fill="none" stroke="rgba(221,172,67,0.28)" stroke-width="2"></path>
   </svg>
   <div class="container-x relative pb-16 pt-20 sm:pb-20 sm:pt-24">
     <p class="reveal eyebrow eyebrow--light">{eyebrow}</p>
