@@ -4,8 +4,9 @@
  * Verifies dist/ is complete and coherent after `astro build`:
  * route counts, sitemap/robots, the PHP endpoint, dotfile copy, brand assets
  * (official lockup per ADR-015), retired-asset regression guard, SEO meta on
- * key pages, the enquiry success-state handler, and the official amber token
- * in compiled CSS.
+ * key pages, the enquiry success-state handler, the official amber token in
+ * compiled CSS, the AI-slop vocabulary guard (ADR-019), and the rule that no
+ * AI-generated asset is referenced by site code (ADR-018).
  *
  * Zero dependencies. Exit 0 = all checks pass; exit 1 = failures listed.
  * Invoked by `npm test` (which runs the build first) — see package.json and
@@ -114,6 +115,37 @@ const cssFiles = existsSync(astroDir) ? readdirSync(astroDir).filter((f) => f.en
 const cssText = cssFiles.map((f) => readFileSync(join(astroDir, f), 'utf8')).join('');
 check('official amber #D69C1F in compiled CSS', cssFiles.length > 0 && cssText.toLowerCase().includes('#d69c1f'));
 check('retired teal #2FB7C2 absent (retheme regression guard)', !cssText.toLowerCase().includes('#2fb7c2'));
+
+// 7. Copy integrity — AI-slop vocabulary guard (ADR-019).
+// Scans every built page for filler/AI-flavoured marketing vocabulary. The SES
+// mission statement ("cutting-edge and innovative solutions…") is verbatim
+// client copy and deliberately NOT on this list — protected per ADR-019.
+const slopPatterns = [
+  ['seamless', /seamless/i],
+  ['delve', /\bdelve\b/i],
+  ['elevate/elevating', /\belevat(e|ing)\b/i],
+  ['unlock/unlocking', /\bunlock(ing)?\b/i],
+  ['game-changer', /game-?chang/i],
+  ['revolutionize', /revolutioniz/i],
+  ['world-class', /world-class/i],
+  ['award-winning', /award-winning/i],
+];
+const pageHtmls = indexPages.map((p) => [p, readFileSync(p, 'utf8')]);
+for (const [label, re] of slopPatterns) {
+  const hit = pageHtmls.find(([, html]) => re.test(html));
+  check(`copy guard: "${label}" absent from all pages`, !hit, hit ? `found in ${hit[0]}` : '');
+}
+
+// 8. AI-generated assets never referenced by site code (ADR-018 boundary,
+//    machine-checked): Higgsfield proposals live under docs/ only.
+const aiAssetHits = pageHtmls.filter(([, html]) =>
+  /higgsfield|creative-proposals|cloudfront/i.test(html),
+);
+check(
+  'no AI-generated asset references in dist (ADR-018)',
+  aiAssetHits.length === 0,
+  aiAssetHits.map(([p]) => p).join(', '),
+);
 
 // Result -------------------------------------------------------------------
 const passed = results.filter((r) => r.ok).length;
