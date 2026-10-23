@@ -1,0 +1,106 @@
+---
+/**
+ * HeroBackdrop — cinematic photographic backdrop for the home hero (ADR-021).
+ *
+ * Documentary base layer: real SES project photography supplied by the client
+ * (Manzini Mall), optimized into lean WebP derivatives by
+ * scripts/hero-assets.mjs (2048px, q78). Originals stay in source-photos/
+ * (gitignored) and never ship raw — enforced by the smoke-test payload guard.
+ *
+ * Foreground protection: renders at -z-10 with pointer-events disabled inside
+ * the hero's `isolate`d stacking context — it cannot cover, intercept, or
+ * compete with the headline, CTA buttons, or the moving gear watermark.
+ *
+ * Motion: pure-CSS sequential crossfade + slow architectural zoom (zero JS).
+ * Reduced motion: static first photograph (WCAG 2.3.3). A restrained two-axis
+ * ink grade keeps headline/CTA contrast AA-safe over bright photographs.
+ */
+const slides = [
+  'manzini-mall-01.webp',
+  'manzini-mall-02.webp',
+  'manzini-mall-03.webp',
+  'manzini-mall-04.webp',
+  'manzini-mall-05.webp',
+  'manzini-mall-06.webp',
+  'manzini-mall-07.webp',
+  'manzini-mall-08.webp',
+  'manzini-mall-09.webp',
+  'manzini-mall-10.webp',
+  'manzini-mall-11.webp',
+];
+---
+
+<div class="hero-backdrop absolute inset-0 -z-10 pointer-events-none" aria-hidden="true">
+  {
+    slides.map((src, i) => (
+      <img
+        src={`/images/hero/${src}`}
+        alt=""
+        loading={i === 0 ? 'eager' : 'lazy'}
+        decoding="async"
+        fetchpriority={i === 0 ? 'high' : 'auto'}
+        class="hero-backdrop__slide"
+        style={`animation-delay: ${i * 6}s;`}
+      />
+    ))
+  }
+  <div class="hero-backdrop__grade"></div>
+</div>
+
+<style>
+  .hero-backdrop__slide {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.03);
+    animation: hero-cycle 66s linear infinite;
+    will-change: opacity, transform;
+  }
+  .hero-backdrop__grade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        to bottom,
+        rgb(18 16 15 / 0.5),
+        rgb(18 16 15 / 0.16) 36%,
+        rgb(18 16 15 / 0.62) 76%,
+        rgb(18 16 15 / 0.9)
+      ),
+      linear-gradient(to right, rgb(18 16 15 / 0.62), rgb(18 16 15 / 0.04) 58%);
+  }
+  @keyframes hero-cycle {
+    0% {
+      opacity: 0;
+      transform: scale(1.03);
+    }
+    2% {
+      opacity: 1;
+    }
+    14% {
+      opacity: 1;
+      transform: scale(1.09);
+    }
+    16.5% {
+      opacity: 0;
+      transform: scale(1.09);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.03);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-backdrop__slide {
+      animation: none;
+      opacity: 0;
+      transform: none;
+    }
+    .hero-backdrop__slide:first-child {
+      opacity: 1;
+    }
+  }
+</style>

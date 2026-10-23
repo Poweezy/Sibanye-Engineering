@@ -5,8 +5,10 @@
  * route counts, sitemap/robots, the PHP endpoint, dotfile copy, brand assets
  * (official lockup per ADR-015), retired-asset regression guard, SEO meta on
  * key pages, the enquiry success-state handler, the official amber token in
- * compiled CSS, the AI-slop vocabulary guard (ADR-019), and the rule that no
- * AI-generated asset is referenced by site code (ADR-018).
+ * compiled CSS, the AI-slop vocabulary guard (ADR-019), the rule that no
+ * AI-generated asset is referenced by site code (ADR-018), and the hero
+ * photographic backdrop with foreground protection, payload and raw-source
+ * (OneDrive resurrection) guards (ADR-021).
  *
  * Zero dependencies. Exit 0 = all checks pass; exit 1 = failures listed.
  * Invoked by `npm test` (which runs the build first) — see package.json and
@@ -145,6 +147,55 @@ check(
   'no AI-generated asset references in dist (ADR-018)',
   aiAssetHits.length === 0,
   aiAssetHits.map(([p]) => p).join(', '),
+);
+
+// 9. Hero photographic backdrop (ADR-021) — supplied photography, protected
+//    foreground, lean payload, intact gear watermark.
+check(
+  'hero backdrop with supplied photography on home',
+  homeHtml.includes('hero-backdrop') && homeHtml.includes('manzini-mall-01.webp'),
+);
+check(
+  'hero backdrop non-interactive (pointer-events-none, aria-hidden)',
+  homeHtml.includes('pointer-events-none') && homeHtml.includes('aria-hidden'),
+);
+check(
+  'moving gear watermark intact (ADR-021 foreground protection)',
+  homeHtml.includes('gear-watermark') && cssText.includes('gear-spin'),
+);
+const oversized = [];
+const walkImgs = (dir) => {
+  if (!existsSync(dir)) return;
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const p = join(dir, entry.name);
+    if (entry.isDirectory()) walkImgs(p);
+    else if (statSync(p).size > 700 * 1024) oversized.push(p.replace(ROOT, ''));
+  }
+};
+walkImgs(join(DIST, 'images'));
+check(
+  'no oversized raw photos in dist (ADR-021 payload guard ≤700KB)',
+  oversized.length === 0,
+  oversized.join(', '),
+);
+
+// 9b. OneDrive resurrection guard (ADR-021): the sync folder has already
+//     resurrected deleted raws into public/images once — raw source
+//     photographs must never ship from there, WebP derivatives only.
+const rawSrc = [];
+const walkRaw = (dir) => {
+  if (!existsSync(dir)) return;
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const p = join(dir, entry.name);
+    if (entry.isDirectory()) walkRaw(p);
+    else if (/\.(jpe?g|png|tiff?|bmp)$/i.test(entry.name)) rawSrc.push(p.replace(ROOT, ''));
+  }
+};
+walkRaw(join(ROOT, 'public', 'images'));
+check(
+  'no raw source photographs in public/images (OneDrive resurrection guard)',
+  rawSrc.length === 0,
+  rawSrc.join(', '),
 );
 
 // Result -------------------------------------------------------------------

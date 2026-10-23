@@ -116,3 +116,14 @@
 ## ADR-020 - Statistics section activates with evidence-matched figures (2026-10-23)
 
 SES approved the homepage statistics section. The 2026 capability statement contains no company-level statistics, so under ADR-007 the section ships only statement-supported figures, labelled to match the evidence: 21 documented projects (references section), 8 engineering disciplines, 2 markets (Eswatini and South Africa), and 30+ years explicitly labelled director-level experience (statement p.5). Project values remain unaggregated pending resolution of the flagged discrepancies. Provenance is embedded in HomeStats.astro.
+
+## ADR-021 — Hero photographic backdrop from client-supplied photography (2026-10-23)
+
+**Context.** The client supplied eleven photographs of the completed Manzini Mall project and directed their use as a premium homepage hero background, with mandatory protection of the headline, CTA buttons and the animated gear watermark.
+
+**Decision.**
+1. Documentary integrity — the real photographs are the background layer; no AI re-imagining of real projects (ADR-018 boundary holds). Higgsfield image-to-video is not available on the current plan (documented limitation); cinematic motion is pure CSS (66s sequential crossfade + slow architectural zoom) with zero JS.
+2. Deploy hygiene — original JPEGs (~15 MB each) leave public/ and git tracking entirely, preserved in gitignored source-photos/ (OneDrive-synced). Only optimized WebP derivatives (~2048px) ship via public/images/hero/.
+3. Foreground protection — the backdrop renders at -z-10 with pointer-events-none and aria-hidden inside the hero's isolated stacking context; reduced-motion users receive a static first photograph; the gear watermark, headline and CTAs are untouched.
+
+**Consequences.** Smoke gate extended with four ADR-021 checks (backdrop presence, non-interference, wheel integrity, derivative payload guard). Any future hero motion must preserve these invariants.

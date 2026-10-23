@@ -39,3 +39,8 @@
 ### 2026-10-23 - Homepage statistics activated (SES approval)
 
 - SES approved the statistics section this cycle. Per ADR-007 the capability statement holds no company-level statistics, so figures are evidence-matched only: 21 documented projects (references section), 8 engineering disciplines, 2 markets (Eswatini and South Africa, documented project locations), 30+ years director-level experience (statement p.5, labelled director-level, never company-wide). Project values stay unaggregated (flagged discrepancies). See ADR-020.
+
+### 2026-10-23 — Hero photographic backdrop activated (ADR-021)
+- Client-supplied Manzini Mall photography (11 images) activated as the homepage hero background; originals preserved in gitignored source-photos/, only WebP derivatives (public/images/hero/) deploy.
+- HeroBackdrop.astro: -z-10 / pointer-events-none / aria-hidden, 66s crossfade + slow zoom, two-axis ink grade, static first-photo fallback under reduced motion; headline, CTAs and the animated gear wheel untouched.
+- Smoke gate extended with four ADR-021 checks.

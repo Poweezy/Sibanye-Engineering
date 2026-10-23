@@ -15,3 +15,6 @@ dist/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Supplied raw photography (large originals; WebP derivatives ship instead)
+source-photos/

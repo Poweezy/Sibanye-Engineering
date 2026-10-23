@@ -1,30 +1,13 @@
 ---
 import Icon from './Icon.astro';
 import GearWatermark from './GearWatermark.astro';
+import HeroBackdrop from './HeroBackdrop.astro';
 ---
 
 <section class="relative isolate overflow-hidden bg-ink-950 text-white">
-  <!-- Backdrop: blueprint grid + contour art. Placeholder for hero photography
-       (real imagery awaited from SES — docs/content-open-items.md). -->
-  <div class="blueprint absolute inset-0" aria-hidden="true"></div>
-  <svg
-    class="absolute inset-0 h-full w-full"
-    viewBox="0 0 1440 700"
-    preserveAspectRatio="xMidYMax slice"
-    aria-hidden="true"
-  >
-    <defs>
-      <linearGradient id="heroFade" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#12100f" stop-opacity="0"></stop>
-        <stop offset="1" stop-color="#12100f" stop-opacity="0.92"></stop>
-      </linearGradient>
-    </defs>
-    <path d="M0 520 320 350l260 140 300-190 560 300" fill="none" stroke="rgba(221,172,67,0.4)" stroke-width="2"></path>
-    <path d="M0 560 340 390l270 140 320-200 510 270" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2"></path>
-    <circle cx="1140" cy="210" r="170" fill="none" stroke="rgba(221,172,67,0.2)"></circle>
-    <circle cx="1140" cy="210" r="115" fill="none" stroke="rgba(221,172,67,0.13)"></circle>
-    <path d="M0 700h1440V420L0 560Z" fill="url(#heroFade)"></path>
-  </svg>
+  <!-- Backdrop: supplied SES photography (Manzini Mall), cinematic treatment —
+       see HeroBackdrop.astro and ADR-021. Foreground content is untouched. -->
+  <HeroBackdrop />
   <GearWatermark class="top-1/2 right-[-160px] w-[520px] -translate-y-1/2 text-accent-400 opacity-[0.07] sm:right-[-120px] sm:w-[620px] lg:right-[-80px] lg:w-[760px]" />
 
   <div class="container-x relative py-28 sm:py-36 lg:py-44">
