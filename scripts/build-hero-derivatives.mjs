@@ -18,6 +18,9 @@
 //   6. Leadership portrait — docs/raw-photography/frans-pienaar-profile.png
 //      → public/images/team/frans-pienaar.webp (400×400 square, attention
 //        crop, avatar for the leadership cards on home + /leadership)
+//   7. Project photo — docs/raw-photography/galp-fueling-station-forecourt.png
+//      → public/images/projects/galp-fueling-station-forecourt.webp (1600px
+//        wide, GALP forecourt photo for the project card + case-study page)
 //
 // OneDrive has repeatedly resurrected/deleted files in public/images/hero, so
 // re-run this script (`node scripts/build-hero-derivatives.mjs`) if a
@@ -61,6 +64,12 @@ const jobs = [
     src: 'docs/raw-photography/frans-pienaar-profile.png',
     out: 'public/images/team/frans-pienaar.webp',
     resize: { width: 400, height: 400, fit: 'cover', position: 'attention' },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/galp-fueling-station-forecourt.png',
+    out: 'public/images/projects/galp-fueling-station-forecourt.webp',
+    resize: { width: 1600, withoutEnlargement: true },
     webp: { quality: 82 },
   },
 ];

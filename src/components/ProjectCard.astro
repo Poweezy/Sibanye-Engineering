@@ -1,8 +1,9 @@
 ---
 import ImagePlaceholder from './ImagePlaceholder.astro';
+import ProjectImage from './ProjectImage.astro';
 
 interface Props {
-  project: { id: string; title: string; sectors: string[]; client?: string; value?: string; location?: string };
+  project: { id: string; title: string; sectors: string[]; client?: string; value?: string; location?: string; image?: string };
   sectorTitles: Record<string, string>;
   /** 'dark' renders the card for dark bands. */
   tone?: 'light' | 'dark';
@@ -13,7 +14,7 @@ const { project, sectorTitles, tone = 'light' } = Astro.props;
 
 <article class={`group h-full ${tone === 'dark' ? 'border border-white/10 bg-ink-900' : 'card'}`}>
   <a href={`/projects/${project.id}/`} class="block h-full">
-    <ImagePlaceholder label={project.title} class="aspect-[16/10]" />
+    <ProjectImage title={project.title} image={project.image} class="aspect-[16/10]" />
     <div class="p-6">
       <p class={`flex flex-wrap gap-2 text-[0.62rem] font-semibold uppercase tracking-[0.18em] ${tone === 'dark' ? 'text-accent-300' : 'text-accent-700'}`}>
         {project.sectors.map((s) => (

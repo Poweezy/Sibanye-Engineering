@@ -46,6 +46,13 @@ This package contains replacement Astro components for the home-page hero.
    fallback — on the home and leadership cards. Current avatars: Musa
    Nkonyane (`musa-nkonyane.webp`, job 5) and Frans Pienaar
    (`frans-pienaar.webp`, job 6), both under `public/images/team/`.
+8. Project photography works the same way: the projects collection takes an
+   optional `image` field (WebP derivative under `/images/projects/`, e.g.
+   `galp-fueling-station-forecourt.webp`, job 7, raw
+   `docs/raw-photography/galp-fueling-station-forecourt.png`), rendered via
+   the `ProjectImage` component — the photo when present, the engineering
+   placeholder as fallback — on project cards (home carousel + `/projects/`)
+   and the case-study pages.
 
 ## Important
 These are source changes, not a verified deployment. I could read the public repository, but the connected GitHub integration rejected branch creation with HTTP 403, so I could not push or open a pull request directly.

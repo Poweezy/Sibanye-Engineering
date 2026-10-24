@@ -1,0 +1,31 @@
+---
+/**
+ * Project image — the supplied project photograph when present, otherwise the
+ * engineering-style placeholder (blueprint grid, "awaiting SES imagery").
+ * Real content image with a descriptive alt when a photo exists.
+ */
+import ImagePlaceholder from './ImagePlaceholder.astro';
+
+interface Props {
+  title: string;
+  image?: string;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+}
+
+const { title, image, class: className = 'aspect-[16/10]', loading = 'lazy' } = Astro.props;
+---
+
+{
+  image ? (
+    <img
+      src={image}
+      alt={title}
+      loading={loading}
+      decoding="async"
+      class={`w-full object-cover ${className}`}
+    />
+  ) : (
+    <ImagePlaceholder label={title} class={className} />
+  )
+}

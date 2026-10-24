@@ -44,6 +44,7 @@ const projects = defineCollection({
     value: z.string().default(''),
     featured: z.boolean().default(false),
     summary: z.string().default(''),
+    image: z.string().default(''),
   }),
 });
 

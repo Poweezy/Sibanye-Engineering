@@ -4,7 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/PageHero.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import Icon from '../../components/Icon.astro';
-import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
+import ProjectImage from '../../components/ProjectImage.astro';
 
 export async function getStaticPaths() {
   const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
@@ -36,13 +36,20 @@ const facts = [
   <section class="bg-white">
     <div class="container-x grid gap-12 py-16 sm:py-20 lg:grid-cols-12 lg:gap-16">
       <div class="reveal lg:col-span-8">
-        <ImagePlaceholder label={project.data.title} class="aspect-[16/9]" />
+        <ProjectImage
+          title={project.data.title}
+          image={project.data.image}
+          class="aspect-[16/9]"
+          loading="eager"
+        />
         <h2 class="mt-10 text-2xl font-semibold">Scope & role</h2>
         <p class="mt-4 text-base leading-relaxed text-body">{project.data.summary}</p>
         <p class="mt-6 border-l-2 border-accent-500 pl-4 text-sm leading-relaxed text-muted">
-          Full case study — including imagery, programme detail and outcomes — is in preparation
-          and subject to SES confirmation and project-owner permissions. Where a field above reads
-          "To be confirmed", the capability statement does not publish that detail.
+          {project.data.image
+            ? 'Full case study — including programme detail and outcomes — is in preparation and subject to SES confirmation and project-owner permissions.'
+            : 'Full case study — including imagery, programme detail and outcomes — is in preparation and subject to SES confirmation and project-owner permissions.'}
+          Where a field above reads "To be confirmed", the capability statement does not publish
+          that detail.
         </p>
       </div>
 

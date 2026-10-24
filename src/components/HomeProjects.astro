@@ -1,9 +1,9 @@
 ---
 import Icon from './Icon.astro';
-import ImagePlaceholder from './ImagePlaceholder.astro';
+import ProjectImage from './ProjectImage.astro';
 
 interface Props {
-  projects: { id: string; title: string; sectors: string[]; location?: string; value?: string }[];
+  projects: { id: string; title: string; sectors: string[]; location?: string; value?: string; image?: string }[];
   sectorTitles: Record<string, string>;
 }
 
@@ -36,7 +36,7 @@ const { projects, sectorTitles } = Astro.props;
             <li class="w-[85%] shrink-0 snap-start sm:w-[60%] lg:w-[calc((100%-3rem)/3)]">
               <article class="group h-full border border-white/10 bg-ink-900">
                 <a href={`/projects/${p.id}/`} class="block h-full">
-                  <ImagePlaceholder label={p.title} class="aspect-[16/10]" />
+                  <ProjectImage title={p.title} image={p.image} class="aspect-[16/10]" />
                   <div class="p-6">
                     <p class="flex flex-wrap gap-2 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-accent-300">
                       {p.sectors.map((s) => (
@@ -80,8 +80,9 @@ const { projects, sectorTitles } = Astro.props;
       </div>
     </div>
     <p class="mt-8 text-xs leading-relaxed text-ink-400">
-      Project data sourced from the SES 2026 capability statement. Case-study pages and project
-      photography are pending SES confirmation and image permissions.
+      Project data sourced from the SES 2026 capability statement. Photography shown where
+      supplied by SES; case-study pages and further imagery are pending confirmation and image
+      permissions.
     </p>
   </div>
 </section>
