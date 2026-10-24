@@ -40,11 +40,12 @@ This package contains replacement Astro components for the home-page hero.
    `sunset-industrial-blueprint.png`); derivatives come from the same
    `node scripts/build-hero-derivatives.mjs` pipeline (jobs 3–4, 1600px wide,
    ≤700KB guard). Pages that omit `image` keep the plain blueprint band.
-7. Leadership avatars use the same pipeline: the raw portrait lives in
-   `docs/raw-photography/` and a 400×400 square WebP derivative
-   (`public/images/team/musa-nkonyane.webp`, job 5) renders via the
+7. Leadership avatars use the same pipeline: raw portraits live in
+   `docs/raw-photography/` and 400×400 square WebP derivatives render via the
    `LeaderAvatar` component — the photo when present, the initials circle as
-   fallback — on the home and leadership cards.
+   fallback — on the home and leadership cards. Current avatars: Musa
+   Nkonyane (`musa-nkonyane.webp`, job 5) and Frans Pienaar
+   (`frans-pienaar.webp`, job 6), both under `public/images/team/`.
 
 ## Important
 These are source changes, not a verified deployment. I could read the public repository, but the connected GitHub integration rejected branch creation with HTTP 403, so I could not push or open a pull request directly.

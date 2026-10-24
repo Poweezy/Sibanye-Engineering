@@ -9,7 +9,7 @@
  * AI-generated asset is referenced by site code (ADR-018), and the hero
  * blueprint backdrop + gear porthole with foreground protection, payload and
  * raw-source (OneDrive resurrection) guards (ADR-021), interior hero
- * photo backdrops and the leadership profile photo (same ADR-021 pipeline).
+ * photo backdrops and the leadership profile photos (same ADR-021 pipeline).
  *
  * Zero dependencies. Exit 0 = all checks pass; exit 1 = failures listed.
  * Invoked by `npm test` (which runs the build first) — see package.json and
@@ -232,18 +232,25 @@ for (const [page, file] of heroPhotoPages) {
   );
 }
 
-// 9d. Leadership profile photo (ADR-021 pipeline): Musa Nkonyane avatar on the
-//     home and leadership pages — a real content image with a descriptive alt.
+// 9d. Leadership profile photos (ADR-021 pipeline): avatar images on the home
+//     and leadership pages — real content images with descriptive alts.
 const leadershipHtml = readFileSync(join(DIST, 'leadership', 'index.html'), 'utf8');
-const musaAvatarHome = /<img[^>]*musa-nkonyane\.webp[^>]*>/.exec(homeHtml)?.[0] ?? '';
-const musaAvatarLeadership = /<img[^>]*musa-nkonyane\.webp[^>]*>/.exec(leadershipHtml)?.[0] ?? '';
-check(
-  'Musa Nkonyane profile photo on home + leadership (descriptive alt)',
-  musaAvatarHome !== '' &&
-    musaAvatarLeadership !== '' &&
-    musaAvatarHome.includes('alt="Portrait of Nkonyane Musa"') &&
-    musaAvatarLeadership.includes('alt="Portrait of Nkonyane Musa"'),
-);
+const avatarExpectations = [
+  ['musa-nkonyane.webp', 'Portrait of Nkonyane Musa'],
+  ['frans-pienaar.webp', 'Portrait of Frans Pienaar'],
+];
+for (const [file, alt] of avatarExpectations) {
+  const pattern = new RegExp(`<img[^>]*${file.replace('.', '\\.')}[^>]*>`);
+  const homeImg = pattern.exec(homeHtml)?.[0] ?? '';
+  const leadershipImg = pattern.exec(leadershipHtml)?.[0] ?? '';
+  check(
+    `leadership avatar (${alt}) on home + leadership page`,
+    homeImg !== '' &&
+      leadershipImg !== '' &&
+      homeImg.includes(`alt="${alt}"`) &&
+      leadershipImg.includes(`alt="${alt}"`),
+  );
+}
 
 // Result -------------------------------------------------------------------
 const passed = results.filter((r) => r.ok).length;

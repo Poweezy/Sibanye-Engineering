@@ -15,6 +15,9 @@
 //   5. Leadership portrait — docs/raw-photography/musa-nkonyane-profile.jpg
 //      → public/images/team/musa-nkonyane.webp (400×400 square, attention
 //        crop, avatar for the leadership cards on home + /leadership)
+//   6. Leadership portrait — docs/raw-photography/frans-pienaar-profile.png
+//      → public/images/team/frans-pienaar.webp (400×400 square, attention
+//        crop, avatar for the leadership cards on home + /leadership)
 //
 // OneDrive has repeatedly resurrected/deleted files in public/images/hero, so
 // re-run this script (`node scripts/build-hero-derivatives.mjs`) if a
@@ -51,6 +54,12 @@ const jobs = [
   {
     src: 'docs/raw-photography/musa-nkonyane-profile.jpg',
     out: 'public/images/team/musa-nkonyane.webp',
+    resize: { width: 400, height: 400, fit: 'cover', position: 'attention' },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/frans-pienaar-profile.png',
+    out: 'public/images/team/frans-pienaar.webp',
     resize: { width: 400, height: 400, fit: 'cover', position: 'attention' },
     webp: { quality: 82 },
   },
