@@ -169,6 +169,11 @@ check(
     /gear-spin\s+90s\s+linear\s+infinite(?! reverse)/.test(homeHtml),
 );
 check(
+  'hero copy shield + dimmed porthole photo (headline legibility)',
+  // esbuild minifies ::before to :before and brightness(0.78) to brightness(.78)
+  homeHtml.includes(':before') && /brightness\(\.?78\)/.test(homeHtml),
+);
+check(
   'hero backdrop non-interactive (pointer-events-none, aria-hidden)',
   homeHtml.includes('pointer-events-none') && homeHtml.includes('aria-hidden'),
 );

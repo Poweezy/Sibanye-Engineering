@@ -18,7 +18,11 @@ This package contains replacement Astro components for the home-page hero.
    gear rotates like a porthole: `.ses-hero__gear-rotor` spins the masked
    window and the amber watermark in lockstep, while the photo
    counter-rotates at the same rate — the image appears pinned to the page
-   and the sweeping window reveals different parts of it. ADR-021
+   and the sweeping window reveals different parts of it. Headline
+   legibility is layered: the photo renders dimmed (`brightness(0.78)`),
+   a radial "pool of shade" (`.ses-hero__copy::before`) paints above the
+   gear but below the text, and headline/sub-copy carry soft text-shadows.
+   ADR-021
    requires WebP derivatives only in `public/images` — raw sources live under
    `docs/` (plate: `docs/creative-proposals/`, photo: `docs/raw-photography/`).
    Regenerate both derivatives with `node scripts/build-hero-derivatives.mjs`
