@@ -24,6 +24,10 @@
 //   8. Project photo — docs/raw-photography/healing-power-church.jpg
 //      → public/images/projects/healing-power-church.webp (1600px wide, HPC
 //        church structure photo for the project card + case-study page)
+//   9. Project photo — docs/raw-photography/manzini-mall-original.webp
+//      (8192×6144 original, preserved here after a OneDrive resurrection)
+//      → public/images/projects/manzini-mall.webp (1600px wide, Manzini Mall
+//        photo for the project card + case-study page)
 //
 // OneDrive has repeatedly resurrected/deleted files in public/images/hero, so
 // re-run this script (`node scripts/build-hero-derivatives.mjs`) if a
@@ -78,6 +82,12 @@ const jobs = [
   {
     src: 'docs/raw-photography/healing-power-church.jpg',
     out: 'public/images/projects/healing-power-church.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/manzini-mall-original.webp',
+    out: 'public/images/projects/manzini-mall.webp',
     resize: { width: 1600, withoutEnlargement: true },
     webp: { quality: 82 },
   },
