@@ -4,35 +4,132 @@ import GearWatermark from './GearWatermark.astro';
 import HeroBackdrop from './HeroBackdrop.astro';
 ---
 
-<section class="relative isolate overflow-hidden bg-ink-950 text-white">
-  <!-- Backdrop: supplied SES photography (Manzini Mall), cinematic treatment —
-       see HeroBackdrop.astro and ADR-021. Foreground content is untouched. -->
+<section class="ses-hero relative isolate min-h-[min(850px,calc(100svh-4rem))] overflow-hidden bg-ink-950 text-white">
   <HeroBackdrop />
-  <GearWatermark class="top-1/2 right-[-160px] w-[520px] -translate-y-1/2 text-accent-400 opacity-[0.07] sm:right-[-120px] sm:w-[620px] lg:right-[-80px] lg:w-[760px]" />
 
-  <div class="container-x relative py-28 sm:py-36 lg:py-44">
-    <div class="max-w-3xl">
+  <!-- Atmospheric light adds depth over the blueprint plate. -->
+  <div
+    class="ses-hero__atmosphere pointer-events-none absolute inset-0 z-0"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Gear porthole — the Manzini Mall photograph shows through the gear
+       silhouette (CSS mask in public/images/gear-mask.svg) while the amber
+       gear watermark spins above it in lockstep (same 90s gear-spin). -->
+  <div
+    class="ses-hero__gear pointer-events-none absolute top-1/2 right-[-250px] aspect-square w-[560px] -translate-y-1/2 sm:right-[-230px] sm:w-[700px] lg:right-[-170px] lg:w-[820px] xl:right-[-120px]"
+    aria-hidden="true"
+  >
+    <img
+      src="/images/hero/manzini-mall-01.webp"
+      alt=""
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+      class="ses-hero__gear-photo"
+    />
+    <GearWatermark class="inset-0 h-full w-full text-accent-400 opacity-[0.13]" />
+  </div>
+
+  <div class="container-x relative z-10 flex min-h-[min(850px,calc(100svh-4rem))] items-center py-24 sm:py-28 lg:py-32">
+    <div class="ses-hero__copy max-w-3xl">
       <p class="reveal eyebrow eyebrow--light">Engineering / Infrastructure / Sustainability</p>
-      <h1 class="reveal mt-6 text-4xl font-semibold leading-[1.06] sm:text-6xl lg:text-7xl">
-        Engineering Infrastructure.<br />
-        <span class="text-accent-300">Enabling Sustainable Progress.</span>
+
+      <h1 class="reveal mt-6 max-w-[900px] text-4xl font-semibold leading-[1.02] tracking-[-0.045em] sm:text-6xl lg:text-7xl xl:text-[5.4rem]">
+        Engineering that moves
+        <span class="ses-hero__headline-accent block text-accent-300">progress forward.</span>
       </h1>
-      <p class="reveal mt-7 max-w-xl text-base leading-relaxed text-ink-200 sm:text-lg">
-        Multidisciplinary engineering, project management and infrastructure advisory services
-        delivering practical solutions across Eswatini and Southern Africa.
+
+      <p class="reveal mt-7 max-w-xl text-base leading-relaxed text-ink-100 sm:text-lg">
+        Engineering, project management and infrastructure advisory for complex projects
+        across Eswatini and Southern Africa.
       </p>
-      <div class="reveal mt-10 flex flex-wrap gap-4">
+
+      <div class="reveal mt-9 flex flex-wrap gap-3 sm:gap-4">
         <a href="/contact/#enquiry" class="btn-primary">
           Discuss Your Project
           <Icon name="arrow" class="h-4 w-4" />
         </a>
         <a href="/capabilities/" class="btn-outline-light">Explore Our Capabilities</a>
       </div>
-    </div>
 
-    <div class="reveal mt-16 flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-ink-300" aria-hidden="true">
-      <span class="inline-block h-9 w-px bg-gradient-to-b from-accent-400 to-transparent"></span>
-      Scroll to explore
+      <div class="reveal mt-14 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-ink-200" aria-hidden="true">
+        <span class="inline-block h-9 w-px bg-gradient-to-b from-accent-400 to-transparent"></span>
+        <span>Engineered for what’s next</span>
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .ses-hero__atmosphere {
+    background:
+      radial-gradient(ellipse at 76% 47%, rgb(214 156 31 / 0.13), transparent 35%),
+      linear-gradient(90deg, rgb(18 16 15 / 0.22), transparent 72%);
+  }
+
+  .ses-hero__gear {
+    filter: drop-shadow(0 0 42px rgb(214 156 31 / 0.16));
+  }
+
+  /* The Manzini Mall photograph is clipped to the gear silhouette (same
+     geometry as GearWatermark) and rotates in lockstep with the watermark's
+     90s gear-spin, so the porthole reads as one machined part. */
+  .ses-hero__gear-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    filter: brightness(0.94) saturate(0.92);
+    -webkit-mask-image: url('/images/gear-mask.svg');
+    mask-image: url('/images/gear-mask.svg');
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-position: center;
+    mask-position: center;
+    animation: gear-spin 90s linear infinite;
+    transform-origin: 50% 50%;
+    will-change: transform;
+  }
+
+  .ses-hero__headline-accent {
+    text-wrap: balance;
+  }
+
+  @media (max-width: 639px) {
+    .ses-hero__gear {
+      top: auto;
+      right: -180px;
+      bottom: -150px;
+      width: 420px;
+      /* Tailwind v4's -translate-y-1/2 uses the `translate` property, so it
+         must be reset here (transform: none has no effect on it). */
+      translate: none;
+      opacity: 0.92;
+    }
+
+    .ses-hero__gear-photo {
+      object-position: 58% center;
+    }
+
+    .ses-hero__atmosphere {
+      background:
+        radial-gradient(ellipse at 80% 78%, rgb(214 156 31 / 0.1), transparent 36%),
+        linear-gradient(90deg, rgb(18 16 15 / 0.36), rgb(18 16 15 / 0.08));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ses-hero__gear {
+      filter: none;
+    }
+
+    .ses-hero__gear-photo {
+      animation: none;
+    }
+  }
+</style>

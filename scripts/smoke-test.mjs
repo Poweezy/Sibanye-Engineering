@@ -7,8 +7,8 @@
  * key pages, the enquiry success-state handler, the official amber token in
  * compiled CSS, the AI-slop vocabulary guard (ADR-019), the rule that no
  * AI-generated asset is referenced by site code (ADR-018), and the hero
- * photographic backdrop with foreground protection, payload and raw-source
- * (OneDrive resurrection) guards (ADR-021).
+ * blueprint backdrop + gear porthole with foreground protection, payload and
+ * raw-source (OneDrive resurrection) guards (ADR-021).
  *
  * Zero dependencies. Exit 0 = all checks pass; exit 1 = failures listed.
  * Invoked by `npm test` (which runs the build first) — see package.json and
@@ -149,11 +149,18 @@ check(
   aiAssetHits.map(([p]) => p).join(', '),
 );
 
-// 9. Hero photographic backdrop (ADR-021) — supplied photography, protected
-//    foreground, lean payload, intact gear watermark.
+// 9. Hero blueprint plate + gear porthole (ADR-021) — approved proposal-B
+//    plate as the backdrop, supplied Manzini Mall photography showing through
+//    the gear mask, protected foreground, lean payload, intact gear watermark.
 check(
-  'hero backdrop with supplied photography on home',
-  homeHtml.includes('hero-backdrop') && homeHtml.includes('manzini-mall-01.webp'),
+  'hero blueprint backdrop (proposal-B plate) on home',
+  homeHtml.includes('hero-backdrop') && homeHtml.includes('proposal-b-hero-grid-16x9.webp'),
+);
+check(
+  'hero gear porthole with supplied photography on home',
+  homeHtml.includes('ses-hero__gear-photo') &&
+    homeHtml.includes('manzini-mall-01.webp') &&
+    homeHtml.includes('gear-mask.svg'),
 );
 check(
   'hero backdrop non-interactive (pointer-events-none, aria-hidden)',
