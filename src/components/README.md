@@ -32,13 +32,14 @@ This package contains replacement Astro components for the home-page hero.
    `src` of `.ses-hero__gear-photo` in `HomeHero.astro`.
 6. Interior heroes can carry the same photography: `PageHero` accepts an
    optional `image` prop — the About page passes
-   `/images/hero/engineers-golden-industrial-site.webp`, rendered as a
+   `/images/hero/engineers-golden-industrial-site.webp` and the Services page
+   `/images/hero/sunset-industrial-blueprint.webp`, each rendered as a
    full-bleed, aria-hidden, non-interactive backdrop under `ink-950` gradient
-   scrims so the eyebrow/title/intro keep full contrast. Its raw source is
-   `docs/raw-photography/engineers-golden-industrial-site.png`; the derivative
-   comes from the same `node scripts/build-hero-derivatives.mjs` pipeline
-   (job 3, 1600px wide, ≤700KB guard). Pages that omit `image` keep the plain
-   blueprint band.
+   scrims so the eyebrow/title/intro keep full contrast. Their raw sources live
+   under `docs/raw-photography/` (`engineers-golden-industrial-site.png`,
+   `sunset-industrial-blueprint.png`); derivatives come from the same
+   `node scripts/build-hero-derivatives.mjs` pipeline (jobs 3–4, 1600px wide,
+   ≤700KB guard). Pages that omit `image` keep the plain blueprint band.
 
 ## Important
 These are source changes, not a verified deployment. I could read the public repository, but the connected GitHub integration rejected branch creation with HTTP 403, so I could not push or open a pull request directly.

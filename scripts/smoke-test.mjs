@@ -8,8 +8,8 @@
  * compiled CSS, the AI-slop vocabulary guard (ADR-019), the rule that no
  * AI-generated asset is referenced by site code (ADR-018), and the hero
  * blueprint backdrop + gear porthole with foreground protection, payload and
- * raw-source (OneDrive resurrection) guards (ADR-021), and the About-page
- * hero photo backdrop (same ADR-021 pipeline).
+ * raw-source (OneDrive resurrection) guards (ADR-021), and interior hero
+ * photo backdrops (same ADR-021 pipeline).
  *
  * Zero dependencies. Exit 0 = all checks pass; exit 1 = failures listed.
  * Invoked by `npm test` (which runs the build first) — see package.json and
@@ -217,14 +217,20 @@ check(
   rawSrc.join(', '),
 );
 
-// 9c. About-page hero photo (ADR-021 pipeline): supplied industrial-site
-//     photography as the PageHero backdrop — decorative and non-interactive.
-const aboutHtml = readFileSync(join(DIST, 'about', 'index.html'), 'utf8');
-const aboutHeroImg = /<img[^>]*engineers-golden-industrial-site\.webp[^>]*>/.exec(aboutHtml)?.[0] ?? '';
-check(
-  'about hero photo backdrop on /about (decorative, non-interactive)',
-  aboutHeroImg !== '' && aboutHeroImg.includes('aria-hidden') && aboutHeroImg.includes('pointer-events-none'),
-);
+// 9c. Interior hero photo backdrops (ADR-021 pipeline): supplied photography on
+//     PageHero pages — decorative and non-interactive on each.
+const heroPhotoPages = [
+  ['about', 'engineers-golden-industrial-site.webp'],
+  ['services', 'sunset-industrial-blueprint.webp'],
+];
+for (const [page, file] of heroPhotoPages) {
+  const html = readFileSync(join(DIST, page, 'index.html'), 'utf8');
+  const img = new RegExp(`<img[^>]*${file}[^>]*>`).exec(html)?.[0] ?? '';
+  check(
+    `${page} hero photo backdrop (decorative, non-interactive)`,
+    img !== '' && img.includes('aria-hidden') && img.includes('pointer-events-none'),
+  );
+}
 
 // Result -------------------------------------------------------------------
 const passed = results.filter((r) => r.ok).length;
