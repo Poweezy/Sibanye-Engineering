@@ -1,19 +1,12 @@
 ---
 import Icon from './Icon.astro';
+import LeaderAvatar from './LeaderAvatar.astro';
 
 interface Props {
-  leaders: { id: string; name: string; role: string; credentials: string[] }[];
+  leaders: { id: string; name: string; role: string; credentials: string[]; photo?: string }[];
 }
 
 const { leaders } = Astro.props;
-
-const initials = (name: string): string =>
-  name
-    .split(' ')
-    .map((part) => part[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
 ---
 
 <section class="bg-white">
@@ -41,12 +34,7 @@ const initials = (name: string): string =>
         leaders.map((l) => (
           <li class="reveal">
             <article class="card flex h-full flex-col gap-5 p-7 sm:flex-row sm:items-start">
-              <span
-                class="inline-flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-ink-950 font-display text-xl font-semibold text-accent-300"
-                aria-hidden="true"
-              >
-                {initials(l.name)}
-              </span>
+              <LeaderAvatar name={l.name} photo={l.photo} />
               <div>
                 <h3 class="text-xl font-semibold">{l.name}</h3>
                 <p class="mt-1 text-sm font-medium text-accent-700">{l.role}</p>
@@ -55,7 +43,11 @@ const initials = (name: string): string =>
                     <li class="border border-line bg-paper px-2.5 py-1 text-xs font-medium text-body">{c}</li>
                   ))}
                 </ul>
-                <p class="mt-4 text-xs text-muted">Full profile pending SES approval and photograph.</p>
+                {l.photo ? (
+                  <p class="mt-4 text-xs text-muted">Full profile pending SES approval.</p>
+                ) : (
+                  <p class="mt-4 text-xs text-muted">Full profile pending SES approval and photograph.</p>
+                )}
               </div>
             </article>
           </li>

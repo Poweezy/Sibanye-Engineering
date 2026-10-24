@@ -12,11 +12,16 @@
 //   4. Services-hero photo — docs/raw-photography/sunset-industrial-blueprint.png
 //      → public/images/hero/sunset-industrial-blueprint.webp (1600px wide
 //        full-bleed backdrop for the PageHero band on /services)
+//   5. Leadership portrait — docs/raw-photography/musa-nkonyane-profile.jpg
+//      → public/images/team/musa-nkonyane.webp (400×400 square, attention
+//        crop, avatar for the leadership cards on home + /leadership)
 //
 // OneDrive has repeatedly resurrected/deleted files in public/images/hero, so
 // re-run this script (`node scripts/build-hero-derivatives.mjs`) if a
 // derivative ever goes missing.
 import sharp from 'sharp';
+import { mkdirSync } from 'node:fs';
+import { dirname } from 'node:path';
 
 const GUARD = 700 * 1024;
 const jobs = [
@@ -43,11 +48,18 @@ const jobs = [
     resize: { width: 1600, withoutEnlargement: true },
     webp: { quality: 82 },
   },
+  {
+    src: 'docs/raw-photography/musa-nkonyane-profile.jpg',
+    out: 'public/images/team/musa-nkonyane.webp',
+    resize: { width: 400, height: 400, fit: 'cover', position: 'attention' },
+    webp: { quality: 82 },
+  },
 ];
 
 for (const { src, out, resize, webp } of jobs) {
   let pipeline = sharp(src);
   if (resize) pipeline = pipeline.resize(resize);
+  mkdirSync(dirname(out), { recursive: true }); // sharp does not create folders
   const info = await pipeline.webp(webp).toFile(out);
   console.log(`wrote ${out} — ${info.size} bytes (${info.width}x${info.height})`);
   if (info.size > GUARD) {

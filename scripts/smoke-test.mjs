@@ -8,8 +8,8 @@
  * compiled CSS, the AI-slop vocabulary guard (ADR-019), the rule that no
  * AI-generated asset is referenced by site code (ADR-018), and the hero
  * blueprint backdrop + gear porthole with foreground protection, payload and
- * raw-source (OneDrive resurrection) guards (ADR-021), and interior hero
- * photo backdrops (same ADR-021 pipeline).
+ * raw-source (OneDrive resurrection) guards (ADR-021), interior hero
+ * photo backdrops and the leadership profile photo (same ADR-021 pipeline).
  *
  * Zero dependencies. Exit 0 = all checks pass; exit 1 = failures listed.
  * Invoked by `npm test` (which runs the build first) — see package.json and
@@ -231,6 +231,19 @@ for (const [page, file] of heroPhotoPages) {
     img !== '' && img.includes('aria-hidden') && img.includes('pointer-events-none'),
   );
 }
+
+// 9d. Leadership profile photo (ADR-021 pipeline): Musa Nkonyane avatar on the
+//     home and leadership pages — a real content image with a descriptive alt.
+const leadershipHtml = readFileSync(join(DIST, 'leadership', 'index.html'), 'utf8');
+const musaAvatarHome = /<img[^>]*musa-nkonyane\.webp[^>]*>/.exec(homeHtml)?.[0] ?? '';
+const musaAvatarLeadership = /<img[^>]*musa-nkonyane\.webp[^>]*>/.exec(leadershipHtml)?.[0] ?? '';
+check(
+  'Musa Nkonyane profile photo on home + leadership (descriptive alt)',
+  musaAvatarHome !== '' &&
+    musaAvatarLeadership !== '' &&
+    musaAvatarHome.includes('alt="Portrait of Nkonyane Musa"') &&
+    musaAvatarLeadership.includes('alt="Portrait of Nkonyane Musa"'),
+);
 
 // Result -------------------------------------------------------------------
 const passed = results.filter((r) => r.ok).length;

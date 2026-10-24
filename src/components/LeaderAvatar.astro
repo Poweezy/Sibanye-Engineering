@@ -1,0 +1,40 @@
+---
+/**
+ * Leadership avatar — the supplied portrait when present, otherwise the
+ * initials fallback (dark circle, amber initials). Real content image:
+ * descriptive alt, not aria-hidden.
+ */
+interface Props {
+  name: string;
+  photo?: string;
+}
+
+const { name, photo } = Astro.props;
+
+const initials = (name: string): string =>
+  name
+    .split(' ')
+    .map((part) => part[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+---
+
+{
+  photo ? (
+    <img
+      src={photo}
+      alt={`Portrait of ${name}`}
+      loading="lazy"
+      decoding="async"
+      class="h-20 w-20 shrink-0 rounded-full object-cover"
+    />
+  ) : (
+    <span
+      class="inline-flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-ink-950 font-display text-xl font-semibold text-accent-300"
+      aria-hidden="true"
+    >
+      {initials(name)}
+    </span>
+  )
+}

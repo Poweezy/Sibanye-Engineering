@@ -3,19 +3,12 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
+import LeaderAvatar from '../components/LeaderAvatar.astro';
 
 const preferredOrder = ['nkonyane-musa', 'frans-pienaar'];
 const leaders = (await getCollection('leadership')).sort(
   (a, b) => preferredOrder.indexOf(a.id) - preferredOrder.indexOf(b.id),
 );
-
-const initials = (name: string): string =>
-  name
-    .split(' ')
-    .map((part) => part[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
 ---
 
 <BaseLayout
@@ -35,12 +28,7 @@ const initials = (name: string): string =>
           leaders.map((l) => (
             <li class="reveal">
               <article class="card flex h-full flex-col gap-6 p-8 sm:flex-row sm:items-start">
-                <span
-                  class="inline-flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-ink-950 font-display text-xl font-semibold text-accent-300"
-                  aria-hidden="true"
-                >
-                  {initials(l.data.name)}
-                </span>
+                <LeaderAvatar name={l.data.name} photo={l.data.photo} />
                 <div>
                   <h2 class="text-xl font-semibold">{l.data.name}</h2>
                   <p class="mt-1 text-sm font-medium text-accent-700">{l.data.role}</p>
@@ -49,7 +37,11 @@ const initials = (name: string): string =>
                       <li class="border border-line bg-paper px-2.5 py-1 text-xs font-medium text-body">{c}</li>
                     ))}
                   </ul>
-                  <p class="mt-4 text-xs text-muted">Full profile pending SES approval and photograph.</p>
+                  {l.data.photo ? (
+                    <p class="mt-4 text-xs text-muted">Full profile pending SES approval.</p>
+                  ) : (
+                    <p class="mt-4 text-xs text-muted">Full profile pending SES approval and photograph.</p>
+                  )}
                 </div>
               </article>
             </li>
