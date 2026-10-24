@@ -15,7 +15,7 @@ or `[CONFIRM WITH SES]` and are never fabricated.
 | 5 | **Domain confirmation** — `sibanyeengineering.com` | ✅ **Confirmed** — www.sibanyeengineering.com appears in the capability statement | — |
 | 6 | **Enquiry mailbox + SMTP account details** for `public/api/enquiry.php` | ⏳ Outstanding | Form submission endpoint (Stage 3) |
 | 7 | **Client logo permissions** — client names confirmed by the statement (p16 "Our Clients"); logo wall withheld until SES provides logo files and permission | ⏳ Outstanding | Any rendering of third-party marks (permission required) |
-| 8 | **Leadership profiles** — bios now sourced from statement pp. 4–5; photographs and SES approval of published wording outstanding | 🔶 Partially resolved | Leadership page |
+| 8 | **Leadership profiles** — ✅ **RESOLVED 2026-10-24**: SES approved the full profiles. Biographies populated verbatim from statement pp. 4–5 (typographic normalization only: dehyphenation of PDF line breaks, dash spacing, "(2025 -2030)" → "(2025–2030)"); credential bylines confirmed as published — Musa: Pr Eng, PMP®, MBA, MEng, MSAICE, MSANCOLD, MWISA · Frans: Pr Eng, BEng (Civil), MSAICE; portraits live on home + /leadership. Bio rendering enforced by smoke check 9e | ✅ Resolved | — |
 | 9 | **Case-study data** — clients, values, locations and SES roles now populated from the statement; per-project sign-off outstanding | 🔶 Partially resolved | Case-study pages |
 | 10 | **Testimonials** | ⏳ None supplied | No testimonials section exists; none will be created without written approval |
 | 11 | **Contact details** — phones (+268) 2404 5512 / (+268) 7802 4964 (statement also lists +268 7906 1000 and SA +27 65 688 0826 / +27 86 607 7369), address and P O Box 7433 confirmed from statement p17 | ✅ From statement | Footer/contact page (publish after SES confirms approved version) |
@@ -42,6 +42,8 @@ Discrepancies and ambiguities found during transcription — **do not resolve by
    may be a separate reference or an image caption. Verify.
 5. **Frans Pienaar degree** — byline prints "BEng (Civil)"; bio text says "Bachelor of Science in
    Civil Engineering, Stellenbosch University, 1987". Confirm the correct abbreviation.
+   ✅ RESOLVED 2026-10-24: SES approved the final credential wording — byline "BEng (Civil)" stands;
+   the bio's full degree name is verbatim statement text. Both are now published.
 6. **Cover address** ("Nedbank Centre, Swazi Plaza") vs p17 (full street + box) — p17 version used
    on site; cover is an abbreviated form. No action.
 7. **Nsoko capacity** — reference says 13.34 MWp; photo caption says "13 MW". Use 13.34 MWp.

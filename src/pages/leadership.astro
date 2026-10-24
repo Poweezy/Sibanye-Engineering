@@ -26,23 +26,27 @@ const leaders = (await getCollection('leadership')).sort(
       <ul class="grid gap-6 md:grid-cols-2">
         {
           leaders.map((l) => (
-            <li class="reveal">
-              <article class="card flex h-full flex-col gap-6 p-8 sm:flex-row sm:items-start">
-                <LeaderAvatar name={l.data.name} photo={l.data.photo} />
-                <div>
-                  <h2 class="text-xl font-semibold">{l.data.name}</h2>
-                  <p class="mt-1 text-sm font-medium text-accent-700">{l.data.role}</p>
-                  <ul class="mt-4 flex flex-wrap gap-2" aria-label="Credentials">
-                    {l.data.credentials.map((c) => (
-                      <li class="border border-line bg-paper px-2.5 py-1 text-xs font-medium text-body">{c}</li>
-                    ))}
-                  </ul>
-                  {l.data.photo ? (
-                    <p class="mt-4 text-xs text-muted">Full profile pending SES approval.</p>
-                  ) : (
-                    <p class="mt-4 text-xs text-muted">Full profile pending SES approval and photograph.</p>
-                  )}
+            <li class="reveal" id={l.id}>
+              <article class="card flex h-full flex-col p-8">
+                <div class="flex items-center gap-5">
+                  <LeaderAvatar name={l.data.name} photo={l.data.photo} />
+                  <div>
+                    <h2 class="text-xl font-semibold">{l.data.name}</h2>
+                    <p class="mt-1 text-sm font-medium text-accent-700">{l.data.role}</p>
+                  </div>
                 </div>
+                <ul class="mt-5 flex flex-wrap gap-2" aria-label="Credentials">
+                  {l.data.credentials.map((c) => (
+                    <li class="border border-line bg-paper px-2.5 py-1 text-xs font-medium text-body">{c}</li>
+                  ))}
+                </ul>
+                {l.data.bio && (
+                  <div class="mt-5 space-y-4 text-base leading-relaxed text-body">
+                    {l.data.bio.split('\n\n').map((paragraph) => (
+                      <p>{paragraph}</p>
+                    ))}
+                  </div>
+                )}
               </article>
             </li>
           ))
@@ -52,9 +56,8 @@ const leaders = (await getCollection('leadership')).sort(
       <div class="reveal mt-12 border border-dashed border-line bg-paper p-6 text-sm leading-relaxed text-muted">
         <p>
           <strong class="text-ink-900">Content integrity note.</strong> Leadership biographies,
-          photographs and the final wording of professional credentials are pending SES approval.
-          The names, roles and registrations shown above are drawn from the SES 2026 capability
-          statement; nothing beyond that source is published here.
+          photographs and the final wording of professional credentials are published as approved
+          by SES, reproduced from the SES 2026 capability statement (pp. 4–5).
         </p>
       </div>
     </div>

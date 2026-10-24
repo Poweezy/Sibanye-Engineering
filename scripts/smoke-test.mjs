@@ -252,6 +252,21 @@ for (const [file, alt] of avatarExpectations) {
   );
 }
 
+// 9e. Leadership biographies (approved SES copy — statement pp. 4–5) render on
+//     /leadership; populated bios must never regress to placeholder cards.
+const bioMarkers = [
+  'public private partnership specialist',
+  'IDP (2025–2030) for Manzini Municipality',
+  'Inyatsi Construction Group Chairman',
+  'Institute of Directors in Southern Africa',
+];
+const missingBios = bioMarkers.filter((m) => !leadershipHtml.includes(m));
+check(
+  'leadership biographies rendered from approved statement text',
+  missingBios.length === 0,
+  missingBios.join(' | '),
+);
+
 // Result -------------------------------------------------------------------
 const passed = results.filter((r) => r.ok).length;
 console.log(`SES smoke test — ${passed}/${results.length} checks passed (${indexPages.length} pages scanned in dist/).`);

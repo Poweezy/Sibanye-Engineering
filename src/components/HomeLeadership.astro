@@ -43,11 +43,13 @@ const { leaders } = Astro.props;
                     <li class="border border-line bg-paper px-2.5 py-1 text-xs font-medium text-body">{c}</li>
                   ))}
                 </ul>
-                {l.photo ? (
-                  <p class="mt-4 text-xs text-muted">Full profile pending SES approval.</p>
-                ) : (
-                  <p class="mt-4 text-xs text-muted">Full profile pending SES approval and photograph.</p>
-                )}
+                <a
+                  href={`/leadership/#${l.id}`}
+                  class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-700 transition-colors hover:text-ink-900"
+                >
+                  Full profile
+                  <Icon name="arrow" class="h-4 w-4" />
+                </a>
               </div>
             </article>
           </li>
