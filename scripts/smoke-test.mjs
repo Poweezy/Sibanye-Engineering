@@ -9,7 +9,8 @@
  * AI-generated asset is referenced by site code (ADR-018), and the hero
  * blueprint backdrop + gear porthole with foreground protection, payload and
  * raw-source (OneDrive resurrection) guards (ADR-021), interior hero
- * photo backdrops and the leadership profile photos (same ADR-021 pipeline).
+ * photo backdrops and the leadership profile photos (same ADR-021 pipeline),
+ * plus the motion polish (count-up stats, staggered grid reveals, card zoom).
  *
  * Zero dependencies. Exit 0 = all checks pass; exit 1 = failures listed.
  * Invoked by `npm test` (which runs the build first) — see package.json and
@@ -284,6 +285,40 @@ for (const [id, webp, alt] of [
     imgIndex !== '' && imgPage !== '' && imgIndex.includes(`alt="${alt}"`) && imgPage.includes(`alt="${alt}"`),
   );
 }
+
+// 9g. Motion polish — count-up stats, staggered grid reveals, project-card
+//     image zoom. All enhancement-only: markup carries the final values and
+//     CSS/scripts honour prefers-reduced-motion.
+// Markup always carries the final figures (`data-count-up="21"`); the
+// animation script ships either inlined in the page (Astro inlines small
+// scripts) or bundled under dist/_astro/*.js — accept both.
+const statCountUps = (homeHtml.match(/data-count-up="/g) ?? []).length;
+const motionJs = readdirSync(join(DIST, '_astro'))
+  .filter((f) => f.endsWith('.js'))
+  .map((f) => readFileSync(join(DIST, '_astro', f), 'utf8'))
+  .join('\n');
+const motionScript = `${motionJs}\n${homeHtml}`;
+check(
+  'count-up stats wired (markup values + animation script, reduced-motion safe)',
+  statCountUps >= 4 &&
+    motionScript.includes('data-count-up') &&
+    motionScript.includes('IntersectionObserver') &&
+    motionScript.includes('prefers-reduced-motion'),
+  `${statCountUps} data-count-up markup attrs in home HTML`,
+);
+const revealDelays = (homeHtml.match(/--reveal-delay/g) ?? []).length;
+check('staggered grid reveals (--reveal-delay steps on home grids)', revealDelays >= 12, `found ${revealDelays}`);
+const motionCss = readdirSync(join(DIST, '_astro'))
+  .filter((f) => f.endsWith('.css'))
+  .map((f) => readFileSync(join(DIST, '_astro', f), 'utf8'))
+  .join('\n');
+check(
+  'project-card image zoom (media wrapper + hover/focus CSS)',
+  homeHtml.includes('ses-card-media') &&
+    projectsIndexHtml.includes('ses-card-media') &&
+    motionCss.includes('.ses-card') &&
+    motionCss.includes('scale(1.03)'),
+);
 
 // Result -------------------------------------------------------------------
 const passed = results.filter((r) => r.ok).length;

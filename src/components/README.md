@@ -43,7 +43,15 @@ This package contains replacement Astro components for the home-page hero.
 7. Leadership avatars use the same pipeline: raw portraits live in
    `docs/raw-photography/` and 400×400 square WebP derivatives render via the
    `LeaderAvatar` component — the photo when present, the initials circle as
-   fallback — on the home and leadership cards. Current avatars: Musa
+   fallback — on the home and leadership cards.
+8. Motion polish (enhancement-only, all honouring `prefers-reduced-motion`):
+   HomeStats figures count up on first scroll into view (`data-count-up`
+   attributes + a component script registered once on `astro:page-load`, the
+   BaseLayout convention, so it survives view-transition navigation); home
+   grids (Services/Sectors/Leadership) stagger their `.reveal` entrance with
+   inline `--reveal-delay` steps capped at 360ms; project cards zoom their
+   photo 1.03× on hover/focus via `.ses-card`/`.ses-card-media` in
+   `global.css` (photos only — the blueprint placeholder never scales). Current avatars: Musa
    Nkonyane (`musa-nkonyane.webp`, job 5) and Frans Pienaar
    (`frans-pienaar.webp`, job 6), both under `public/images/team/`.
 8. Project photography works the same way: the projects collection takes an

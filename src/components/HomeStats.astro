@@ -30,15 +30,65 @@ const stats = [
       </h2>
     </div>
     <dl class="reveal mt-10 grid grid-cols-2 gap-px bg-white/10 lg:grid-cols-4" style="--reveal-delay: 120ms">
-      {stats.map((stat) => (
-        <div class="flex flex-col bg-ink-950 p-6 sm:p-8">
-          <dt class="order-2 mt-3 text-sm font-semibold text-white">{stat.label}</dt>
-          <dd class="order-1">
-            <span class="block font-display text-4xl font-bold text-accent-400 sm:text-5xl">{stat.value}</span>
-            <span class="mt-2 block text-xs uppercase tracking-[0.15em] text-white/60">{stat.note}</span>
-          </dd>
-        </div>
-      ))}
+      {stats.map((stat) => {
+        /* Split "30+" → number (animated) + suffix (static). The markup always
+           renders the final figure, so no-JS / reduced-motion show it intact. */
+        const m = /^(\d+)(.*)$/.exec(stat.value);
+        const num = m?.[1] ?? stat.value;
+        const suffix = m?.[2] ?? '';
+        return (
+          <div class="flex flex-col bg-ink-950 p-6 sm:p-8">
+            <dt class="order-2 mt-3 text-sm font-semibold text-white">{stat.label}</dt>
+            <dd class="order-1">
+              <span class="block font-display text-4xl font-bold text-accent-400 sm:text-5xl">
+                <span class="tabular-nums" data-count-up={num}>
+                  {num}
+                </span>
+                {suffix}
+              </span>
+              <span class="mt-2 block text-xs uppercase tracking-[0.15em] text-white/60">{stat.note}</span>
+            </dd>
+          </div>
+        );
+      })}
     </dl>
   </div>
 </section>
+
+<script>
+  // Count-up for the stats band — enhancement only. The markup above always
+  // carries the final figures, so no-JS, unsupported browsers and reduced
+  // motion all simply show the static values. Numbers animate from 0 the
+  // first time their cell scrolls into view. Re-queried inside astro:page-load
+  // (registered once at module scope) so it also works after view-transition
+  // navigations — the same convention as the BaseLayout script.
+  document.addEventListener('astro:page-load', () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!('IntersectionObserver' in window)) return;
+    const counters = document.querySelectorAll<HTMLElement>('[data-count-up]');
+    if (counters.length === 0) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          io.unobserve(entry.target);
+          const el = entry.target as HTMLElement;
+          const target = Number.parseInt(el.dataset.countUp ?? '', 10);
+          if (!Number.isFinite(target) || target <= 0) continue;
+          const duration = 1200;
+          const startedAt = performance.now();
+          const tick = (now: number) => {
+            const t = Math.min((now - startedAt) / duration, 1);
+            const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+            el.textContent = String(Math.round(eased * target));
+            if (t < 1) requestAnimationFrame(tick);
+          };
+          el.textContent = '0';
+          requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.5 },
+    );
+    counters.forEach((el) => io.observe(el));
+  });
+</script>

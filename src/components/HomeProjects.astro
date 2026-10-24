@@ -34,9 +34,11 @@ const { projects, sectorTitles } = Astro.props;
         {
           projects.map((p) => (
             <li class="w-[85%] shrink-0 snap-start sm:w-[60%] lg:w-[calc((100%-3rem)/3)]">
-              <article class="group h-full border border-white/10 bg-ink-900">
+              <article class="ses-card group h-full border border-white/10 bg-ink-900">
                 <a href={`/projects/${p.id}/`} class="block h-full">
-                  <ProjectImage title={p.title} image={p.image} class="aspect-[16/10]" />
+                  <div class="ses-card-media">
+                    <ProjectImage title={p.title} image={p.image} class="aspect-[16/10]" />
+                  </div>
                   <div class="p-6">
                     <p class="flex flex-wrap gap-2 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-accent-300">
                       {p.sectors.map((s) => (

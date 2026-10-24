@@ -26,8 +26,8 @@ const { services } = Astro.props;
 
     <ul class="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
       {
-        services.map((s) => (
-          <li class="group bg-white">
+        services.map((s, i) => (
+          <li class="reveal group bg-white" style={`--reveal-delay: ${Math.min(i * 60, 360)}ms`}>
             <a href={`/services/${s.id}/`} class="block h-full p-7 transition-colors group-hover:bg-ink-950">
               <Icon name={s.icon} class="h-7 w-7 text-accent-600" />
               <h3 class="mt-5 text-lg font-semibold transition-colors group-hover:text-white">{s.title}</h3>

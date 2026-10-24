@@ -12,9 +12,11 @@ interface Props {
 const { project, sectorTitles, tone = 'light' } = Astro.props;
 ---
 
-<article class={`group h-full ${tone === 'dark' ? 'border border-white/10 bg-ink-900' : 'card'}`}>
+<article class={`ses-card group h-full ${tone === 'dark' ? 'border border-white/10 bg-ink-900' : 'card'}`}>
   <a href={`/projects/${project.id}/`} class="block h-full">
-    <ProjectImage title={project.title} image={project.image} class="aspect-[16/10]" />
+    <div class="ses-card-media">
+      <ProjectImage title={project.title} image={project.image} class="aspect-[16/10]" />
+    </div>
     <div class="p-6">
       <p class={`flex flex-wrap gap-2 text-[0.62rem] font-semibold uppercase tracking-[0.18em] ${tone === 'dark' ? 'text-accent-300' : 'text-accent-700'}`}>
         {project.sectors.map((s) => (

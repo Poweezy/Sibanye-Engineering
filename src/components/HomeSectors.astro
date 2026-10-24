@@ -21,8 +21,8 @@ const { sectors } = Astro.props;
 
     <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {
-        sectors.map((s) => (
-          <li class="reveal">
+        sectors.map((s, i) => (
+          <li class="reveal" style={`--reveal-delay: ${Math.min(i * 60, 360)}ms`}>
             <a
               href={`/sectors/#${s.id}`}
               class="card group flex h-full items-start gap-5 p-6 transition-colors hover:border-accent-500"
