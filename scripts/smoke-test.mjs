@@ -267,23 +267,22 @@ check(
   missingBios.join(' | '),
 );
 
-// 9f. Project photography (ADR-021 pipeline): GALP forecourt photo on the
-//     projects index and the GALP case-study page — a real content image
-//     with a descriptive alt.
+// 9f. Project photography (ADR-021 pipeline): each photo-carrying project
+//     renders its derivative with a descriptive alt on the projects index
+//     and its own case-study page.
 const projectsIndexHtml = readFileSync(join(DIST, 'projects', 'index.html'), 'utf8');
-const galpPageHtml = readFileSync(
-  join(DIST, 'projects', 'galp-fuel-station-forecourt', 'index.html'),
-  'utf8',
-);
-const galpImgIndex = /<img[^>]*galp-fueling-station-forecourt\.webp[^>]*>/.exec(projectsIndexHtml)?.[0] ?? '';
-const galpImgPage = /<img[^>]*galp-fueling-station-forecourt\.webp[^>]*>/.exec(galpPageHtml)?.[0] ?? '';
-check(
-  'GALP forecourt photo on projects index + case-study page (descriptive alt)',
-  galpImgIndex !== '' &&
-    galpImgPage !== '' &&
-    galpImgIndex.includes('alt="GALP Fueling Station Forecourt"') &&
-    galpImgPage.includes('alt="GALP Fueling Station Forecourt"'),
-);
+for (const [id, webp, alt] of [
+  ['galp-fuel-station-forecourt', 'galp-fueling-station-forecourt\\.webp', 'GALP Fueling Station Forecourt'],
+  ['healing-power-church', 'healing-power-church\\.webp', 'Healing Power Church (HPC)'],
+]) {
+  const pageHtml = readFileSync(join(DIST, 'projects', id, 'index.html'), 'utf8');
+  const imgIndex = new RegExp(`<img[^>]*${webp}[^>]*>`).exec(projectsIndexHtml)?.[0] ?? '';
+  const imgPage = new RegExp(`<img[^>]*${webp}[^>]*>`).exec(pageHtml)?.[0] ?? '';
+  check(
+    `${alt} photo on projects index + case-study page (descriptive alt)`,
+    imgIndex !== '' && imgPage !== '' && imgIndex.includes(`alt="${alt}"`) && imgPage.includes(`alt="${alt}"`),
+  );
+}
 
 // Result -------------------------------------------------------------------
 const passed = results.filter((r) => r.ok).length;

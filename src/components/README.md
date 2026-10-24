@@ -47,9 +47,11 @@ This package contains replacement Astro components for the home-page hero.
    Nkonyane (`musa-nkonyane.webp`, job 5) and Frans Pienaar
    (`frans-pienaar.webp`, job 6), both under `public/images/team/`.
 8. Project photography works the same way: the projects collection takes an
-   optional `image` field (WebP derivative under `/images/projects/`, e.g.
+   optional `image` field (WebP derivatives under `/images/projects/`:
    `galp-fueling-station-forecourt.webp`, job 7, raw
-   `docs/raw-photography/galp-fueling-station-forecourt.png`), rendered via
+   `docs/raw-photography/galp-fueling-station-forecourt.png`;
+   `healing-power-church.webp`, job 8, raw
+   `docs/raw-photography/healing-power-church.jpg`), rendered via
    the `ProjectImage` component — the photo when present, the engineering
    placeholder as fallback — on project cards (home carousel + `/projects/`)
    and the case-study pages.
