@@ -14,7 +14,11 @@ This package contains replacement Astro components for the home-page hero.
 5. The hero now uses the approved proposal-B blueprint plate
    (`public/images/hero/proposal-b-hero-grid-16x9.webp`) as the backdrop, with
    the Manzini Mall photo (`public/images/hero/manzini-mall-01.webp`) visible
-   through the gear via the CSS mask in `public/images/gear-mask.svg`. ADR-021
+   through the gear via the CSS mask in `public/images/gear-mask.svg`. The
+   gear rotates like a porthole: `.ses-hero__gear-rotor` spins the masked
+   window and the amber watermark in lockstep, while the photo
+   counter-rotates at the same rate — the image appears pinned to the page
+   and the sweeping window reveals different parts of it. ADR-021
    requires WebP derivatives only in `public/images` — raw sources live under
    `docs/` (plate: `docs/creative-proposals/`, photo: `docs/raw-photography/`).
    Regenerate both derivatives with `node scripts/build-hero-derivatives.mjs`

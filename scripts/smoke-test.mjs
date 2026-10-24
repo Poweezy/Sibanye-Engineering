@@ -158,9 +158,15 @@ check(
 );
 check(
   'hero gear porthole with supplied photography on home',
-  homeHtml.includes('ses-hero__gear-photo') &&
+  homeHtml.includes('ses-hero__gear-rotor') &&
+    homeHtml.includes('ses-hero__gear-photo') &&
     homeHtml.includes('manzini-mall-01.webp') &&
     homeHtml.includes('gear-mask.svg'),
+);
+check(
+  'gear window sweeps over a stationary photo (rotor spin + reverse counter-spin)',
+  /gear-spin\s+90s\s+linear\s+infinite\s+reverse/.test(homeHtml) &&
+    /gear-spin\s+90s\s+linear\s+infinite(?! reverse)/.test(homeHtml),
 );
 check(
   'hero backdrop non-interactive (pointer-events-none, aria-hidden)',

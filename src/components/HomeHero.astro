@@ -13,22 +13,28 @@ import HeroBackdrop from './HeroBackdrop.astro';
     aria-hidden="true"
   ></div>
 
-  <!-- Gear porthole — the Manzini Mall photograph shows through the gear
-       silhouette (CSS mask in public/images/gear-mask.svg) while the amber
-       gear watermark spins above it in lockstep (same 90s gear-spin). -->
+  <!-- Gear porthole — one rotor drives the gear-masked window and the amber
+       watermark in lockstep (90s). The photograph inside counter-rotates at
+       the same rate, so it appears pinned to the page while the rotating
+       gear window sweeps across it, revealing different parts of the image.
+       Mask geometry: public/images/gear-mask.svg. -->
   <div
     class="ses-hero__gear pointer-events-none absolute top-1/2 right-[-250px] aspect-square w-[560px] -translate-y-1/2 sm:right-[-230px] sm:w-[700px] lg:right-[-170px] lg:w-[820px] xl:right-[-120px]"
     aria-hidden="true"
   >
-    <img
-      src="/images/hero/manzini-mall-01.webp"
-      alt=""
-      loading="eager"
-      decoding="async"
-      fetchpriority="high"
-      class="ses-hero__gear-photo"
-    />
-    <GearWatermark class="inset-0 h-full w-full text-accent-400 opacity-[0.13]" />
+    <div class="ses-hero__gear-rotor">
+      <div class="ses-hero__gear-window">
+        <img
+          src="/images/hero/manzini-mall-01.webp"
+          alt=""
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+          class="ses-hero__gear-photo"
+        />
+      </div>
+      <GearWatermark spin={false} class="inset-0 h-full w-full text-accent-400 opacity-[0.13]" />
+    </div>
   </div>
 
   <div class="container-x relative z-10 flex min-h-[min(850px,calc(100svh-4rem))] items-center py-24 sm:py-28 lg:py-32">
@@ -72,17 +78,22 @@ import HeroBackdrop from './HeroBackdrop.astro';
     filter: drop-shadow(0 0 42px rgb(214 156 31 / 0.16));
   }
 
-  /* The Manzini Mall photograph is clipped to the gear silhouette (same
-     geometry as GearWatermark) and rotates in lockstep with the watermark's
-     90s gear-spin, so the porthole reads as one machined part. */
-  .ses-hero__gear-photo {
+  /* One rotor spins both the gear-mask window and the amber watermark in
+     perfect lockstep (single animation = no drift between them). */
+  .ses-hero__gear-rotor {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 40%;
-    filter: brightness(0.94) saturate(0.92);
+    animation: gear-spin 90s linear infinite;
+    transform-origin: 50% 50%;
+    will-change: transform;
+  }
+
+  /* Gear-shaped aperture (same geometry as GearWatermark); rotates with the
+     rotor, so the porthole itself turns. The mask's gear silhouette is
+     rotationally symmetric, so it never reveals outside the square photo. */
+  .ses-hero__gear-window {
+    position: absolute;
+    inset: 0;
     -webkit-mask-image: url('/images/gear-mask.svg');
     mask-image: url('/images/gear-mask.svg');
     -webkit-mask-repeat: no-repeat;
@@ -91,7 +102,20 @@ import HeroBackdrop from './HeroBackdrop.astro';
     mask-size: 100% 100%;
     -webkit-mask-position: center;
     mask-position: center;
-    animation: gear-spin 90s linear infinite;
+  }
+
+  /* The photograph counter-rotates (same 90s, reversed) to cancel the
+     rotor's spin — its pixels stay pinned to the viewport while the gear
+     window sweeps across it, revealing different parts of the still image. */
+  .ses-hero__gear-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    filter: brightness(0.94) saturate(0.92);
+    animation: gear-spin 90s linear infinite reverse;
     transform-origin: 50% 50%;
     will-change: transform;
   }
@@ -128,6 +152,9 @@ import HeroBackdrop from './HeroBackdrop.astro';
       filter: none;
     }
 
+    /* Watermark gets spin={false}; stop the rotor and the photo's
+       counter-rotation so the whole porthole renders static. */
+    .ses-hero__gear-rotor,
     .ses-hero__gear-photo {
       animation: none;
     }
