@@ -6,6 +6,9 @@
 //   2. Gear-porthole photo — docs/raw-photography/manzini-mall-01.jpg
 //      → public/images/hero/manzini-mall-01.webp (1200px wide, for the ≤820px
 //        gear window at 1–2× device pixel ratio)
+//   3. About-hero photo — docs/raw-photography/engineers-golden-industrial-site.png
+//      → public/images/hero/engineers-golden-industrial-site.webp (1600px wide
+//        full-bleed backdrop for the PageHero band on /about)
 //
 // OneDrive has repeatedly resurrected/deleted files in public/images/hero, so
 // re-run this script (`node scripts/build-hero-derivatives.mjs`) if a
@@ -23,6 +26,12 @@ const jobs = [
     src: 'docs/raw-photography/manzini-mall-01.jpg',
     out: 'public/images/hero/manzini-mall-01.webp',
     resize: { width: 1200, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/engineers-golden-industrial-site.png',
+    out: 'public/images/hero/engineers-golden-industrial-site.webp',
+    resize: { width: 1600, withoutEnlargement: true },
     webp: { quality: 82 },
   },
 ];
