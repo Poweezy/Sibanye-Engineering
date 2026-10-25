@@ -127,3 +127,15 @@ SES approved the homepage statistics section. The 2026 capability statement cont
 3. Foreground protection — the backdrop renders at -z-10 with pointer-events-none and aria-hidden inside the hero's isolated stacking context; reduced-motion users receive a static first photograph; the gear watermark, headline and CTAs are untouched.
 
 **Consequences.** Smoke gate extended with four ADR-021 checks (backdrop presence, non-interference, wheel integrity, derivative payload guard). Any future hero motion must preserve these invariants.
+
+## ADR-022 — Rotating gear-porthole hero + generative-asset adoption path (2026-10-24)
+
+**Context.** ADR-021 shipped an eleven-photo crossfade hero; the design then evolved through client iteration (blueprint-plate backdrop, photo-in-gear, counter-rotation legibility work), and both Higgsfield texture proposals (A and B) were approved by client direction — leaving the register and ADR trail stale.
+
+**Decision.**
+1. Home hero = approved proposal-B blueprint plate + gear porthole: one 90s rotor spins the gear-masked window and the amber watermark in lockstep while the Manzini Mall photograph counter-rotates at the same rate — the photo appears pinned to the page and the sweeping aperture reveals it (`.ses-hero__gear-rotor` forward spin + reverse counter-spin; asserted by the smoke 9-series).
+2. Legibility stack: porthole photo dimmed (`brightness(0.78)`), a radial copy shield (`::before`) painted above the gear but below the text, a strengthened directional scrim, and soft text-shadows; headline tinted `ink-300`. ADR-021's foreground-protection invariants carry forward unchanged (`pointer-events-none`, `aria-hidden`, reduced-motion safety).
+3. Generative-asset adoption path codified: register → SES approval → ≤700KB WebP derivative via `scripts/build-hero-derivatives.mjs`, with output names deliberately free of register/CDN tokens → smoke guards (check 8 leak-scan; 9-series presence/decoration checks). Proposal-B ships as the hero plate; proposal-A ships as the CtaBand backdrop (decorative, screen-blended, lazy).
+4. Interior pages adopt photography through an optional PageHero `image` prop with a calibrated scrim stack (About, Services).
+
+**Consequences.** ADR-021's crossfade description is superseded for the home hero (decision 1 above); its deploy-hygiene and protection invariants remain binding. The smoke gate grows accordingly. Any new generative asset must repeat the register → approval → derivative → guard path before site use.

@@ -140,13 +140,14 @@ for (const [label, re] of slopPatterns) {
   check(`copy guard: "${label}" absent from all pages`, !hit, hit ? `found in ${hit[0]}` : '');
 }
 
-// 8. AI-generated assets never referenced by site code (ADR-018 boundary,
-//    machine-checked): Higgsfield proposals live under docs/ only.
+// 8. Unapproved AI-generated asset leakage scan (ADR-018/022 boundary, machine-
+//    checked): register/CDN tokens never appear in dist pages; approved assets ship
+// the derivative pipeline under neutral derivative names.
 const aiAssetHits = pageHtmls.filter(([, html]) =>
   /higgsfield|creative-proposals|cloudfront/i.test(html),
 );
 check(
-  'no AI-generated asset references in dist (ADR-018)',
+  'no unapproved AI-generated asset leakage in dist (ADR-018/022)',
   aiAssetHits.length === 0,
   aiAssetHits.map(([p]) => p).join(', '),
 );
@@ -318,6 +319,16 @@ check(
     projectsIndexHtml.includes('ses-card-media') &&
     motionCss.includes('.ses-card') &&
     motionCss.includes('scale(1.03)'),
+);
+
+// 9h. CTA-band generative texture (ADR-018 + register): approved proposal-A
+//     contour plate ships as a decorative CtaBand backdrop; the derivative
+//     name deliberately avoids register/CDN tokens so check 8 stays sharp.
+const ctaHtml = readFileSync(join(DIST, 'about', 'index.html'), 'utf8');
+const ctaTexture = /<img[^>]*proposal-a-cta-contours\.webp[^>]*>/.exec(ctaHtml)?.[0] ?? '';
+check(
+  'CTA band generative texture (approved proposal-A, decorative, non-interactive)',
+  ctaTexture !== '' && ctaTexture.includes('aria-hidden') && ctaTexture.includes('pointer-events-none'),
 );
 
 // Result -------------------------------------------------------------------
