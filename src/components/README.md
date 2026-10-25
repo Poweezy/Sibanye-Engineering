@@ -54,7 +54,7 @@ This package contains replacement Astro components for the home-page hero.
    `global.css` (photos only — the blueprint placeholder never scales). Current avatars: Musa
    Nkonyane (`musa-nkonyane.webp`, job 5) and Frans Pienaar
    (`frans-pienaar.webp`, job 6), both under `public/images/team/`.
-8. Project photography works the same way: the projects collection takes an
+9. Project photography works the same way: the projects collection takes an
    optional `image` field (WebP derivatives under `/images/projects/`:
    `galp-fueling-station-forecourt.webp`, job 7, raw
    `docs/raw-photography/galp-fueling-station-forecourt.png`;
@@ -65,6 +65,18 @@ This package contains replacement Astro components for the home-page hero.
    the `ProjectImage` component — the photo when present, the engineering
    placeholder as fallback — on project cards (home carousel + `/projects/`)
    and the case-study pages.
+10. Remaining interior page heroes (Capabilities, Contact, Leadership,
+    Projects, Sectors, Approach) follow the item-6 pattern — jobs 11–15
+    (`capabilities-hero`, `contact-hero`, `leadership-hero`, `projects-hero`,
+    `sectors-hero`) plus the Approach job 16. Note: no dedicated Approach raw
+    exists yet — job 16 derives `approach-hero.webp` from the approved
+    `sunset-industrial-blueprint.png` raw (so `/approach` and `/services`
+    currently share a source photo). When a dedicated photo is available,
+    drop it in `docs/raw-photography/` and point job 16's `src` at it.
+    The `/approach` page additionally carries the animated five-phase
+    workflow (`.ses-flow`): a left→right line draw, sequentially revealed
+    nodes, and a Sustain→Advise feedback loop, all driven by the shared
+    `.reveal`/`.in-view` observer and disabled under `prefers-reduced-motion`.
 
 ## Important
 These are source changes, not a verified deployment. I could read the public repository, but the connected GitHub integration rejected branch creation with HTTP 403, so I could not push or open a pull request directly.

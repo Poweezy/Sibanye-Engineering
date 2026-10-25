@@ -340,6 +340,18 @@ check(
   ctaTexture !== '' && ctaTexture.includes('aria-hidden') && ctaTexture.includes('pointer-events-none'),
 );
 
+// 9g. Approach workflow diagram — connected five-phase timeline with the
+//     lessons-learned feedback connector and the continuous-disciplines band.
+//     Copy on the page is simultaneously covered by the section 7 slop guard.
+const approachHtml = readFileSync(join(DIST, 'approach', 'index.html'), 'utf8');
+check(
+  'approach workflow: five phases + feedback connector + continuous band',
+  ['Advise', 'Plan', 'structure', 'Deliver', 'Control', 'Sustain'].every((t) => approachHtml.includes(t)) &&
+    approachHtml.includes('Lessons inform future projects') &&
+    approachHtml.includes('Continuous Disciplines') &&
+    approachHtml.includes('Applies throughout the engagement'),
+);
+
 // Result -------------------------------------------------------------------
 const passed = results.filter((r) => r.ok).length;
 console.log(`SES smoke test — ${passed}/${results.length} checks passed (${indexPages.length} pages scanned in dist/).`);

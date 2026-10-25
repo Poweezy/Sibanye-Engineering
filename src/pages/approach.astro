@@ -10,29 +10,46 @@ import Icon from '../components/Icon.astro';
 const phases = [
   {
     n: '01',
+    icon: 'compass',
     title: 'Advise',
     text: 'Engineering advisory grounded in the relevant discipline — civil, water, transportation, energy, structural or mining — so decisions start from sound technical ground.',
   },
   {
     n: '02',
+    icon: 'gantt',
     title: 'Plan & structure',
     text: 'Project and programme management with disciplined project controls: scope, schedule and budget baselines established before delivery begins.',
   },
   {
     n: '03',
+    icon: 'building',
     title: 'Deliver',
     text: 'Construction supervision with quality assurance and quality control embedded on site, keeping execution aligned with the design intent.',
   },
   {
     n: '04',
+    icon: 'eye',
     title: 'Control',
     text: 'Budget management, risk assessment and contract management applied continuously — under FIDIC, JBCC, GCC, NEC and EPC forms of contract.',
   },
   {
     n: '05',
+    icon: 'leaf',
     title: 'Sustain',
     text: 'Handover with a focus on quality, safety and sustainability, so the infrastructure keeps delivering value beyond practical completion.',
   },
+];
+
+/* The five continuous disciplines run across all five phases rather than
+   living in a single stage — visualised in the supporting band beneath the
+   workflow. Wording stays grounded in the capabilities already published on
+   this page (QA/QC, project controls, risk, contract forms, site safety). */
+const continuous = [
+  { icon: 'check', title: 'Quality', text: 'QA and QC embedded at every phase, from documentation review to site supervision.' },
+  { icon: 'gantt', title: 'Cost', text: 'Budget baselines and cost visibility maintained across the engagement.' },
+  { icon: 'eye', title: 'Risk', text: 'Risk assessed and managed continuously, not only at a single gate.' },
+  { icon: 'frame', title: 'Contract management', text: 'Administered under FIDIC, JBCC, GCC, NEC and EPC forms of contract.' },
+  { icon: 'bolt', title: 'Safety', text: 'Treated as a requirement on every site, through to handover.' },
 ];
 
 const principles = [
@@ -58,37 +75,119 @@ const principles = [
   title="Our Approach"
   description="How Sibanye Engineering Solutions delivers: engineering advisory, disciplined project controls, construction supervision and contract management under FIDIC, JBCC, GCC, NEC and EPC forms of contract."
 >
-  <PageHero
-    eyebrow="Our Approach"
-    title="Disciplined delivery, from advisory to handover"
-    intro="A consistent way of working across disciplines and sectors — built on the capabilities recorded in our capability statement."
-  />
-
+<PageHero
+  eyebrow="Our Approach"
+  title="Disciplined delivery, from advisory to handover"
+  intro="A consistent way of working across disciplines and sectors — built on the capabilities recorded in our capability statement."
+  image="/images/hero/approach-hero.webp"
+/>
+  
   <section class="bg-white">
     <div class="container-x py-20 sm:py-24">
       <div class="reveal max-w-2xl">
         <p class="eyebrow">How We Work</p>
         <h2 class="mt-4 text-3xl font-semibold">Five phases, one accountable team</h2>
+        <p class="mt-4 text-base leading-relaxed text-body">
+          Each phase hands to the next in a single delivery loop — and what delivery teaches
+          us feeds the next engagement's advice.
+        </p>
       </div>
-      <ol class="mt-12 space-y-px overflow-hidden border border-line bg-line">
-        {
-          phases.map((p) => (
-            <li class="reveal bg-white">
-              <div class="flex flex-col gap-4 p-7 sm:flex-row sm:items-baseline sm:gap-10 sm:p-9">
-                <span class="font-display text-3xl font-semibold text-accent-600 sm:w-20 sm:shrink-0">{p.n}</span>
-                <div>
-                  <h3 class="text-xl font-semibold">{p.title}</h3>
-                  <p class="mt-2 max-w-2xl text-base leading-relaxed text-body">{p.text}</p>
+
+      <!-- Connected five-phase workflow. All animation keys off the global
+           .reveal/.in-view observer (no extra observers, no client JS):
+           the amber rail draws left→right, the steps stagger in via
+           --reveal-delay, and the feedback loop draws last. -->
+      <div class="ses-flow reveal mt-14">
+        <ol class="ses-flow__list">
+          {
+            phases.map((p, i) => (
+              <li class="ses-flow__step reveal" style={`--reveal-delay: ${i * 130}ms`}>
+                <span class="ses-flow__node border-2 border-ink-900 bg-white font-display text-lg font-semibold text-accent-600" aria-hidden="true">
+                  {p.n}
+                </span>
+                <div class="ses-flow__body lg:text-center">
+                  <h3 class="ses-flow__title flex items-center justify-start gap-2 text-lg font-semibold lg:justify-center">
+                    <Icon name={p.icon} class="h-5 w-5 shrink-0 text-accent-600" />
+                    {p.title}
+                  </h3>
+                  <p class="ses-flow__text mt-2 text-base leading-relaxed text-body lg:text-sm lg:leading-relaxed lg:text-center">
+                    {p.text}
+                  </p>
+                  {p.n === '04' && (
+                    <p class="mt-3 inline-block border border-accent-300 bg-accent-100 px-2.5 py-1 text-xs font-medium text-accent-700">
+                      Applies throughout the engagement
+                    </p>
+                  )}
                 </div>
-              </div>
-            </li>
-          ))
-        }
-      </ol>
+              </li>
+            ))
+          }
+        </ol>
+
+        <!-- Desktop feedback connector: Sustain loops back to Advise. The drawn
+             path and arrowhead are decorative; the label is real text. -->
+        <div class="ses-flow__feedback">
+          <div class="ses-flow__feedback-canvas text-accent-500" aria-hidden="true">
+            <svg viewBox="0 0 1000 84" preserveAspectRatio="none" fill="none">
+              <path
+                class="ses-flow__feedback-path"
+                pathLength="100"
+                d="M900 2 L900 40 Q900 56 884 56 L116 56 Q100 56 100 40 L100 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                vector-effect="non-scaling-stroke"
+              ></path>
+            </svg>
+            <svg class="ses-flow__feedback-arrow" viewBox="0 0 14 9" fill="none">
+              <path d="M1 8 7 2l6 6" stroke="currentColor" stroke-width="1.5" fill="none"></path>
+            </svg>
+          </div>
+          <span class="ses-flow__feedback-label bg-white text-accent-700">Lessons inform future projects</span>
+        </div>
+
+        <!-- Mobile feedback indicator (vertical timeline adaptation). -->
+        <div class="ses-flow__feedback-m mt-10 items-center gap-3 border-t border-dashed border-line pt-6">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-accent-300 bg-accent-100 text-accent-700">
+            <Icon name="arrow" class="h-4 w-4 -rotate-90" />
+          </span>
+          <p class="text-sm font-medium text-muted">Lessons inform future projects</p>
+        </div>
+      </div>
+
       <p class="mt-6 text-xs leading-relaxed text-muted">
         Phase framing maps the capabilities listed in the SES 2026 capability statement; detailed
         methodology documentation is available on request.
       </p>
+    </div>
+  </section>
+
+  <!-- Supporting band: the disciplines that never leave the timeline. -->
+  <section class="bg-ink-950 text-white">
+    <div class="container-x py-16 sm:py-20">
+      <div class="reveal flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div class="max-w-xl">
+          <p class="eyebrow eyebrow--light">Continuous Disciplines</p>
+          <h2 class="mt-4 text-2xl font-semibold text-white sm:text-3xl">Running through every phase</h2>
+        </div>
+        <p class="max-w-md text-sm leading-relaxed text-ink-300">
+          Quality, cost, risk, contract management and safety are not one stage of the timeline —
+          they are managed across the whole engagement, from first advisory session to handover.
+        </p>
+      </div>
+      <ul class="reveal mt-10 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-5">
+        {
+          continuous.map((c) => (
+            <li class="bg-ink-950 p-6">
+              <span class="inline-flex h-10 w-10 items-center justify-center border border-accent-500/40 text-accent-400">
+                <Icon name={c.icon} class="h-5 w-5" />
+              </span>
+              <h3 class="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-white">{c.title}</h3>
+              <p class="mt-2 text-xs leading-relaxed text-ink-300">{c.text}</p>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </section>
 
@@ -136,3 +235,184 @@ const principles = [
 
   <CtaBand />
 </BaseLayout>
+
+<style>
+  /* Five-phase workflow — connected timeline.
+     Mobile: vertical rail on the left (per-step segments), descriptions right.
+     Desktop (lg+): horizontal rail behind the numbered nodes with an amber
+     fill that draws left→right on .in-view; the Sustain→Advise feedback loop
+     draws after the main line completes. Everything keys off the single
+     global IntersectionObserver (.reveal/.in-view) — no new observers, no
+     client JS — and collapses to a static diagram under reduced motion. */
+  .ses-flow__list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+  }
+  .ses-flow__step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    column-gap: 1.25rem;
+    align-items: start;
+  }
+  .ses-flow__step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 27px;
+    top: 3.5rem;
+    bottom: -2.25rem;
+    width: 2px;
+    background: var(--color-line);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.5s ease;
+    transition-delay: calc(var(--reveal-delay, 0ms) + 150ms);
+  }
+  .ses-flow.in-view .ses-flow__step:not(:last-child)::before {
+    transform: scaleY(1);
+  }
+  .ses-flow__node {
+    grid-column: 1;
+    grid-row: 1;
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 9999px;
+  }
+  .ses-flow__body {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+  }
+  .ses-flow__feedback {
+    display: none;
+  }
+  .ses-flow__feedback-m {
+    display: flex;
+  }
+
+  @media (min-width: 64rem) {
+    .ses-flow__list {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      column-gap: 2rem;
+    }
+    .ses-flow__step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .ses-flow__step:not(:last-child)::before {
+      display: none;
+    }
+    .ses-flow__body {
+      width: 100%;
+    }
+    /* Static rail + animated amber fill (draws left → right on .in-view). */
+    .ses-flow__list::before {
+      content: '';
+      position: absolute;
+      top: 27px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: var(--color-line);
+    }
+    .ses-flow__list::after {
+      content: '';
+      position: absolute;
+      top: 27px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-accent-500), var(--color-accent-300));
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 1.15s cubic-bezier(0.4, 0, 0.2, 1) 0.25s;
+    }
+    .ses-flow.in-view .ses-flow__list::after {
+      transform: scaleX(1);
+    }
+    .ses-flow__text {
+      max-width: 36ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    /* Feedback loop: drawn after the main line, arrowhead fades in last. */
+    .ses-flow__feedback {
+      display: block;
+      position: relative;
+      height: 84px;
+      margin-top: 3rem;
+    }
+    .ses-flow__feedback-canvas {
+      position: absolute;
+      inset: 0;
+    }
+    .ses-flow__feedback-canvas svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .ses-flow__feedback-path {
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      transition: stroke-dashoffset 1.1s ease 1.45s;
+    }
+    .ses-flow.in-view .ses-flow__feedback-path {
+      stroke-dashoffset: 0;
+    }
+    .ses-flow__feedback-arrow {
+      position: absolute;
+      top: 9px;
+      left: 10%;
+      width: 14px;
+      height: 9px;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.4s ease 2.4s;
+    }
+    .ses-flow.in-view .ses-flow__feedback-arrow {
+      opacity: 1;
+    }
+    .ses-flow__feedback-label {
+      position: absolute;
+      top: 66.7%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 0.15rem 0.75rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .ses-flow__feedback-m {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ses-flow__step:not(:last-child)::before,
+    .ses-flow__list::after {
+      transition: none;
+      transform: none;
+    }
+    .ses-flow__feedback-path,
+    .ses-flow__feedback-arrow {
+      transition: none;
+    }
+    .ses-flow__feedback-path {
+      stroke-dashoffset: 0;
+    }
+    .ses-flow__feedback-arrow {
+      opacity: 1;
+    }
+  }
+</style>

@@ -131,6 +131,15 @@ const jobs = [
     resize: { width: 1600, withoutEnlargement: true },
     webp: { quality: 82 },
   },
+  {
+    // Approach-page hero — no dedicated raw yet; derived from the approved
+    // sunset-industrial-blueprint raw. When a dedicated photo lands in
+    // docs/raw-photography/, point src at it (one-line swap).
+    src: 'docs/raw-photography/sunset-industrial-blueprint.png',
+    out: 'public/images/hero/approach-hero.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
 ];
 
 for (const { src, out, resize, webp } of jobs) {
