@@ -177,6 +177,10 @@ check(
   homeHtml.includes(':before') && /brightness\(\.?78\)/.test(homeHtml),
 );
 check(
+  'hero dark overlay present (veil over plate + porthole, below copy)',
+  (homeHtml.match(/ses-hero__overlay/g) ?? []).length >= 2,
+);
+check(
   'hero backdrop non-interactive (pointer-events-none, aria-hidden)',
   homeHtml.includes('pointer-events-none') && homeHtml.includes('aria-hidden'),
 );

@@ -37,6 +37,13 @@ import HeroBackdrop from './HeroBackdrop.astro';
     </div>
   </div>
 
+  <!-- Full-bleed dark veil — deepens the whole hero (plate + porthole) below
+       the copy layer (z-10), whose calibrated contrast stays untouched. -->
+  <div
+    class="ses-hero__overlay pointer-events-none absolute inset-0 z-[5]"
+    aria-hidden="true"
+  ></div>
+
   <div class="container-x relative z-10 flex min-h-[min(850px,calc(100svh-4rem))] items-center py-24 sm:py-28 lg:py-32">
     <div class="ses-hero__copy max-w-3xl">
       <p class="reveal eyebrow eyebrow--light">Engineering / Infrastructure / Sustainability</p>
@@ -72,6 +79,18 @@ import HeroBackdrop from './HeroBackdrop.astro';
     background:
       radial-gradient(ellipse at 76% 47%, rgb(214 156 31 / 0.13), transparent 35%),
       linear-gradient(90deg, rgb(18 16 15 / 0.3), rgb(18 16 15 / 0.08) 55%, transparent 80%);
+  }
+
+  /* Full-bleed dark veil over the plate, atmosphere and porthole (z-[5] —
+     below the copy container's z-10, so text/CTAs are unaffected). Deepens
+     the scene and strengthens the blend into the next section. */
+  .ses-hero__overlay {
+    background: linear-gradient(
+      180deg,
+      rgb(12 10 9 / 0.3) 0%,
+      rgb(12 10 9 / 0.24) 45%,
+      rgb(12 10 9 / 0.42) 100%
+    );
   }
 
   /* Pool of shade behind the copy column — paints INSIDE container-x's
@@ -178,6 +197,17 @@ import HeroBackdrop from './HeroBackdrop.astro';
       background:
         radial-gradient(ellipse at 80% 78%, rgb(214 156 31 / 0.1), transparent 36%),
         linear-gradient(90deg, rgb(18 16 15 / 0.36), rgb(18 16 15 / 0.08));
+    }
+
+    /* Slightly lighter veil on mobile — the hero is viewport-tall and the
+       porthole sits low, so keep the photo readable. */
+    .ses-hero__overlay {
+      background: linear-gradient(
+        180deg,
+        rgb(12 10 9 / 0.26) 0%,
+        rgb(12 10 9 / 0.22) 45%,
+        rgb(12 10 9 / 0.4) 100%
+      );
     }
   }
 
