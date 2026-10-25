@@ -1,0 +1,14 @@
+--- public WebPs ---
+capabilities: MISSING
+contact: MISSING
+leadership: MISSING
+projects: MISSING
+sectors: MISSING
+--- dist page refs ---
+capabilities: img=false aria-hidden=true
+contact: img=false aria-hidden=true
+leadership: img=false aria-hidden=true
+projects: img=false aria-hidden=true
+sectors: img=false aria-hidden=true
+--- dist assets ---
+capabilities-hero.webp, contact-hero.webp, engineers-golden-industrial-site.webp, leadership-hero.webp, manzini-mall-01.webp, projects-hero.webp, proposal-b-hero-grid-16x9.webp, sectors-hero.webp, sunset-industrial-blueprint.webp

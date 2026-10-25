@@ -101,6 +101,36 @@ const jobs = [
     out: 'public/images/creative/proposal-a-cta-contours.webp',
     webp: { quality: 85 },
   },
+  {
+    src: 'docs/raw-photography/capabilities-hero.png',
+    out: 'public/images/hero/capabilities-hero.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/contact-hero.png',
+    out: 'public/images/hero/contact-hero.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/leadership-hero.png',
+    out: 'public/images/hero/leadership-hero.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/projects-hero.png',
+    out: 'public/images/hero/projects-hero.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/sectors-hero.png',
+    out: 'public/images/hero/sectors-hero.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
 ];
 
 for (const { src, out, resize, webp } of jobs) {

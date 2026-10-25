@@ -228,6 +228,11 @@ check(
 const heroPhotoPages = [
   ['about', 'engineers-golden-industrial-site.webp'],
   ['services', 'sunset-industrial-blueprint.webp'],
+  ['capabilities', 'capabilities-hero.webp'],
+  ['contact', 'contact-hero.webp'],
+  ['leadership', 'leadership-hero.webp'],
+  ['projects', 'projects-hero.webp'],
+  ['sectors', 'sectors-hero.webp'],
 ];
 for (const [page, file] of heroPhotoPages) {
   const html = readFileSync(join(DIST, page, 'index.html'), 'utf8');
