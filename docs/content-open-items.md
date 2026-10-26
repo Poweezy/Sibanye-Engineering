@@ -48,8 +48,13 @@ Discrepancies and ambiguities found during transcription — **do not resolve by
 6. **Cover address** ("Nedbank Centre, Swazi Plaza") vs p17 (full street + box) — p17 version used
    on site; cover is an abbreviated form. No action.
 7. **Nsoko capacity** — reference says 13.34 MWp; photo caption says "13 MW". Use 13.34 MWp.
-8. **Values page (p6) is graphical** — value wording could not be extracted; homepage values line
-   remains pending SES sign-off.
+8. **Values page (p6) is graphical** — ✅ **RESOLVED 2026-10-24**: the page was rasterized
+   (Windows.Data.Pdf render) and the graphical values transcribed verbatim — Futuristic ·
+   Respect & Integrity · Playfulness · Participation — plus the "Socio-economic development"
+   heading and its paragraph. Published on /about (values grid + SED block) and the home
+   About card values line; the old placeholder chips (Integrity/Excellence/Collaboration/
+   Sustainability/Professionalism) are retired. Verbatim wording and placeholder regression
+   are enforced by smoke check 9i.
 
 ## Old-website reconciliation (appsystemsz.com/sibanyeengineering)
 

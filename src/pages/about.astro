@@ -6,9 +6,9 @@ import Icon from '../components/Icon.astro';
 import HomeStats from '../components/HomeStats.astro';
 
 /* All copy grounded in the SES 2026 capability statement. VERBATIM CLIENT COPY
-   (ADR-019): the mission text — including "cutting-edge and innovative" — is
-   protected from copy/slop rewrites. Values wording is graphical in the
-   statement and pending SES sign-off — chips show placeholders. */
+   (ADR-019): the mission text — including "cutting-edge and innovative" — and
+   the values + socio-economic development wording (statement p. 6, graphical
+   page transcribed verbatim) are protected from copy/slop rewrites. */
 const pillars = [
   {
     icon: 'compass',
@@ -22,7 +22,14 @@ const pillars = [
   },
 ];
 
-const valuePlaceholders = ['Integrity', 'Excellence', 'Collaboration', 'Sustainability', 'Professionalism'];
+/* Values verbatim from capability statement p. 6 (graphical page transcribed);
+   icons are the site's decorative stand-ins for the statement's own glyphs. */
+const values = [
+  { icon: 'eye', name: 'Futuristic' },
+  { icon: 'check', name: 'Respect & Integrity' },
+  { icon: 'bolt', name: 'Playfulness' },
+  { icon: 'bridge', name: 'Participation' },
+];
 
 const facts = [
   { label: 'Headquarters', value: 'Mbabane, Eswatini' },
@@ -104,20 +111,29 @@ const facts = [
         <p class="eyebrow">Our Values</p>
         <h2 class="mt-4 text-3xl font-semibold">What we hold ourselves to</h2>
         <p class="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-          The values page of the capability statement is graphical; final wording is pending SES
-          sign-off. The themes below reflect the statement's stated focus and will be confirmed
-          before launch.
+          The four values SES publishes in its 2026 capability statement, reproduced verbatim.
         </p>
       </div>
-      <ul class="mt-8 flex flex-wrap gap-3">
+      <ul class="mt-10 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
         {
-          valuePlaceholders.map((v) => (
-            <li class="border border-dashed border-line bg-paper px-4 py-2 text-sm font-medium text-body">
-              {v} <span class="text-xs text-muted">· pending</span>
+          values.map((v) => (
+            <li class="reveal bg-white p-7">
+              <Icon name={v.icon} class="h-7 w-7 text-accent-500" />
+              <h3 class="mt-5 text-lg font-semibold">{v.name}</h3>
             </li>
           ))
         }
       </ul>
+      <div class="reveal mt-10 border border-line bg-paper p-8 sm:p-10">
+        <Icon name="building" class="h-7 w-7 text-accent-500" />
+        <h3 class="mt-5 text-2xl font-semibold">Socio-economic development</h3>
+        <p class="mt-3 max-w-3xl text-base leading-relaxed text-body">
+          SES believe in and supports Skills Development and Social Upliftment and therefore gives
+          back to society and communities through programmes including: Young engineers initiative
+          providing mentorship and training to graduates; social upliftment and development projects
+          across various communities focusing on education; young talent and development.
+        </p>
+      </div>
     </div>
   </section>
 

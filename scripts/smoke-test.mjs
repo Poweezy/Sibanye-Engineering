@@ -10,7 +10,8 @@
  * blueprint backdrop + gear porthole with foreground protection, payload and
  * raw-source (OneDrive resurrection) guards (ADR-021), interior hero
  * photo backdrops and the leadership profile photos (same ADR-021 pipeline),
- * plus the motion polish (count-up stats, staggered grid reveals, card zoom).
+ * plus the motion polish (count-up stats, staggered grid reveals, card zoom)
+ * and the SES values wording transcribed from capability statement p. 6 (9i).
  *
  * Zero dependencies. Exit 0 = all checks pass; exit 1 = failures listed.
  * Invoked by `npm test` (which runs the build first) — see package.json and
@@ -350,6 +351,28 @@ check(
     approachHtml.includes('Lessons inform future projects') &&
     approachHtml.includes('Continuous Disciplines') &&
     approachHtml.includes('Applies throughout the engagement'),
+);
+
+// 9i. Values wording (capability statement p. 6 — graphical page transcribed
+//     verbatim): the four published values on /about and the home summary
+//     card, plus the socio-economic development paragraph. The retired
+//     'Professionalism' placeholder is asserted absent on both pages. Astro
+//     escapes ampersands in built HTML, so value matching runs against a
+//     de-entitized copy of each page (see `unescaped` below).
+const sesValues = ['Futuristic', 'Respect & Integrity', 'Playfulness', 'Participation'];
+// `ctaHtml` is the full About page (read above for the 9h CTA check). Built
+// HTML carries entities and wraps long source lines across whitespace, so
+// matching de-entitizes AND collapses whitespace. The entity literal is
+// assembled from parts so no transport can decode it.
+const unescaped = (h) => h.replaceAll('&' + 'amp;', '&').replace(/\s+/g, ' ');
+check(
+  'SES values verbatim on about + home, SED paragraph, placeholders retired',
+  sesValues.every((t) => unescaped(ctaHtml).includes(t)) &&
+    sesValues.every((t) => unescaped(homeHtml).includes(t)) &&
+    unescaped(ctaHtml).includes('Socio-economic development') &&
+    unescaped(ctaHtml).includes('gives back to society and communities') &&
+    !ctaHtml.includes('Professionalism') &&
+    !homeHtml.includes('Professionalism'),
 );
 
 // Result -------------------------------------------------------------------
