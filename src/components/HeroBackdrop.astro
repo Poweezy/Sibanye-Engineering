@@ -1,15 +1,21 @@
 ---
 /**
- * HeroBackdrop — approved proposal-B "hero grid" blueprint plate.
+ * HeroBackdrop — approved proposal-C2 cinematic hero plate (ADR-023).
  *
- * docs/creative-proposals/proposal-B-hero-grid-16x9.png (served from
- * public/images/hero/) fills the hero as a full-bleed technical-drawing
- * backdrop that sits behind the gear porthole. A quiet grade protects
+ * docs/creative-proposals/proposal-C2-cinematic-hero-16x9.png (SES-approved
+ * 2026-10-26; served from public/images/hero/ via pipeline job 17) fills the
+ * hero as a full-bleed photorealistic backdrop behind the gear porthole: a
+ * monumental concrete-and-steel structure with its strongest details
+ * centre-right and a quiet dark left zone reserved for headline/CTAs. An
+ * establishing dolly-in (45s, one-shot, transform-only) simulates the brief's
+ * slow camera move until the video track reopens on a plan upgrade; it is
+ * disabled under prefers-reduced-motion. The proposal-B blueprint plate
+ * remains in public/ as the documented fallback asset. A quiet grade protects
  * header, headline and CTA contrast and eases the plate into the next
  * section. Decorative: aria-hidden, pointer-events none, -z-10 behind all
  * foreground content.
  */
-const src = '/images/hero/proposal-b-hero-grid-16x9.webp';
+const src = '/images/hero/proposal-c2-cinematic-hero-16x9.webp';
 ---
 
 <div class="hero-backdrop pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
@@ -74,6 +80,34 @@ const src = '/images/hero/proposal-b-hero-grid-16x9.webp';
           rgb(18 16 15 / 0.85) 100%
         ),
         linear-gradient(90deg, rgb(18 16 15 / 0.35), rgb(18 16 15 / 0.2));
+    }
+  }
+
+  /* Establishing dolly-in (ADR-023): the brief's "very slow, smooth cinematic
+     dolly-in" simulated in CSS until the video model is plan-upgraded. One
+     45s shot on load — transform-only (GPU-composited, no layout/paint),
+     origin anchored on the subject (centre-right) so the frame grows toward
+     its focal point. fill-mode 'both' holds the final framing; the from-state
+     is the natural scale, so reduced-motion (animation: none) shows the same
+     composition with zero movement. */
+  .hero-backdrop__plate {
+    animation: hero-dolly 45s cubic-bezier(0.33, 0, 0.2, 1) both;
+    transform-origin: 62% 50%;
+    will-change: transform;
+  }
+
+  @keyframes hero-dolly {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.07);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-backdrop__plate {
+      animation: none;
     }
   }
 </style>

@@ -11,8 +11,11 @@ This package contains replacement Astro components for the home-page hero.
 2. Replace the matching files with these versions.
 3. Run `npm run build`.
 4. Check the home page at desktop and mobile widths, especially text contrast and image crop.
-5. The hero now uses the approved proposal-B blueprint plate
-   (`public/images/hero/proposal-b-hero-grid-16x9.webp`) as the backdrop, with
+5. The hero now uses the approved proposal-C2 cinematic plate
+   (`public/images/hero/proposal-c2-cinematic-hero-16x9.webp` — ADR-023; the
+   proposal-B blueprint plate stays as documented fallback) as the backdrop,
+   settled by a 45s one-shot establishing dolly-in (transform-only, disabled
+   under `prefers-reduced-motion`), with
    the Manzini Mall photo (`public/images/hero/manzini-mall-01.webp`) visible
    through the gear via the CSS mask in `public/images/gear-mask.svg`. The
    gear rotates like a porthole: `.ses-hero__gear-rotor` spins the masked

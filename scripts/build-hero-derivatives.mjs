@@ -140,6 +140,17 @@ const jobs = [
     resize: { width: 1600, withoutEnlargement: true },
     webp: { quality: 82 },
   },
+  {
+    // Home-hero cinematic backdrop — approved proposal-C2 (ADR-023): FLUX 3
+    // Image still, SES-approved 2026-10-26. Replaces the proposal-B blueprint
+    // plate as the home backdrop (B stays in public/ as the documented
+    // fallback). Derivative name stays free of register/CDN tokens so the
+    // smoke leak scan (check 8) keeps distinguishing approved from unapproved.
+    src: 'docs/creative-proposals/proposal-C2-cinematic-hero-16x9.png',
+    out: 'public/images/hero/proposal-c2-cinematic-hero-16x9.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
 ];
 
 for (const { src, out, resize, webp } of jobs) {

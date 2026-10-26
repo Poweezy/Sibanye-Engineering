@@ -153,12 +153,26 @@ check(
   aiAssetHits.map(([p]) => p).join(', '),
 );
 
-// 9. Hero blueprint plate + gear porthole (ADR-021) — approved proposal-B
-//    plate as the backdrop, supplied Manzini Mall photography showing through
-//    the gear mask, protected foreground, lean payload, intact gear watermark.
+// 9. Hero cinematic plate + gear porthole (ADR-021/ADR-023) — approved
+//    proposal-C2 plate as the backdrop, supplied Manzini Mall photography
+//    showing through the gear mask, protected foreground, lean payload,
+//    intact gear watermark.
 check(
-  'hero blueprint backdrop (proposal-B plate) on home',
-  homeHtml.includes('hero-backdrop') && homeHtml.includes('proposal-b-hero-grid-16x9.webp'),
+  'hero cinematic backdrop (approved proposal-C2) on home',
+  homeHtml.includes('hero-backdrop') && homeHtml.includes('proposal-c2-cinematic-hero-16x9.webp'),
+);
+// HeroBackdrop's scoped styles are small, so with inlineStylesheets:'auto'
+// they compile into the page's inline <style> rather than the external CSS
+// bundle — scan both surfaces, tolerating minified or pretty formatting.
+const heroCss = `${cssText}\n${homeHtml}`;
+check(
+  'hero establishing dolly-in (one-shot, reduced-motion disabled)',
+  heroCss.includes('hero-dolly') &&
+    /hero-dolly\s+45s/.test(heroCss) &&
+    heroCss.includes('scale(1.07)') &&
+    /@media\s*\(prefers-reduced-motion\s*:\s*reduce\)\s*\{\.hero-backdrop__plate[^{]*\{animation\s*:\s*none/.test(
+      heroCss,
+    ),
 );
 check(
   'hero gear porthole with supplied photography on home',

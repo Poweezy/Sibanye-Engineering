@@ -139,3 +139,15 @@ SES approved the homepage statistics section. The 2026 capability statement cont
 4. Interior pages adopt photography through an optional PageHero `image` prop with a calibrated scrim stack (About, Services).
 
 **Consequences.** ADR-021's crossfade description is superseded for the home hero (decision 1 above); its deploy-hygiene and protection invariants remain binding. The smoke gate grows accordingly. Any new generative asset must repeat the register → approval → derivative → guard path before site use.
+
+## ADR-023 — Photoreal cinematic home hero (proposal-C2) + people-depiction policy amendment (2026-10-26)
+
+**Context.** The client commissioned a cinematic photorealistic hero (structure, engineer figure, eventual dolly-in). Register policy (Gate 2 §5, ADR-022) admitted only non-documentary decoration — "never depicts people" — and all video models are Basic-plan-gated, so the animation half of the brief was not deliverable. Two FLUX 3 Image stills (C, C2) were generated and registered with an honest policy flag (3 credits each; 51 credits remaining).
+
+**Decision.**
+1. Policy amended (client approval, 2026-10-26): the creative register admits SES-approved photorealistic scenes containing **generic, non-identifiable AI-generated people**, decorative use only — never captioned or implied as a real SES employee, project, client or credential. Depiction of real people/projects via generative tools remains out of bounds.
+2. Proposal-C2 adopted as the home-hero backdrop (client "proceed"): ships as `public/images/hero/proposal-c2-cinematic-hero-16x9.webp` via `scripts/build-hero-derivatives.mjs` job 17 (≤700KB guard), replacing the proposal-B blueprint plate as the backdrop. Proposal-B remains in `public/images/hero/` as the documented fallback; proposal-C stays registered and unreferenced.
+3. The brief's slow cinematic dolly-in ships as a CSS establishing move — 45s one-shot transform-only scale toward the subject, disabled under `prefers-reduced-motion` — until the video track reopens on a plan upgrade (preserved prompt + job IDs live in the register).
+4. Smoke guards updated: check 9a asserts the C2 backdrop; a new check asserts the dolly animation and its reduced-motion off-switch; check 8's leak scan is unchanged (derivative names stay free of register/CDN tokens).
+
+**Consequences.** The hero's centre-right subject and quiet left zone are baked into the approved frame; the calibrated grade/overlay/copy-shield stack is retained for headline contrast. Any future people-depicting generative asset must repeat the register → class + per-asset approval → derivative → guard path.
