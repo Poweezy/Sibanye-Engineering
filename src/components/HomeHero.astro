@@ -1,6 +1,5 @@
 ---
 import Icon from './Icon.astro';
-import GearWatermark from './GearWatermark.astro';
 import HeroBackdrop from './HeroBackdrop.astro';
 ---
 
@@ -13,32 +12,8 @@ import HeroBackdrop from './HeroBackdrop.astro';
     aria-hidden="true"
   ></div>
 
-  <!-- Gear porthole — one rotor drives the gear-masked window and the amber
-       watermark in lockstep (90s). The photograph inside counter-rotates at
-       the same rate, so it appears pinned to the page while the rotating
-       gear window sweeps across it, revealing different parts of the image.
-       Mask geometry: public/images/gear-mask.svg. -->
-  <div
-    class="ses-hero__gear pointer-events-none absolute top-1/2 right-[-250px] aspect-square w-[560px] -translate-y-1/2 sm:right-[-230px] sm:w-[700px] lg:right-[-170px] lg:w-[820px] xl:right-[-120px]"
-    aria-hidden="true"
-  >
-    <div class="ses-hero__gear-rotor">
-      <div class="ses-hero__gear-window">
-        <img
-          src="/images/hero/manzini-mall-01.webp"
-          alt=""
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-          class="ses-hero__gear-photo"
-        />
-      </div>
-      <GearWatermark spin={false} class="inset-0 h-full w-full text-accent-400 opacity-[0.13]" />
-    </div>
-  </div>
-
-  <!-- Full-bleed dark veil — deepens the whole hero (plate + porthole) below
-       the copy layer (z-10), whose calibrated contrast stays untouched. -->
+  <!-- Full-bleed dark veil — deepens the hero backdrop below the copy layer
+       (z-10), whose calibrated contrast stays untouched. -->
   <div
     class="ses-hero__overlay pointer-events-none absolute inset-0 z-[5]"
     aria-hidden="true"
@@ -125,82 +100,18 @@ import HeroBackdrop from './HeroBackdrop.astro';
       0 3px 24px rgb(12 10 9 / 0.42);
   }
 
-  .ses-hero__gear {
-    filter: drop-shadow(0 0 42px rgb(214 156 31 / 0.16));
-  }
-
-  /* One rotor spins both the gear-mask window and the amber watermark in
-     perfect lockstep (single animation = no drift between them). */
-  .ses-hero__gear-rotor {
-    position: absolute;
-    inset: 0;
-    animation: gear-spin 90s linear infinite;
-    transform-origin: 50% 50%;
-    will-change: transform;
-  }
-
-  /* Gear-shaped aperture (same geometry as GearWatermark); rotates with the
-     rotor, so the porthole itself turns. The mask's gear silhouette is
-     rotationally symmetric, so it never reveals outside the square photo. */
-  .ses-hero__gear-window {
-    position: absolute;
-    inset: 0;
-    -webkit-mask-image: url('/images/gear-mask.svg');
-    mask-image: url('/images/gear-mask.svg');
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
-    -webkit-mask-position: center;
-    mask-position: center;
-  }
-
-  /* The photograph counter-rotates (same 90s, reversed) to cancel the
-     rotor's spin — its pixels stay pinned to the viewport while the gear
-     window sweeps across it, revealing different parts of the still image.
-     Dimmed to brightness(.78): the raw photo (mean 0.54 sRGB) washed out
-     the headline wherever the porthole passed behind it. */
-  .ses-hero__gear-photo {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 40%;
-    filter: brightness(0.78) saturate(0.85);
-    animation: gear-spin 90s linear infinite reverse;
-    transform-origin: 50% 50%;
-    will-change: transform;
-  }
-
   .ses-hero__headline-accent {
     text-wrap: balance;
   }
 
   @media (max-width: 639px) {
-    .ses-hero__gear {
-      top: auto;
-      right: -180px;
-      bottom: -150px;
-      width: 420px;
-      /* Tailwind v4's -translate-y-1/2 uses the `translate` property, so it
-         must be reset here (transform: none has no effect on it). */
-      translate: none;
-      opacity: 0.92;
-    }
-
-    .ses-hero__gear-photo {
-      object-position: 58% center;
-    }
-
     .ses-hero__atmosphere {
       background:
         radial-gradient(ellipse at 80% 78%, rgb(214 156 31 / 0.1), transparent 36%),
         linear-gradient(90deg, rgb(18 16 15 / 0.36), rgb(18 16 15 / 0.08));
     }
 
-    /* Slightly lighter veil on mobile — the hero is viewport-tall and the
-       porthole sits low, so keep the photo readable. */
+    /* Slightly lighter veil on mobile — the hero is viewport-tall. */
     .ses-hero__overlay {
       background: linear-gradient(
         180deg,
@@ -211,16 +122,4 @@ import HeroBackdrop from './HeroBackdrop.astro';
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .ses-hero__gear {
-      filter: none;
-    }
-
-    /* Watermark gets spin={false}; stop the rotor and the photo's
-       counter-rotation so the whole porthole renders static. */
-    .ses-hero__gear-rotor,
-    .ses-hero__gear-photo {
-      animation: none;
-    }
-  }
 </style>
