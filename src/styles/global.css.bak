@@ -1,0 +1,245 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   SES design tokens — official brand palette. Primary amber is the official
+   logo field #D69C1F (SIBANYE-LOGO-(OFFICIAL).jpg, supplied 2026-10-22);
+   flare/bright remain provisional references sampled from the capability-
+   statement cover (docs/content-open-items.md item 14). Governed by the
+   ses-brand-identity agent: amber gold + engineering orange on warm near-black
+   ink and warm paper. Extended ramps are contrast-derived tints/shades.
+--------------------------------------------------------------------------- */
+@theme {
+  --font-display: "Space Grotesk Variable", "Space Grotesk", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", "Inter", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+
+  /* Ink — warm near-black ramp anchored on official #12100F */
+  --color-ink-950: #12100f;
+  --color-ink-900: #1d1a17;
+  --color-ink-800: #2a2521;
+  --color-ink-700: #3b342e;
+  --color-ink-600: #554b42;
+  --color-ink-500: #75685c;
+  --color-ink-400: #9c8f82;
+  --color-ink-300: #c4bab0;
+  --color-ink-200: #ded7ce;
+  --color-ink-100: #f0ebe4;
+
+  /* Accent — amber gold ramp anchored on the official logo field #D69C1F
+     (supplied 2026-10-22). Derived steps meet WCAG targets:
+     700 ≥5:1 on white · 600 ≥3:1 on white · 400/300 ≥9:1 on ink-950. */
+  --color-accent-700: #8b6514; /* bronze — accent text on light (5.3:1) */
+  --color-accent-600: #af8019; /* deep amber — icons on light (3.5:1) */
+  --color-accent-500: #d69c1f; /* amber gold — primary (official logo field; 7.8:1 with ink-950) */
+  --color-accent-400: #ddac43; /* light amber — text/icons on dark (9.1:1) */
+  --color-accent-300: #e5c172; /* (11:1 on ink-950) */
+  --color-accent-200: #efd9aa;
+  --color-accent-100: #f9f0dd;
+
+  /* Secondary brand colours (official sampled anchors) */
+  --color-flare: #e2631b;  /* engineering orange — hovers, gradient partner */
+  --color-bright: #f0d711; /* bright yellow — non-text signature marks only */
+
+  /* Paper neutrals — official light grey #DCDFE4 + warm support */
+  --color-paper: #f8f7f4;
+  --color-paper-2: #efeeea;
+  --color-line: #dcdfe4;
+  --color-body: #40454b;
+  --color-muted: #575b61; /* official slate grey (6.8:1 on white) */
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white font-sans text-body antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight text-ink-900;
+  }
+
+  ::selection {
+    background: var(--color-accent-500);
+    color: var(--color-ink-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-700);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Layout -------------------------------------------------------------- */
+  .container-x {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-accent-700;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply h-px w-8 shrink-0 bg-accent-500;
+  }
+  .eyebrow--light {
+    @apply text-accent-400;
+  }
+
+  /* Buttons -------------------------------------------------------------- */
+  .btn,
+  .btn-primary,
+  .btn-dark,
+  .btn-outline-light,
+  .btn-outline-dark {
+    @apply inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-sm font-semibold tracking-wide transition-colors duration-200;
+  }
+  .btn-primary {
+    @apply bg-accent-500 text-ink-950 hover:bg-flare;
+  }
+  .btn-dark {
+    @apply bg-ink-900 text-white hover:bg-ink-700;
+  }
+  .btn-outline-light {
+    @apply border border-white/40 text-white hover:border-white hover:bg-white/10;
+  }
+  .btn-outline-dark {
+    @apply border border-ink-900/25 text-ink-900 hover:border-ink-900 hover:bg-ink-900 hover:text-white;
+  }
+
+  /* Cards & rules -------------------------------------------------------- */
+  .card {
+    @apply border border-line bg-white;
+  }
+  .hairline {
+    @apply h-px w-full bg-line;
+  }
+
+  /* Signature heat gradient — bright→amber→orange energy bar (use sparingly:
+     one per viewport, non-text decoration only) */
+  .flare-bar {
+    @apply h-1 w-full;
+    background: linear-gradient(90deg, var(--color-bright), var(--color-accent-500), var(--color-flare));
+  }
+
+  /* Blueprint grid texture for dark bands / image placeholders ------------ */
+  .blueprint {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  /* Scroll reveal --------------------------------------------------------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s ease,
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal.in-view {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Card imagery — slow zoom on hover/focus (project cards). Enhancement
+     only: gated to hover-capable pointers and static under reduced motion. */
+  .ses-card .ses-card-media {
+    overflow: hidden;
+  }
+  .ses-card .ses-card-media img {
+    transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @media (hover: hover) {
+    .ses-card:hover .ses-card-media img,
+    .ses-card:focus-within .ses-card-media img {
+      transform: scale(1.03);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .ses-card .ses-card-media img {
+      transition: none;
+      transform: none;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   View transitions (Astro ClientRouter) — honour reduced motion.
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Gear watermark — signature mark echoing the SES gear-E monogram.
+   Decorative only: aria-hidden, pointer-events none, non-text colour.
+--------------------------------------------------------------------------- */
+.gear-watermark {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+.gear-watermark--spin svg {
+  animation: gear-spin 90s linear infinite;
+  transform-origin: 50% 50%;
+}
+@keyframes gear-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gear-watermark--spin svg {
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Services marquee — one idea, quiet motion. Pauses on hover/focus;
+   renders as a static wrapped list under reduced motion.
+--------------------------------------------------------------------------- */
+.marquee {
+  overflow: hidden;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 48s linear infinite;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .marquee-copy--dupe {
+    display: none;
+  }
+}

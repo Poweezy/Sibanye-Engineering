@@ -187,28 +187,9 @@
   }
 }
 
-/* ---------------------------------------------------------------------------
-   Gear watermark — signature mark echoing the SES gear-E monogram.
    Decorative only: aria-hidden, pointer-events none, non-text colour.
 --------------------------------------------------------------------------- */
-.gear-watermark {
-  position: absolute;
-  pointer-events: none;
-  user-select: none;
-}
-.gear-watermark--spin svg {
-  animation: gear-spin 90s linear infinite;
-  transform-origin: 50% 50%;
-}
-@keyframes gear-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
 @media (prefers-reduced-motion: reduce) {
-  .gear-watermark--spin svg {
-    animation: none;
-  }
 }
 
 /* ---------------------------------------------------------------------------

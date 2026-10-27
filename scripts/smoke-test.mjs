@@ -7,7 +7,6 @@
  * key pages, the enquiry success-state handler, the official amber token in
  * compiled CSS, the AI-slop vocabulary guard (ADR-019), the rule that no
  * AI-generated asset is referenced by site code (ADR-018), and the hero
- * blueprint backdrop + gear porthole with foreground protection, payload and
  * raw-source (OneDrive resurrection) guards (ADR-021), interior hero
  * photo backdrops and the leadership profile photos (same ADR-021 pipeline),
  * plus the motion polish (count-up stats, staggered grid reveals, card zoom)
@@ -153,10 +152,6 @@ check(
   aiAssetHits.map(([p]) => p).join(', '),
 );
 
-// 9. Hero cinematic plate + gear porthole (ADR-021/ADR-023) — approved
-//    proposal-C2 plate as the backdrop, supplied Manzini Mall photography
-//    showing through the gear mask, protected foreground, lean payload,
-//    intact gear watermark.
 check(
   'hero cinematic backdrop (approved proposal-C2) on home',
   homeHtml.includes('hero-backdrop') && homeHtml.includes('proposal-c2-cinematic-hero-16x9.webp'),
@@ -175,33 +170,8 @@ check(
     ),
 );
 check(
-  'hero gear porthole with supplied photography on home',
-  homeHtml.includes('ses-hero__gear-rotor') &&
-    homeHtml.includes('ses-hero__gear-photo') &&
-    homeHtml.includes('manzini-mall-01.webp') &&
-    homeHtml.includes('gear-mask.svg'),
-);
-check(
-  'gear window sweeps over a stationary photo (rotor spin + reverse counter-spin)',
-  /gear-spin\s+90s\s+linear\s+infinite\s+reverse/.test(homeHtml) &&
-    /gear-spin\s+90s\s+linear\s+infinite(?! reverse)/.test(homeHtml),
-);
-check(
-  'hero copy shield + dimmed porthole photo (headline legibility)',
-  // esbuild minifies ::before to :before and brightness(0.78) to brightness(.78)
-  homeHtml.includes(':before') && /brightness\(\.?78\)/.test(homeHtml),
-);
-check(
-  'hero dark overlay present (veil over plate + porthole, below copy)',
-  (homeHtml.match(/ses-hero__overlay/g) ?? []).length >= 2,
-);
-check(
   'hero backdrop non-interactive (pointer-events-none, aria-hidden)',
   homeHtml.includes('pointer-events-none') && homeHtml.includes('aria-hidden'),
-);
-check(
-  'moving gear watermark intact (ADR-021 foreground protection)',
-  homeHtml.includes('gear-watermark') && cssText.includes('gear-spin'),
 );
 const oversized = [];
 const walkImgs = (dir) => {

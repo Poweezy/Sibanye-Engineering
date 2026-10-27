@@ -3,10 +3,7 @@
 //
 //   1. Blueprint plate — docs/creative-proposals/proposal-B-hero-grid-16x9.png
 //      → public/images/hero/proposal-b-hero-grid-16x9.webp
-//   2. Gear-porthole photo — docs/raw-photography/manzini-mall-01.jpg
-//      → public/images/hero/manzini-mall-01.webp (1200px wide, for the ≤820px
-//        gear window at 1–2× device pixel ratio)
-//   3. About-hero photo — docs/raw-photography/engineers-golden-industrial-site.png
+//   2. About-hero photo — docs/raw-photography/engineers-golden-industrial-site.png
 //      → public/images/hero/engineers-golden-industrial-site.webp (1600px wide
 //        full-bleed backdrop for the PageHero band on /about)
 //   4. Services-hero photo — docs/raw-photography/sunset-industrial-blueprint.png
@@ -47,12 +44,6 @@ const jobs = [
     src: 'docs/creative-proposals/proposal-B-hero-grid-16x9.png',
     out: 'public/images/hero/proposal-b-hero-grid-16x9.webp',
     webp: { quality: 85 },
-  },
-  {
-    src: 'docs/raw-photography/manzini-mall-01.jpg',
-    out: 'public/images/hero/manzini-mall-01.webp',
-    resize: { width: 1200, withoutEnlargement: true },
-    webp: { quality: 82 },
   },
   {
     src: 'docs/raw-photography/engineers-golden-industrial-site.png',
