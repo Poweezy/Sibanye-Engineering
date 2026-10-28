@@ -35,3 +35,36 @@ derivative; a 45s one-shot CSS dolly-in stands in for the plan-gated video
 move, and the video path reopens on a plan upgrade with the prompt preserved
 above). Proposal-C remains registered and unreferenced; the proposal-B
 blueprint plate stays in `public/images/hero/` as the documented fallback.
+
+---
+
+## 2026-10-27 — Engineering-background library (proposals D–I, ADR-024)
+
+Six discipline-specific backdrops for dark service/sector/capability surfaces,
+generated from the client-commissioned brief (SES letter, 2026-10-27) which
+pre-approved the six-image library and its integration. Production model:
+**Seedream 5.0 Flash** (0.5 credits/image, 2k, 16:9) — planned FLUX.2 jobs were
+switched after a text-bake defect, and FLUX 3 reserved for hero work. 7 jobs ×
+0.5 = **3.5 credits spent** (~47.5 remaining). Every asset was screen-reviewed
+before acceptance; one reject is preserved below.
+
+| Asset | Source job (Seedream 5.0 Flash) | Prompt intent | Intended slot | Policy screen | SES approval |
+| --- | --- | --- | --- | --- | --- |
+| `proposal-D-structural-16x9.png` | `hf_20261027_170946_75d9167a` | Structural: steel/concrete multi-storey under construction, amber late light, no text | Dark service cards (civil, structural, industrial) | ✅ No text/logo/people; geometry straight | ✅ 2026-10-27 (library pre-approved) |
+| `proposal-E-water-16x9.png` | `hf_20261027_174536_7f1a75f9` | Water/sanitation: treatment basins, pipework, valves; navy/amber grade | Water & sanitation cards/panels | ✅ No text/logo; credible plant | ✅ 2026-10-27 |
+| `proposal-F-transport-16x9.png` | `hf_20261027_175951_b913f678` | Transport: road/bridge, piers, drainage; dark grade, amber sun | Transportation cards/panels | ✅ No text/logo; spans plausible | ✅ 2026-10-27 |
+| `proposal-G-energy-16x9.png` | `hf_20261027_185715_83fba61a` (v2) | Energy: pylon, substation, solar in savanna | Energy cards/panels | ✅ No text/logo | ✅ 2026-10-27 |
+| `proposal-G-energy-16x9-rejected-v1-baked-text.png` | `hf_20261027_181458_8f8cb19d` | Same brief (FLUX.2 first take) | — | ❌ **Rejected**: baked pseudo-text in sky | n/a (preserved as reject evidence) |
+| `proposal-H-coordination-16x9.png` | `hf_20261027_191326_00f09078` | Coordination: engineer in PPE annotating drawings, live site | Project/programme-management cards | ✅ Generic person per ADR-023; no readable text; natural pose | ✅ 2026-10-27 |
+| `proposal-I-texture-16x9.png` | `hf_20261027_192152_e223974e` | Abstract blueprint-grid texture, amber nodes | Faint band texture (capabilities); mining fallback | ✅ No text; near-zero complexity | ✅ 2026-10-27 |
+
+**Adoption (2026-10-27, ADR-024):** all six ship as ≤700KB WebP derivatives
+(`public/images/engineering-backgrounds/engineering-bg-*.webp`, names free of
+register/CDN tokens per the ADR-022 path) via `build-hero-derivatives.mjs`
+jobs 18–23. Consumption is mapped per service/sector in
+`src/lib/serviceBackgrounds.ts`; decorative-only markup via the shared
+`.ses-bgimg` layer (aria-hidden, pointer-events-none, scrimmed, desktop-gated,
+reduced-motion-safe). Mining deliberately shares the abstract texture rather
+than borrowing a discipline image; sectors without a mapped asset keep plain
+cards. All AI-generated imagery remains decorative — never captioned as SES
+project photography (ADR-018/ADR-023 boundary).

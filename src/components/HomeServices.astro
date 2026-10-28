@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { serviceBackgrounds } from '../lib/serviceBackgrounds';
 
 interface Props {
   services: { id: string; title: string; tagline: string; icon: string }[];
@@ -27,13 +28,29 @@ const { services } = Astro.props;
     <ul class="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
       {
         services.map((s, i) => (
-          <li class="reveal group bg-white" style={`--reveal-delay: ${Math.min(i * 60, 360)}ms`}>
-            <a href={`/services/${s.id}/`} class="block h-full p-7 transition-colors group-hover:bg-ink-950">
-              <Icon name={s.icon} class="h-7 w-7 text-accent-600" />
-              <h3 class="mt-5 text-lg font-semibold transition-colors group-hover:text-white">{s.title}</h3>
-              <p class="mt-2 text-sm leading-relaxed text-muted transition-colors group-hover:text-ink-300">
-                {s.tagline}
-              </p>
+          <li class="reveal group relative isolate bg-white" style={`--reveal-delay: ${Math.min(i * 60, 360)}ms`}>
+            <a
+              href={`/services/${s.id}/`}
+              class="block h-full transition-colors group-hover:bg-ink-950"
+            >
+              {serviceBackgrounds[s.id] && (
+                <span class="block aspect-[16/9] overflow-hidden">
+                  <img
+                    src={serviceBackgrounds[s.id]}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="h-full w-full object-cover"
+                  />
+                </span>
+              )}
+              <span class="block p-7">
+                <Icon name={s.icon} class="h-7 w-7 text-accent-600 transition-colors group-hover:text-accent-400" />
+                <h3 class="mt-5 text-lg font-semibold text-ink-900 transition-colors group-hover:text-white">{s.title}</h3>
+                <span class="mt-2 block text-sm leading-relaxed text-muted transition-colors group-hover:text-ink-300">
+                  {s.tagline}
+                </span>
+              </span>
             </a>
           </li>
         ))

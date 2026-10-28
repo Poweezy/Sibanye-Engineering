@@ -39,5 +39,6 @@ npm run preview # preview the production build
 3. Client/partner logos, leadership and project photographs require SES permission before use.
 4. English only. British spelling. Currency in Emalangeni (E).
 
-The 2026 capability statement (the primary source of truth) has **not yet been supplied** —
-see `docs/content-open-items.md`.
+The 2026 capability statement (the primary source of truth) has been received; SES confirmation
+that this is the approved version and several project-specific content checks remain outstanding.
+See `docs/content-open-items.md`.

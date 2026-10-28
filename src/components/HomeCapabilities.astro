@@ -19,7 +19,18 @@ const capabilities = [
 ];
 ---
 
-<section class="bg-ink-900 text-white">
+<section class="relative isolate bg-ink-900 text-white">
+  <!-- ADR-024 approved generative texture (proposal-I): faint always-on depth
+       behind the capability list; decorative only, aria-hidden, no pointer
+       interception; hidden below 48rem and under reduced motion. -->
+  <span class="ses-bgimg ses-bgimg--static" aria-hidden="true" style="--ses-bgimg-opacity: 0.5">
+    <img
+      src="/images/engineering-backgrounds/engineering-bg-texture.webp"
+      alt=""
+      loading="lazy"
+      decoding="async"
+    />
+  </span>
   <div class="container-x grid gap-12 py-20 sm:py-24 lg:grid-cols-2 lg:gap-16">
     <div class="reveal">
       <p class="eyebrow eyebrow--light">Our Capabilities</p>

@@ -74,16 +74,16 @@ const facts = [
 
   <section class="bg-paper-2">
     <div class="container-x flex items-center justify-between gap-6 py-10">
-      <a href={`/projects/${prev.id}/`} class="group inline-flex items-center gap-3 text-sm font-semibold text-ink-900">
-        <Icon name="arrow" class="h-4 w-4 rotate-180 text-accent-700 transition-transform group-hover:-translate-x-1" />
-        <span class="max-w-[12rem] truncate sm:max-w-none">{prev.data.title}</span>
+      <a href={`/projects/${prev.id}/`} class="group inline-flex min-w-0 flex-1 items-center gap-3 text-sm font-semibold text-ink-900">
+        <Icon name="arrow" class="h-4 w-4 shrink-0 rotate-180 text-accent-700 transition-transform group-hover:-translate-x-1" />
+        <span class="min-w-0 max-w-[12rem] truncate sm:max-w-none">{prev.data.title}</span>
       </a>
       <a href="/projects/" class="hidden text-xs font-semibold uppercase tracking-[0.18em] text-muted hover:text-accent-700 sm:inline">
         All projects
       </a>
-      <a href={`/projects/${next.id}/`} class="group inline-flex items-center gap-3 text-right text-sm font-semibold text-ink-900">
-        <span class="max-w-[12rem] truncate sm:max-w-none">{next.data.title}</span>
-        <Icon name="arrow" class="h-4 w-4 text-accent-700 transition-transform group-hover:translate-x-1" />
+      <a href={`/projects/${next.id}/`} class="group inline-flex min-w-0 flex-1 items-center justify-end gap-3 text-right text-sm font-semibold text-ink-900">
+        <span class="min-w-0 max-w-[12rem] truncate sm:max-w-none">{next.data.title}</span>
+        <Icon name="arrow" class="h-4 w-4 shrink-0 text-accent-700 transition-transform group-hover:translate-x-1" />
       </a>
     </div>
   </section>

@@ -142,6 +142,45 @@ const jobs = [
     resize: { width: 1600, withoutEnlargement: true },
     webp: { quality: 82 },
   },
+  // ADR-024 engineering-background library — six SES-approved (2026-10-27)
+  // generative backdrops for dark service/sector/capability surfaces.
+  // Raw stays under docs/creative-proposals/ (register rows D–I); derivatives
+  // use neutral engineering-bg-* names (smoke check 8 stays token-clean).
+  {
+    src: 'docs/creative-proposals/proposal-D-structural-16x9.png',
+    out: 'public/images/engineering-backgrounds/engineering-bg-structural.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 80 },
+  },
+  {
+    src: 'docs/creative-proposals/proposal-E-water-16x9.png',
+    out: 'public/images/engineering-backgrounds/engineering-bg-water.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 80 },
+  },
+  {
+    src: 'docs/creative-proposals/proposal-F-transport-16x9.png',
+    out: 'public/images/engineering-backgrounds/engineering-bg-transport.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 80 },
+  },
+  {
+    src: 'docs/creative-proposals/proposal-G-energy-16x9.png',
+    out: 'public/images/engineering-backgrounds/engineering-bg-energy.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 80 },
+  },
+  {
+    src: 'docs/creative-proposals/proposal-H-coordination-16x9.png',
+    out: 'public/images/engineering-backgrounds/engineering-bg-coordination.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 80 },
+  },
+  {
+    src: 'docs/creative-proposals/proposal-I-texture-16x9.png',
+    out: 'public/images/engineering-backgrounds/engineering-bg-texture.webp',
+    webp: { quality: 80 },
+  },
 ];
 
 for (const { src, out, resize, webp } of jobs) {
