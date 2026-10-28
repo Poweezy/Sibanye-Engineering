@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/PageHero.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import Icon from '../../components/Icon.astro';
+import { serviceBackgrounds } from '../../lib/serviceBackgrounds';
 
 const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
 ---
@@ -25,15 +26,28 @@ const services = (await getCollection('services')).sort((a, b) => a.data.order -
         {
           services.map((s) => (
             <li class="group bg-white">
-              <a href={`/services/${s.id}/`} class="block h-full p-7 transition-colors group-hover:bg-ink-950">
-                <Icon name={s.data.icon} class="h-7 w-7 text-accent-500" />
-                <h2 class="mt-5 text-lg font-semibold transition-colors group-hover:text-white">{s.data.title}</h2>
-                <p class="mt-2 text-sm leading-relaxed text-muted transition-colors group-hover:text-ink-300">
-                  {s.data.tagline}
-                </p>
-                <span class="mt-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent-700 transition-colors group-hover:text-accent-300">
-                  Explore
-                  <Icon name="arrow" class="h-3.5 w-3.5" />
+              <a href={`/services/${s.id}/`} class="block h-full transition-colors group-hover:bg-ink-950">
+                  {serviceBackgrounds[s.id] && (
+                    <span class="block aspect-[16/9] overflow-hidden">
+                      <img
+                        src={serviceBackgrounds[s.id]}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                        class="h-full w-full object-cover"
+                      />
+                    </span>
+                  )}
+                <span class="block p-7">
+                  <Icon name={s.data.icon} class="h-7 w-7 text-accent-500" />
+                  <h2 class="mt-5 text-lg font-semibold transition-colors group-hover:text-white">{s.data.title}</h2>
+                  <span class="mt-2 block text-sm leading-relaxed text-muted transition-colors group-hover:text-ink-300">
+                    {s.data.tagline}
+                  </span>
+                  <span class="mt-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent-700 transition-colors group-hover:text-accent-300">
+                    Explore
+                    <Icon name="arrow" class="h-3.5 w-3.5" />
+                  </span>
                 </span>
               </a>
             </li>

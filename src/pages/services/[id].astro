@@ -5,6 +5,7 @@ import PageHero from '../../components/PageHero.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import Icon from '../../components/Icon.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
+import { serviceBackgrounds } from '../../lib/serviceBackgrounds';
 
 export async function getStaticPaths() {
   const services = await getCollection('services');
@@ -53,7 +54,12 @@ const related = projects
 ---
 
 <BaseLayout title={service.data.title} description={service.data.tagline}>
-  <PageHero eyebrow="Service" title={service.data.title} intro={service.data.tagline} />
+  <PageHero
+    eyebrow="Service"
+    title={service.data.title}
+    intro={service.data.tagline}
+    image={serviceBackgrounds[service.id]}
+  />
 
   <section class="bg-white">
     <div class="container-x grid gap-12 py-20 sm:py-24 lg:grid-cols-12 lg:gap-16">

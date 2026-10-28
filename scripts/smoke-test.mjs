@@ -5,11 +5,12 @@
  * route counts, sitemap/robots, the PHP endpoint, dotfile copy, brand assets
  * (official lockup per ADR-015), retired-asset regression guard, SEO meta on
  * key pages, the enquiry success-state handler, the official amber token in
- * compiled CSS, the AI-slop vocabulary guard (ADR-019), the rule that no
- * AI-generated asset is referenced by site code (ADR-018), and the hero
+ * compiled CSS, the AI-slop vocabulary guard (ADR-019), the no-unapproved-
+ * AI-asset leakage guard (ADR-018), and the hero
  * raw-source (OneDrive resurrection) guards (ADR-021), interior hero
  * photo backdrops and the leadership profile photos (same ADR-021 pipeline),
- * plus the motion polish (count-up stats, staggered grid reveals, card zoom)
+ * plus engineering imagery on service/sector cards and service detail heroes,
+ * motion polish (count-up stats, staggered grid reveals, card zoom)
  * and the SES values wording transcribed from capability statement p. 6 (9i).
  *
  * Zero dependencies. Exit 0 = all checks pass; exit 1 = failures listed.
@@ -112,6 +113,67 @@ const handlerInBundles = jsFiles.some((f) => hasHandler(readFileSync(join(astroD
 check(
   'enquiry success-state handler compiled (inline or bundle)',
   hasHandler(contactHtml) || handlerInBundles,
+);
+
+// 5b. Every service/sector card uses its mapped engineering image, and each
+//     service detail hero reuses its corresponding card image.
+const serviceVisuals = [
+  ['civil-engineering', 'engineering-bg-structural.webp'],
+  ['water-sanitation', 'engineering-bg-water.webp'],
+  ['transportation', 'engineering-bg-transport.webp'],
+  ['energy', 'engineering-bg-energy.webp'],
+  ['structural-engineering', 'engineering-bg-structural.webp'],
+  ['mining-engineering', 'engineering-bg-mining.webp'],
+  ['project-programme-management', 'engineering-bg-coordination.webp'],
+  ['industrial-commercial-buildings', 'engineering-bg-structural.webp'],
+];
+const sectorVisuals = [
+  ['water-sanitation', 'engineering-bg-water.webp'],
+  ['energy', 'engineering-bg-energy.webp'],
+  ['transportation', 'engineering-bg-transport.webp'],
+  ['mining', 'engineering-bg-mining.webp'],
+  ['infrastructure', 'engineering-bg-coordination.webp'],
+  ['structures', 'engineering-bg-structural.webp'],
+  ['industrial-commercial', 'engineering-bg-structural.webp'],
+  ['healthcare', 'engineering-bg-coordination.webp'],
+  ['agriculture', 'engineering-bg-water.webp'],
+];
+const hasLinkedImage = (html, href, image) => {
+  const start = html.indexOf(`href="${href}"`);
+  if (start < 0) return false;
+  const end = html.indexOf('</a>', start);
+  return end > start && html.slice(start, end).includes(image);
+};
+const servicesIndexHtml = readFileSync(join(DIST, 'services', 'index.html'), 'utf8');
+const sectorsIndexHtml = readFileSync(join(DIST, 'sectors', 'index.html'), 'utf8');
+const servicesOnHome = serviceVisuals.every(([id, image]) =>
+  hasLinkedImage(homeHtml, `/services/${id}/`, image),
+);
+const servicesOnIndex = serviceVisuals.every(([id, image]) =>
+  hasLinkedImage(servicesIndexHtml, `/services/${id}/`, image),
+);
+const serviceHeroes = serviceVisuals.every(([id, image]) => {
+  const html = readFileSync(join(DIST, 'services', id, 'index.html'), 'utf8');
+  return html.includes(image) && html.includes('pointer-events-none') && html.includes('aria-hidden="true"');
+});
+const sectorsOnHome = sectorVisuals.every(([id, image]) =>
+  hasLinkedImage(homeHtml, `/sectors/#${id}`, image),
+);
+const sectorsOnIndex = sectorVisuals.every(([id, image]) => {
+  const start = sectorsIndexHtml.indexOf(`id="${id}"`);
+  const end = sectorsIndexHtml.indexOf('</section>', start);
+  return start >= 0 && end > start && sectorsIndexHtml.slice(start, end).includes(image);
+});
+check('mapped engineering images on all 8 home service cards', servicesOnHome);
+check('mapped engineering images on all 8 services index cards', servicesOnIndex);
+check('matching image on all 8 service detail heroes', serviceHeroes);
+check('mapped engineering images on all 9 home sector cards', sectorsOnHome);
+check('mapped engineering images on all 9 sector index cards', sectorsOnIndex);
+check(
+  'Mining uses its dedicated visual, not the generic texture fallback',
+  existsSync(join(DIST, 'images', 'engineering-backgrounds', 'engineering-bg-mining.webp')) &&
+    serviceVisuals.find(([id]) => id === 'mining-engineering')?.[1] === 'engineering-bg-mining.webp' &&
+    sectorVisuals.find(([id]) => id === 'mining')?.[1] === 'engineering-bg-mining.webp',
 );
 
 // 6. Token sanity in compiled CSS — official amber present, retired teal absent.

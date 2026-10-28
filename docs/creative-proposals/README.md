@@ -48,7 +48,7 @@ switched after a text-bake defect, and FLUX 3 reserved for hero work. 7 jobs ×
 0.5 = **3.5 credits spent** (~47.5 remaining). Every asset was screen-reviewed
 before acceptance; one reject is preserved below.
 
-| Asset | Source job (Seedream 5.0 Flash) | Prompt intent | Intended slot | Policy screen | SES approval |
+| Asset | Source model / job | Prompt intent | Intended slot | Policy screen | SES approval |
 | --- | --- | --- | --- | --- | --- |
 | `proposal-D-structural-16x9.png` | `hf_20261027_170946_75d9167a` | Structural: steel/concrete multi-storey under construction, amber late light, no text | Dark service cards (civil, structural, industrial) | ✅ No text/logo/people; geometry straight | ✅ 2026-10-27 (library pre-approved) |
 | `proposal-E-water-16x9.png` | `hf_20261027_174536_7f1a75f9` | Water/sanitation: treatment basins, pipework, valves; navy/amber grade | Water & sanitation cards/panels | ✅ No text/logo; credible plant | ✅ 2026-10-27 |
@@ -57,14 +57,18 @@ before acceptance; one reject is preserved below.
 | `proposal-G-energy-16x9-rejected-v1-baked-text.png` | `hf_20261027_181458_8f8cb19d` | Same brief (FLUX.2 first take) | — | ❌ **Rejected**: baked pseudo-text in sky | n/a (preserved as reject evidence) |
 | `proposal-H-coordination-16x9.png` | `hf_20261027_191326_00f09078` | Coordination: engineer in PPE annotating drawings, live site | Project/programme-management cards | ✅ Generic person per ADR-023; no readable text; natural pose | ✅ 2026-10-27 |
 | `proposal-I-texture-16x9.png` | `hf_20261027_192152_e223974e` | Abstract blueprint-grid texture, amber nodes | Faint band texture (capabilities); mining fallback | ✅ No text; near-zero complexity | ✅ 2026-10-27 |
+| `proposal-J-mining-16x9.png` | `image_auto` — 2026-10-28 | Open-pit mine with stepped benches and haul road, Southern African landscape, restrained amber light | Mining Engineering card and detail hero | ✅ Decorative generic mine scene; no text/logo/people | ✅ Approved by SES direction 2026-10-28 |
 
 **Adoption (2026-10-27, ADR-024):** all six ship as ≤700KB WebP derivatives
 (`public/images/engineering-backgrounds/engineering-bg-*.webp`, names free of
 register/CDN tokens per the ADR-022 path) via `build-hero-derivatives.mjs`
 jobs 18–23. Consumption is mapped per service/sector in
-`src/lib/serviceBackgrounds.ts`; decorative-only markup via the shared
-`.ses-bgimg` layer (aria-hidden, pointer-events-none, scrimmed, desktop-gated,
-reduced-motion-safe). Mining deliberately shares the abstract texture rather
-than borrowing a discipline image; sectors without a mapped asset keep plain
-cards. All AI-generated imagery remains decorative — never captioned as SES
-project photography (ADR-018/ADR-023 boundary).
+`src/lib/serviceBackgrounds.ts`. All AI-generated imagery remains decorative —
+never captioned as SES project photography (ADR-018/ADR-023 boundary).
+
+**Mining visual (2026-10-28):** proposal-J adds a dedicated generated mining
+scene, approved by SES direction, replacing the generic texture fallback on
+the Mining Engineering service and Mining sector cards. It ships as
+`engineering-bg-mining.webp` through the same ≤700KB derivative pipeline.
+The images appear on home and index cards; service images are also applied to
+their matching service detail hero.

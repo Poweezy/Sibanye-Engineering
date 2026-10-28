@@ -181,6 +181,12 @@ const jobs = [
     out: 'public/images/engineering-backgrounds/engineering-bg-texture.webp',
     webp: { quality: 80 },
   },
+  {
+    src: 'docs/creative-proposals/proposal-J-mining-16x9.png',
+    out: 'public/images/engineering-backgrounds/engineering-bg-mining.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 80 },
+  },
 ];
 
 for (const { src, out, resize, webp } of jobs) {
