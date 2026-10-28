@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Privacy Notice"
+  description="How Sibanye Engineering Solutions uses and retains information submitted through its project enquiry form."
+>
+  <section class="bg-paper-2">
+    <div class="container-x py-16 sm:py-20">
+      <p class="eyebrow">Privacy</p>
+      <h1 class="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-ink-950 sm:text-5xl">
+        Privacy notice
+      </h1>
+      <p class="mt-5 text-sm text-muted">Last updated: 28 October 2026</p>
+    </div>
+  </section>
+
+  <article class="container-x max-w-3xl py-12 sm:py-16">
+    <div class="space-y-10 text-base leading-relaxed text-body">
+      <section>
+        <h2 class="text-xl font-semibold text-ink-950">Who we are</h2>
+        <p class="mt-3">
+          Sibanye Engineering Solutions (SES) handles information submitted through this website's
+          project enquiry form. For privacy questions or requests, email
+          <a class="font-medium text-accent-700 underline" href="mailto:corporate@sibanyeengineering.com">
+            corporate@sibanyeengineering.com
+          </a>.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-ink-950">Information we collect and why</h2>
+        <p class="mt-3">
+          The form asks for your name, email address and project details. You may also provide your
+          organisation, phone number and sector of interest. For a valid submitted enquiry, the
+          endpoint includes your IP address in the email sent to SES. A SHA-256 hash of the IP
+          address is also used in the separate rate-limit file to prevent repeat submissions. We
+          use these details to review and respond to your enquiry, manage any resulting engagement,
+          and operate and protect the form.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-ink-950">Service providers</h2>
+        <p class="mt-3">
+          Email hosting is provided by Real Image. Real Image may process enquiry emails to host
+          the SES mailbox and deliver messages. The website hosting provider may also process
+          information submitted through the form to operate the site. Enquiry details are sent to
+          corporate@sibanyeengineering.com.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-ink-950">How long we keep information</h2>
+        <ul class="mt-3 list-disc space-y-3 pl-6">
+          <li>Enquiry emails: 24 months after the last meaningful contact.</li>
+          <li>Unsuccessful or abandoned enquiries: 12 months after the last contact.</li>
+          <li>
+            Enquiries that become client engagements: relevant correspondence is transferred to
+            the client record and kept for 7 years after the engagement ends where justified by
+            contractual, legal or business requirements.
+          </li>
+          <li>Mail delivery and error logs: 90 days.</li>
+          <li>
+            Security and rate-limiting logs: 30 days, unless an incident requires longer retention.
+            The separate rate-limit file stores a hashed IP key and removes entries after one hour.
+          </li>
+          <li>Backups containing enquiry emails: 90 days, after which older backups are securely overwritten or deleted.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-semibold text-ink-950">Your questions and requests</h2>
+        <p class="mt-3">
+          Contact SES at
+          <a class="font-medium text-accent-700 underline" href="mailto:corporate@sibanyeengineering.com">
+            corporate@sibanyeengineering.com
+          </a>
+          with questions or requests about your enquiry information, including a request to access,
+          correct or delete it. Requests will be handled in accordance with applicable requirements.
+        </p>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

@@ -84,7 +84,7 @@ resolve them by guesswork; answers may adjust case-study data before publication
 
 ## 6. Verification status (already checked by the agency)
 
-- `npm test` — green, **39 pages**, **88/88 smoke checks**, **86/86** internal references resolve (2026-10-28).
+- `npm test` — green, **40 pages**, **91/91 smoke checks**, **87/87** internal references resolve (2026-10-28; current local evidence).
 - Contrast — amber/near-black pairing verified against WCAG 2.1 AA (dark-on-amber CTAs 7.8:1).
 - Reduced-motion support — all animation (reveals, gear watermark, page transitions) renders
   static and fully visible when the OS requests reduced motion.

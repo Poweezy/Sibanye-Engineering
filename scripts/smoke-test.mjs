@@ -13,10 +13,14 @@
  * motion polish (count-up stats, staggered grid reveals, card zoom)
  * and the SES values wording transcribed from capability statement p. 6 (9i).
  *
+ * The CSP script hashes are checked against each emitted inline module so
+ * restrictive production headers cannot silently disable client behaviour.
+ *
  * Zero dependencies. Exit 0 = all checks pass; exit 1 = failures listed.
  * Invoked by `npm test` (which runs the build first) — see package.json and
  * docs/HANDOVER.md §1.
  */
+import { createHash } from 'node:crypto';
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -37,8 +41,8 @@ if (!existsSync(DIST)) {
   process.exit(1);
 }
 
-// 1. Route inventory — 38 index.html files (7 core + 9 services + 22 projects,
-//    including their indexes) + 404.html = 39 routes.
+// 1. Route inventory — 39 index.html files (7 core + 9 services + 22 projects,
+//    including their indexes, plus privacy) + 404.html = 40 routes.
 const indexPages = [];
 const walk = (dir) => {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -48,7 +52,7 @@ const walk = (dir) => {
   }
 };
 walk(DIST);
-check('route count (index.html files)', indexPages.length === 38, `found ${indexPages.length}, expected 38`);
+check('route count (index.html files)', indexPages.length === 39, `found ${indexPages.length}, expected 39`);
 check('404 page present', existsSync(join(DIST, '404.html')));
 
 // 2. Infrastructure artifacts
@@ -58,6 +62,28 @@ const robots = existsSync(join(DIST, 'robots.txt')) ? readFileSync(join(DIST, 'r
 check('robots.txt references sitemap', /sitemap-index\.xml/i.test(robots));
 check('api/enquiry.php shipped', existsSync(join(DIST, 'api', 'enquiry.php')));
 check('.htaccess shipped (dotfile copy)', existsSync(join(DIST, '.htaccess')));
+const apacheConfig = readFileSync(join(DIST, '.htaccess'), 'utf8');
+const csp = apacheConfig.match(/Content-Security-Policy\s+"([^"]+)"/i)?.[1] ?? '';
+const scriptSrc = csp.match(/(?:^|;)\s*script-src\s+([^;]+)/i)?.[1] ?? '';
+const htmlFiles = [...indexPages, join(DIST, '404.html')];
+const inlineModuleHashes = new Set();
+for (const file of htmlFiles) {
+  const html = readFileSync(file, 'utf8');
+  for (const [, attributes, body] of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+    if (/\bsrc\s*=/.test(attributes) || !/\btype="module"/i.test(attributes)) continue;
+    inlineModuleHashes.add(
+      `'sha256-${createHash('sha256').update(body).digest('base64')}'`,
+    );
+  }
+}
+const missingCspHashes = [...inlineModuleHashes].filter((hash) => !csp.includes(hash));
+check(
+  'CSP allows exact inline module scripts without unsafe-inline',
+  inlineModuleHashes.size > 0 &&
+    missingCspHashes.length === 0 &&
+    !scriptSrc.includes("'unsafe-inline'"),
+  missingCspHashes.join(', '),
+);
 
 // 3. Brand assets — ADR-015: the official lockup is the only site logo.
 for (const asset of [
@@ -119,6 +145,22 @@ const contactHtml = readFileSync(join(DIST, 'contact', 'index.html'), 'utf8');
 check(
   'enquiry form anchor + status element on contact',
   contactHtml.includes('id="enquiry"') && contactHtml.includes('data-form-status'),
+);
+check(
+  'enquiry form links to privacy notice',
+  contactHtml.includes('href="/privacy/"') && contactHtml.includes('Privacy Notice'),
+);
+const privacyHtml = readFileSync(join(DIST, 'privacy', 'index.html'), 'utf8');
+check(
+  'privacy notice includes client-approved retention periods',
+  privacyHtml.includes('24 months after the last meaningful contact') &&
+    privacyHtml.includes('12 months after the last contact') &&
+    privacyHtml.includes('90 days') &&
+    privacyHtml.includes('30 days'),
+);
+check(
+  'privacy notice identifies email host',
+  privacyHtml.includes('Email hosting is provided by Real Image'),
 );
 const astroDir = join(DIST, '_astro');
 const jsFiles = existsSync(astroDir) ? readdirSync(astroDir).filter((f) => f.endsWith('.js')) : [];
