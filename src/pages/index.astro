@@ -31,7 +31,12 @@ const leaders = (await getCollection('leadership')).sort((a, b) => a.id.localeCo
   <HomeServices services={services.map((s) => s.data)} />
   <HomeStats />
   <HomeProjects
-    projects={projects.map((p) => ({ id: p.id, title: p.data.title, sectors: p.data.sectors }))}
+    projects={projects.map((p) => ({
+      id: p.id,
+      title: p.data.title,
+      sectors: p.data.sectors,
+      image: p.data.image,
+    }))}
     sectorTitles={sectorTitles}
   />
   <HomeSectors sectors={sectors.map((s) => s.data)} />

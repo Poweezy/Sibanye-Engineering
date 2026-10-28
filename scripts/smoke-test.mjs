@@ -92,6 +92,17 @@ for (const rel of metaTargets) {
   check(`og:image on ${rel}`, html.includes('property="og:image"') && html.includes('/og.jpg'));
 }
 const homeHtml = readFileSync(join(DIST, 'index.html'), 'utf8');
+const featuredProjects = JSON.parse(
+  readFileSync(join(ROOT, 'src', 'content', 'projects.json'), 'utf8'),
+).filter((project) => project.featured);
+const featuredProjectsWithoutImages = featuredProjects.filter(
+  (project) => !project.image || !homeHtml.includes(project.image),
+);
+check(
+  'featured project photos render on home page',
+  featuredProjectsWithoutImages.length === 0,
+  featuredProjectsWithoutImages.map((project) => project.title).join(', '),
+);
 check(
   'large social-card meta (1200×630, summary_large_image)',
   homeHtml.includes('og:image:width" content="1200"') && homeHtml.includes('summary_large_image'),
