@@ -29,7 +29,22 @@
 //      → public/images/projects/national-healthcare-waste-facility.webp
 //  11. Project photo — docs/raw-photography/Shonalanga Pump Station — Ubombo Sugar Limited.jpg
 //      → public/images/projects/shonalanga-pump-station.webp
-//  12. CTA-band texture — docs/creative-proposals/proposal-A-hero-contours-16x9.png
+//      Additional project photos — supplied originals in docs/raw-photography/
+//      for Buy Cash Warehouse, Emandla Solar PV, Luke Commission SDC, MNWAP,
+//      MR3 Pedestrian Bridges, Ridgeview Township Roads, Sicholo Street,
+//      UNDP JET and UNIFOODS → matching WebP derivatives under
+//      public/images/projects/
+//  12. Lavumisa Border solar project — docs/raw-photography/Lavumisa Border Project - additional photo.jpg
+//      → public/images/projects/lavumisa-border.webp
+//  13. Water reticulation project — docs/raw-photography/Water Reticulation & Gravity Sewerage Network.jpg
+//      → public/images/projects/water-reticulation-sewerage.webp
+//  14. Hluti substation — docs/raw-photography/Hluti Power Sub-Station.jpg
+//      → public/images/projects/hluti-power-substation.webp
+//  15. Manzini Region water supply — docs/raw-photography/Manzini Region Sustainable Water Supply.png
+//      → public/images/projects/manzini-region-water.webp
+//  16. Nsoko Solar Park — docs/raw-photography/Nsoko Solar Park Project.png
+//      → public/images/projects/nsoko-solar-pv.webp
+//  17. CTA-band texture — docs/creative-proposals/proposal-A-hero-contours-16x9.png
 //      (approved generative asset, register job 58334af9, ADR-022)
 //      → public/images/creative/proposal-a-cta-contours.webp (full-bleed
 //        decorative backdrop for the CtaBand, screen-blended; the output name
@@ -100,6 +115,90 @@ const jobs = [
   {
     src: 'docs/raw-photography/Shonalanga Pump Station — Ubombo Sugar Limited.jpg',
     out: 'public/images/projects/shonalanga-pump-station.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/Rehabilitation and structural upgrade of a major warehouse facility.jpg',
+    out: 'public/images/projects/buy-cash-warehouse.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/EMANDLA-SOLAR-PHOTOVOLTAIC-PLANT.jpg',
+    out: 'public/images/projects/emandla-solar-pv.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/Luke Commission.jpg',
+    out: 'public/images/projects/luke-commission-sdc.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/Mkhondvo-Ngwavuma-Water-Augmentation-MNWAP.jpg',
+    out: 'public/images/projects/mkhondvo-ngwavuma-water.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/MR3 Pedestrian Bridges.jpg',
+    out: 'public/images/projects/mr3-pedestrian-bridges.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/Ridgeview Township Roads.jpg',
+    out: 'public/images/projects/ridgeview-township-roads.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/Sicholo Street & Associated Drainage Works.jpg',
+    out: 'public/images/projects/sicholo-street-drainage.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/UNDP Just Energy Transition (JET) Project.jpg',
+    out: 'public/images/projects/undp-jet.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/UNIFOODS Factory Shell.jpg',
+    out: 'public/images/projects/unifoods-factory-shell.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/Lavumisa Border Project - additional photo.jpg',
+    out: 'public/images/projects/lavumisa-border.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/Water Reticulation & Gravity Sewerage Network.jpg',
+    out: 'public/images/projects/water-reticulation-sewerage.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/Hluti Power Sub-Station.jpg',
+    out: 'public/images/projects/hluti-power-substation.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/Manzini Region Sustainable Water Supply.png',
+    out: 'public/images/projects/manzini-region-water.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/Nsoko Solar Park Project.png',
+    out: 'public/images/projects/nsoko-solar-pv.webp',
     resize: { width: 1600, withoutEnlargement: true },
     webp: { quality: 82 },
   },

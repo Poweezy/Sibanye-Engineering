@@ -270,6 +270,36 @@ check(
   rawSrc.join(', '),
 );
 
+const projectImageDir = join(ROOT, 'public', 'images', 'projects');
+const projectFiles = readdirSync(projectImageDir).filter((file) =>
+  statSync(join(projectImageDir, file)).isFile(),
+);
+const projectRecords = JSON.parse(readFileSync(join(ROOT, 'src', 'content', 'projects.json'), 'utf8'));
+const mappedProjectFiles = new Set(
+  projectRecords
+    .map((project) => project.image)
+    .filter((image) => typeof image === 'string')
+    .map((image) => image.replace(/^\/images\/projects\//, '')),
+);
+const nonWebpProjectFiles = projectFiles.filter((file) => !file.toLowerCase().endsWith('.webp'));
+const unmappedProjectFiles = projectFiles.filter((file) => !mappedProjectFiles.has(file));
+const missingProjectFiles = [...mappedProjectFiles].filter(
+  (file) => !existsSync(join(projectImageDir, file)),
+);
+check(
+  'project image directory contains only mapped WebP derivatives',
+  nonWebpProjectFiles.length === 0 &&
+    unmappedProjectFiles.length === 0 &&
+    missingProjectFiles.length === 0,
+  [
+    nonWebpProjectFiles.length && `non-WebP: ${nonWebpProjectFiles.join(', ')}`,
+    unmappedProjectFiles.length && `unmapped: ${unmappedProjectFiles.join(', ')}`,
+    missingProjectFiles.length && `missing: ${missingProjectFiles.join(', ')}`,
+  ]
+    .filter(Boolean)
+    .join('; '),
+);
+
 // 9c. Interior hero photo backdrops (ADR-021 pipeline): supplied photography on
 //     PageHero pages — decorative and non-interactive on each.
 const heroPhotoPages = [
@@ -330,18 +360,34 @@ check(
 //     and its own case-study page.
 const projectsIndexHtml = readFileSync(join(DIST, 'projects', 'index.html'), 'utf8');
 for (const [id, webp, alt] of [
+  ['buy-cash-warehouse', 'buy-cash-warehouse\\.webp', 'Rehabilitation of the Buy Cash Warehouse'],
+  ['emandla-solar-pv', 'emandla-solar-pv\\.webp', 'Emandla Solar Photovoltaic Plant'],
   ['galp-fuel-station-forecourt', 'galp-fueling-station-forecourt\\.webp', 'GALP Fueling Station Forecourt'],
   ['healing-power-church', 'healing-power-church\\.webp', 'Healing Power Church (HPC)'],
+  ['hluti-power-substation', 'hluti-power-substation\\.webp', 'Hluti Power Sub-Station'],
+  ['lavumisa-border', 'lavumisa-border\\.webp', 'Lavumisa Border Project'],
+  ['luke-commission-sdc', 'luke-commission-sdc\\.webp', 'Luke Commission Staff Development Centre'],
   ['manzini-mall', 'manzini-mall\\.webp', 'Manzini Mall'],
+  ['manzini-region-water', 'manzini-region-water\\.webp', 'Manzini Region Sustainable Water Supply'],
+  ['mkhondvo-ngwavuma-water', 'mkhondvo-ngwavuma-water\\.webp', 'Mkhondvo-Ngwavuma Water Augmentation Programme (MNWAP) Phase 1B'],
+  ['mr3-pedestrian-bridges', 'mr3-pedestrian-bridges\\.webp', 'MR3 Pedestrian Bridges'],
   ['national-healthcare-waste-facility', 'national-healthcare-waste-facility\\.webp', 'National Healthcare Waste Facility'],
+  ['nsoko-solar-pv', 'nsoko-solar-pv\\.webp', 'Nsoko Solar Photovoltaic Project'],
+  ['ridgeview-township-roads', 'ridgeview-township-roads\\.webp', 'Ridgeview Township Roads'],
+  ['sicholo-street-drainage', 'sicholo-street-drainage\\.webp', 'Sicholo Street & Associated Drainage Works'],
   ['shonalanga-pump-station', 'shonalanga-pump-station\\.webp', 'Shonalanga Pump Station — Ubombo Sugar Limited'],
+  ['undp-jet', 'undp-jet\\.webp', 'UNDP Just Energy Transition (JET) Project'],
+  ['unifoods-factory-shell', 'unifoods-factory-shell\\.webp', 'Unifoods Factory Shell'],
+  ['inyatsi-water-reticulation', 'water-reticulation-sewerage\\.webp', 'Water Reticulation & Gravity Sewerage Network'],
 ]) {
   const pageHtml = readFileSync(join(DIST, 'projects', id, 'index.html'), 'utf8');
   const imgIndex = new RegExp(`<img[^>]*${webp}[^>]*>`).exec(projectsIndexHtml)?.[0] ?? '';
   const imgPage = new RegExp(`<img[^>]*${webp}[^>]*>`).exec(pageHtml)?.[0] ?? '';
+  const altMatches = (img) =>
+    img.match(/\balt="([^"]*)"/)?.[1]?.replace(/&amp;|&#38;/g, '&') === alt;
   check(
     `${alt} photo on projects index + case-study page (descriptive alt)`,
-    imgIndex !== '' && imgPage !== '' && imgIndex.includes(`alt="${alt}"`) && imgPage.includes(`alt="${alt}"`),
+    imgIndex !== '' && imgPage !== '' && altMatches(imgIndex) && altMatches(imgPage),
   );
 }
 
