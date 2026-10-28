@@ -7,14 +7,14 @@
  * implying a completed project.
  */
 export const serviceBackgrounds: Record<string, string> = {
-  'civil-engineering': '/images/engineering-backgrounds/engineering-bg-structural.webp',
+  'civil-engineering': '/images/engineering-backgrounds/engineering-bg-civil.webp',
   'water-sanitation': '/images/engineering-backgrounds/engineering-bg-water.webp',
   transportation: '/images/engineering-backgrounds/engineering-bg-transport.webp',
   energy: '/images/engineering-backgrounds/engineering-bg-energy.webp',
   'structural-engineering': '/images/engineering-backgrounds/engineering-bg-structural.webp',
   'mining-engineering': '/images/engineering-backgrounds/engineering-bg-mining.webp',
   'project-programme-management': '/images/engineering-backgrounds/engineering-bg-coordination.webp',
-  'industrial-commercial-buildings': '/images/engineering-backgrounds/engineering-bg-structural.webp',
+  'industrial-commercial-buildings': '/images/engineering-backgrounds/engineering-bg-industrial.webp',
 };
 
 export const sectorBackgrounds: Record<string, string> = {
@@ -22,9 +22,9 @@ export const sectorBackgrounds: Record<string, string> = {
   energy: '/images/engineering-backgrounds/engineering-bg-energy.webp',
   transportation: '/images/engineering-backgrounds/engineering-bg-transport.webp',
   mining: '/images/engineering-backgrounds/engineering-bg-mining.webp',
-  infrastructure: '/images/engineering-backgrounds/engineering-bg-coordination.webp',
+  infrastructure: '/images/engineering-backgrounds/engineering-bg-infrastructure.webp',
   structures: '/images/engineering-backgrounds/engineering-bg-structural.webp',
   'industrial-commercial': '/images/engineering-backgrounds/engineering-bg-structural.webp',
-  healthcare: '/images/engineering-backgrounds/engineering-bg-coordination.webp',
+  healthcare: '/images/engineering-backgrounds/engineering-bg-healthcare.webp',
   agriculture: '/images/engineering-backgrounds/engineering-bg-water.webp',
 };

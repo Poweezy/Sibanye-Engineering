@@ -187,6 +187,30 @@ const jobs = [
     resize: { width: 1600, withoutEnlargement: true },
     webp: { quality: 80 },
   },
+  {
+    src: 'docs/creative-proposals/proposal-K-civil-engineering-16x9.png',
+    out: 'public/images/engineering-backgrounds/engineering-bg-civil.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 80 },
+  },
+  {
+    src: 'docs/creative-proposals/proposal-L-industrial-buildings-16x9.png',
+    out: 'public/images/engineering-backgrounds/engineering-bg-industrial.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 80 },
+  },
+  {
+    src: 'docs/creative-proposals/proposal-M-infrastructure-16x9.png',
+    out: 'public/images/engineering-backgrounds/engineering-bg-infrastructure.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 80 },
+  },
+  {
+    src: 'docs/creative-proposals/proposal-N-healthcare-16x9.png',
+    out: 'public/images/engineering-backgrounds/engineering-bg-healthcare.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 80 },
+  },
 ];
 
 for (const { src, out, resize, webp } of jobs) {

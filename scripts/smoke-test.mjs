@@ -118,24 +118,24 @@ check(
 // 5b. Every service/sector card uses its mapped engineering image, and each
 //     service detail hero reuses its corresponding card image.
 const serviceVisuals = [
-  ['civil-engineering', 'engineering-bg-structural.webp'],
+  ['civil-engineering', 'engineering-bg-civil.webp'],
   ['water-sanitation', 'engineering-bg-water.webp'],
   ['transportation', 'engineering-bg-transport.webp'],
   ['energy', 'engineering-bg-energy.webp'],
   ['structural-engineering', 'engineering-bg-structural.webp'],
   ['mining-engineering', 'engineering-bg-mining.webp'],
   ['project-programme-management', 'engineering-bg-coordination.webp'],
-  ['industrial-commercial-buildings', 'engineering-bg-structural.webp'],
+  ['industrial-commercial-buildings', 'engineering-bg-industrial.webp'],
 ];
 const sectorVisuals = [
   ['water-sanitation', 'engineering-bg-water.webp'],
   ['energy', 'engineering-bg-energy.webp'],
   ['transportation', 'engineering-bg-transport.webp'],
   ['mining', 'engineering-bg-mining.webp'],
-  ['infrastructure', 'engineering-bg-coordination.webp'],
+  ['infrastructure', 'engineering-bg-infrastructure.webp'],
   ['structures', 'engineering-bg-structural.webp'],
   ['industrial-commercial', 'engineering-bg-structural.webp'],
-  ['healthcare', 'engineering-bg-coordination.webp'],
+  ['healthcare', 'engineering-bg-healthcare.webp'],
   ['agriculture', 'engineering-bg-water.webp'],
 ];
 const hasLinkedImage = (html, href, image) => {

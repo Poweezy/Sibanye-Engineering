@@ -58,6 +58,10 @@ before acceptance; one reject is preserved below.
 | `proposal-H-coordination-16x9.png` | `hf_20261027_191326_00f09078` | Coordination: engineer in PPE annotating drawings, live site | Project/programme-management cards | ✅ Generic person per ADR-023; no readable text; natural pose | ✅ 2026-10-27 |
 | `proposal-I-texture-16x9.png` | `hf_20261027_192152_e223974e` | Abstract blueprint-grid texture, amber nodes | Faint band texture (capabilities); mining fallback | ✅ No text; near-zero complexity | ✅ 2026-10-27 |
 | `proposal-J-mining-16x9.png` | `image_auto` — 2026-10-28 | Open-pit mine with stepped benches and haul road, Southern African landscape, restrained amber light | Mining Engineering card and detail hero | ✅ Decorative generic mine scene; no text/logo/people | ✅ Approved by SES direction 2026-10-28 |
+| `proposal-K-civil-engineering-16x9.png` | `image_auto` — 2026-10-28 | Road, bridge and engineered drainage in a Southern African landscape | Civil Engineering card and detail hero | ✅ Decorative infrastructure scene; no text/logo/people | ✅ Approved by SES direction 2026-10-28 |
+| `proposal-L-industrial-buildings-16x9.png` | `image_auto` — 2026-10-28 | Modern factory/warehouse, loading bays, glazed office frontage and service yard | Industrial & Commercial Buildings card and detail hero | ✅ Decorative built-environment scene; no text/logo/people | ✅ Approved by SES direction 2026-10-28 |
+| `proposal-M-infrastructure-16x9.png` | `image_auto` — 2026-10-28 | Southern African road bridge, roadway, and reservoir/utility landscape | Infrastructure sector card | ✅ Decorative infrastructure scene; no text/logo/people | ✅ Approved by SES direction 2026-10-28 |
+| `proposal-N-healthcare-16x9.png` | `image_auto` — 2026-10-28 | Modern regional healthcare facility and landscaped campus in Southern Africa | Healthcare sector card | ✅ Decorative healthcare facility; no text/logo/people | ✅ Approved by SES direction 2026-10-28 |
 
 **Adoption (2026-10-27, ADR-024):** all six ship as ≤700KB WebP derivatives
 (`public/images/engineering-backgrounds/engineering-bg-*.webp`, names free of
@@ -72,3 +76,12 @@ the Mining Engineering service and Mining sector cards. It ships as
 `engineering-bg-mining.webp` through the same ≤700KB derivative pipeline.
 The images appear on home and index cards; service images are also applied to
 their matching service detail hero.
+
+**Civil and industrial visuals (2026-10-28):** proposals K and L replace
+the reused structural backdrop with discipline-specific road/bridge/drainage
+and industrial factory/warehouse scenes for their respective service cards,
+index entries and detail heroes.
+
+**Infrastructure and Healthcare visuals (2026-10-28):** proposals M and N
+replace the reused coordination image on the respective Market Sectors cards
+with a road-bridge/utility landscape and a modern regional healthcare facility.
