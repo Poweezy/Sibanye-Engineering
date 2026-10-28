@@ -14,7 +14,7 @@
 - `.htaccess` — security headers, browser caching, dotfile denial, custom 404 (ADR-012b)
 - `robots.txt` + `sitemap-index.xml` / `sitemap-0.xml` (`@astrojs/sitemap`)
 - Brand assets: `logo-official.jpg` (official lockup, ADR-015), `favicon.png`, `apple-touch-icon.png`, `og.jpg` (1200×630 social card), master `SIBANYE-LOGO-(OFFICIAL).jpg`
-- `downloads/ses-capability-statement-2026.pdf` (download link intentionally disabled until SES confirms the approved version — content-open-items item 1)
+- `downloads/ses-capability-statement-2026.pdf` (approved for public download by SES confirmation 2026-10-28; linked from `/capabilities/`)
 
 Build and verify locally before every deploy:
 
@@ -51,7 +51,7 @@ npm test          # build + smoke-test.mjs (artifact/integrity gate) + link-chec
 - [ ] `.enquiry-ratecheck` appears in the cPanel home directory — **not** in `public_html`
 - [ ] `https://www.sibanyeengineering.com/sitemap-index.xml` reachable; submit to Google Search Console
 - [ ] Social card previews resolve (og.jpg 1200×630, large-image card)
-- [ ] Capability-statement download enabled only after SES confirms the approved PDF version (item 1)
+- [ ] Confirm the approved capability-statement PDF downloads successfully from `/capabilities/`
 
 ## 5. Rollback
 
@@ -63,4 +63,4 @@ npm test          # build + smoke-test.mjs (artifact/integrity gate) + link-chec
 
 - **Content updates**: edit `src/content/*.json` (services, sectors, projects, leadership, clients), rebuild, redeploy — or raise a request with Analytical Sigma.
 - **Runtime surface**: the PHP endpoint is the only executable code; keep the cPanel PHP version current and directory listing off.
-- **Open approvals** that gate features (see `docs/content-open-items.md`): approved PDF version, live mailbox, photography permissions, statistics, client-logo wall, brand guide/vector/compact logo variants.
+- **Open items/deferred enhancements** (see `docs/content-open-items.md`): live mailbox verification; unresolved case-study facts and unassigned photo; client-logo wall; remaining brand guide/vector/compact logo variants. Current content, assigned supplied project photos and the 2026 capability PDF have client approval recorded 2026-10-28.

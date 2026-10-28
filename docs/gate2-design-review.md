@@ -40,12 +40,12 @@ content decisions, usage rights, content freeze and production QA remain tracked
 | D4 | **Homepage values line** — statement p6 is graphical; wording could not be transcribed | Confirm the values wording as printed in the statement | ☐ Confirmed ☐ Deferred |
 | D5 | **Service naming** — logo tagline uses short forms ("Mining", "Structures") vs site's full names | Confirm canonical names before any copy changes (item 15) | ☐ Keep full names ☐ Match tagline |
 | D6 | **Logo usage** — full official lockup shown per your directive (ADR-015) | The wordmark is unreadable at header scale — approve a compact/horizontal variant for the header (item 4); full lockup stays in the footer | ☐ Supply variant ☐ Keep as is |
-| D7 | **21 case studies** — data transcribed from the capability statement | Approve per-project publication (item 9), or mark exclusions | ☐ Approve ☐ With edits |
-| D8 | **Project values displayed** (e.g. E360m) — pending the Q1–Q4 clarifications | Publish values only once Q1–Q4 are answered | ☐ After Q1–Q4 ☐ Withhold values |
+| D7 | **21 case studies** — current published content approved by client confirmation 2026-10-28; unresolved statement ambiguities are deferred | Publish the approved current records; revisit only if a deferred question is later resolved | ✅ Approved; unresolved facts deferred |
+| D8 | **Project values displayed** — current source-supported values remain as published; unresolved Q1–Q4 ambiguities are deferred and not invented | Retain approved current values and omit unresolved values | ✅ Approved as currently published; Q1–Q4 deferred |
 | D9 | **Leadership** — SES-approved bios and credentials from statement pp. 4–5; portraits are present | Confirm current presentation or request edits | ☐ Approve ☐ With edits |
-| D10 | **Capability-statement download** — deliberately not linked | Confirm `ses-capability-statement-2026.pdf` is the approved public version (item 1) to enable the button | ☐ Approved PDF ☐ Send new version |
+| D10 | **Capability-statement download** — client approved `ses-capability-statement-2026.pdf` for public release on 2026-10-28; download link is enabled | Publish the approved PDF | ✅ Approved |
 | D11 | **Client logo wall** — client *names* are statement-confirmed; logos withheld | Supply logo files + written permission (item 7) or keep names-only | ☐ Supply logos ☐ Names only |
-| D12 | **Photography** — supplied project photos are assigned to matching project cards and detail heroes; publication permissions remain to be confirmed (item 3) | Confirm rights and placements for each supplied project photo; retain placeholders where no cleared image is available | ☐ Confirm rights ☐ Changes required |
+| D12 | **Photography** — client approved currently assigned supplied project photos for public use on 2026-10-28; unassigned assets and unmatched placements are deferred | Keep approved assigned photos; do not use deferred assets until separately approved | ✅ Current assignments approved; unassigned assets deferred |
 | D13 | **Enquiry form routing** — endpoint is built and configured to send to `corporate@sibanyeengineering.com`; production mail delivery is not yet verified (item 6) | Confirm the recipient is monitored and authorize a live end-to-end test on the agreed host | ☐ Confirm mailbox ☐ Details to follow |
 
 ## 4. Statement-transcription questions — Q1–Q6 (from the capability statement)
@@ -84,7 +84,7 @@ resolve them by guesswork; answers may adjust case-study data before publication
 
 ## 6. Verification status (already checked by the agency)
 
-- `npm test` — green, **39 pages**, **87/87 smoke checks**, **86/86** internal references resolve (2026-10-28).
+- `npm test` — green, **39 pages**, **88/88 smoke checks**, **86/86** internal references resolve (2026-10-28).
 - Contrast — amber/near-black pairing verified against WCAG 2.1 AA (dark-on-amber CTAs 7.8:1).
 - Reduced-motion support — all animation (reveals, gear watermark, page transitions) renders
   static and fully visible when the OS requests reduced motion.

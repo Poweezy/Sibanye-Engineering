@@ -73,6 +73,13 @@ for (const asset of [
 }
 check('retired monogram absent (ADR-015 regression guard)', !existsSync(join(DIST, 'logo-ses.png')));
 check('capability PDF shipped', existsSync(join(DIST, 'downloads', 'ses-capability-statement-2026.pdf')));
+const capabilitiesHtml = readFileSync(join(DIST, 'capabilities', 'index.html'), 'utf8');
+check(
+  'approved capability PDF is linked for public download',
+  capabilitiesHtml.includes('href="/downloads/ses-capability-statement-2026.pdf"') &&
+    capabilitiesHtml.includes('Approved for public release by SES.') &&
+    !capabilitiesHtml.includes('Published copy pending SES approval'),
+);
 
 // 4. SEO meta on key pages — one core page, one service, one case study, contact.
 const firstDir = (parent) =>
