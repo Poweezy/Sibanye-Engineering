@@ -25,7 +25,11 @@
 //      (8192×6144 original, preserved here after a OneDrive resurrection)
 //      → public/images/projects/manzini-mall.webp (1600px wide, Manzini Mall
 //        photo for the project card + case-study page)
-//  10. CTA-band texture — docs/creative-proposals/proposal-A-hero-contours-16x9.png
+//  10. Project photo — docs/raw-photography/National Healthcare Waste Facility.jpg
+//      → public/images/projects/national-healthcare-waste-facility.webp
+//  11. Project photo — docs/raw-photography/Shonalanga Pump Station — Ubombo Sugar Limited.jpg
+//      → public/images/projects/shonalanga-pump-station.webp
+//  12. CTA-band texture — docs/creative-proposals/proposal-A-hero-contours-16x9.png
 //      (approved generative asset, register job 58334af9, ADR-022)
 //      → public/images/creative/proposal-a-cta-contours.webp (full-bleed
 //        decorative backdrop for the CtaBand, screen-blended; the output name
@@ -84,6 +88,18 @@ const jobs = [
   {
     src: 'docs/raw-photography/manzini-mall-original.webp',
     out: 'public/images/projects/manzini-mall.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/National Healthcare Waste Facility.jpg',
+    out: 'public/images/projects/national-healthcare-waste-facility.webp',
+    resize: { width: 1600, withoutEnlargement: true },
+    webp: { quality: 82 },
+  },
+  {
+    src: 'docs/raw-photography/Shonalanga Pump Station — Ubombo Sugar Limited.jpg',
+    out: 'public/images/projects/shonalanga-pump-station.webp',
     resize: { width: 1600, withoutEnlargement: true },
     webp: { quality: 82 },
   },

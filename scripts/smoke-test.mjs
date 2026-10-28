@@ -333,6 +333,8 @@ for (const [id, webp, alt] of [
   ['galp-fuel-station-forecourt', 'galp-fueling-station-forecourt\\.webp', 'GALP Fueling Station Forecourt'],
   ['healing-power-church', 'healing-power-church\\.webp', 'Healing Power Church (HPC)'],
   ['manzini-mall', 'manzini-mall\\.webp', 'Manzini Mall'],
+  ['national-healthcare-waste-facility', 'national-healthcare-waste-facility\\.webp', 'National Healthcare Waste Facility'],
+  ['shonalanga-pump-station', 'shonalanga-pump-station\\.webp', 'Shonalanga Pump Station — Ubombo Sugar Limited'],
 ]) {
   const pageHtml = readFileSync(join(DIST, 'projects', id, 'index.html'), 'utf8');
   const imgIndex = new RegExp(`<img[^>]*${webp}[^>]*>`).exec(projectsIndexHtml)?.[0] ?? '';
