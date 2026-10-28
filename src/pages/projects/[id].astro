@@ -5,6 +5,7 @@ import PageHero from '../../components/PageHero.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import Icon from '../../components/Icon.astro';
 import ProjectImage from '../../components/ProjectImage.astro';
+import { sectorBackgrounds } from '../../lib/serviceBackgrounds';
 
 export async function getStaticPaths() {
   const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
@@ -21,6 +22,9 @@ export async function getStaticPaths() {
 const { project, prev, next } = Astro.props;
 const sectors = await getCollection('sectors');
 const sectorTitles = Object.fromEntries(sectors.map((s) => [s.id, s.data.title]));
+const heroImage =
+  project.data.image ||
+  project.data.sectors.map((sector) => sectorBackgrounds[sector]).find(Boolean);
 
 const facts = [
   { label: 'Client', value: project.data.client || 'To be confirmed' },
@@ -31,7 +35,7 @@ const facts = [
 ---
 
 <BaseLayout title={project.data.title} description={project.data.summary}>
-  <PageHero eyebrow="Project" title={project.data.title} />
+  <PageHero eyebrow="Project" title={project.data.title} image={heroImage} />
 
   <section class="bg-white">
     <div class="container-x grid gap-12 py-16 sm:py-20 lg:grid-cols-12 lg:gap-16">

@@ -92,9 +92,8 @@ for (const rel of metaTargets) {
   check(`og:image on ${rel}`, html.includes('property="og:image"') && html.includes('/og.jpg'));
 }
 const homeHtml = readFileSync(join(DIST, 'index.html'), 'utf8');
-const featuredProjects = JSON.parse(
-  readFileSync(join(ROOT, 'src', 'content', 'projects.json'), 'utf8'),
-).filter((project) => project.featured);
+const projectRecords = JSON.parse(readFileSync(join(ROOT, 'src', 'content', 'projects.json'), 'utf8'));
+const featuredProjects = projectRecords.filter((project) => project.featured);
 const featuredProjectsWithoutImages = featuredProjects.filter(
   (project) => !project.image || !homeHtml.includes(project.image),
 );
@@ -149,6 +148,15 @@ const sectorVisuals = [
   ['healthcare', 'engineering-bg-healthcare.webp'],
   ['agriculture', 'engineering-bg-water.webp'],
 ];
+const sectorHeroImages = Object.fromEntries(
+  sectorVisuals.map(([sector, image]) => [sector, `/images/engineering-backgrounds/${image}`]),
+);
+const projectHeroesHaveImages = projectRecords.every((project) => {
+  const image =
+    project.image || project.sectors.map((sector) => sectorHeroImages[sector]).find(Boolean);
+  const page = readFileSync(join(DIST, 'projects', project.id, 'index.html'), 'utf8');
+  return Boolean(image && page.includes(image));
+});
 const hasLinkedImage = (html, href, image) => {
   const start = html.indexOf(`href="${href}"`);
   if (start < 0) return false;
@@ -178,6 +186,7 @@ const sectorsOnIndex = sectorVisuals.every(([id, image]) => {
 check('mapped engineering images on all 8 home service cards', servicesOnHome);
 check('mapped engineering images on all 8 services index cards', servicesOnIndex);
 check('matching image on all 8 service detail heroes', serviceHeroes);
+check('relevant hero image on all 21 project detail pages', projectHeroesHaveImages);
 check('mapped engineering images on all 9 home sector cards', sectorsOnHome);
 check('mapped engineering images on all 9 sector index cards', sectorsOnIndex);
 check(
@@ -285,7 +294,6 @@ const projectImageDir = join(ROOT, 'public', 'images', 'projects');
 const projectFiles = readdirSync(projectImageDir).filter((file) =>
   statSync(join(projectImageDir, file)).isFile(),
 );
-const projectRecords = JSON.parse(readFileSync(join(ROOT, 'src', 'content', 'projects.json'), 'utf8'));
 const mappedProjectFiles = new Set(
   projectRecords
     .map((project) => project.image)
@@ -393,9 +401,12 @@ for (const [id, webp, alt] of [
 ]) {
   const pageHtml = readFileSync(join(DIST, 'projects', id, 'index.html'), 'utf8');
   const imgIndex = new RegExp(`<img[^>]*${webp}[^>]*>`).exec(projectsIndexHtml)?.[0] ?? '';
-  const imgPage = new RegExp(`<img[^>]*${webp}[^>]*>`).exec(pageHtml)?.[0] ?? '';
   const altMatches = (img) =>
     img.match(/\balt="([^"]*)"/)?.[1]?.replace(/&amp;|&#38;/g, '&') === alt;
+  const imgPage =
+    [...pageHtml.matchAll(new RegExp(`<img[^>]*${webp}[^>]*>`, 'g'))]
+      .map(([img]) => img)
+      .find(altMatches) ?? '';
   check(
     `${alt} photo on projects index + case-study page (descriptive alt)`,
     imgIndex !== '' && imgPage !== '' && altMatches(imgIndex) && altMatches(imgPage),
