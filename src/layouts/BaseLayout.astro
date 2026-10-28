@@ -35,7 +35,7 @@ const orgJsonLd = {
   url: site.href,
   logo: new URL('/logo-official.jpg', site).href,
   description,
-  email: 'info@sibanyeengineering.com',
+  email: 'corporate@sibanyeengineering.com',
   telephone: ['+268 2404 5512', '+268 7802 4964'],
   address: {
     '@type': 'PostalAddress',
@@ -129,7 +129,7 @@ const orgJsonLd = {
             status.textContent =
               sent === '1'
                 ? 'Thank you — your enquiry has been sent. Our team will respond shortly.'
-                : 'Sorry — your enquiry could not be sent right now. Please email info@sibanyeengineering.com, call +268 2404 5512 or message us on WhatsApp.';
+                : 'Sorry — your enquiry could not be sent right now. Please email corporate@sibanyeengineering.com, call +268 2404 5512 or message us on WhatsApp.';
             status.classList.remove('hidden');
             status.setAttribute('tabindex', '-1');
             status.focus({ preventScroll: true });

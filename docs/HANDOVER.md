@@ -33,14 +33,14 @@ npm test          # build + smoke-test.mjs (artifact/integrity gate) + link-chec
 
 ## 3. Enquiry form configuration
 
-- **Recipient**: the `RECIPIENT` constant at the top of `public/api/enquiry.php` (currently `info@sibanyeengineering.com` — confirm the live mailbox with SES, content-open-items item 6).
+- **Recipient**: the `RECIPIENT` constant at the top of `public/api/enquiry.php` (currently `corporate@sibanyeengineering.com` — confirm the live mailbox with SES, content-open-items item 6).
 - **Envelope/From**: `no-reply@sibanyeengineering.com` — must be a real mailbox on the hosting domain or mail() will be rejected/spam-foldered.
 - **Deliverability (SPF/DKIM/DMARC)** — required for the form to reach inboxes reliably:
   - **SPF**: in cPanel *Zone Editor*, add a TXT record for the domain: `v=spf1 a mx include:<host-spf> ~all` (cPanel's *Email Deliverability* tool proposes the exact record for the server).
   - **DKIM**: enable via cPanel *Email Deliverability* ("Enable DKIM" — one click on most hosts) which installs the selector + TXT record.
-  - **DMARC** (recommended, start lenient): TXT `_dmarc` → `v=DMARC1; p=none; rua=mailto:info@sibanyeengineering.com`.
+  - **DMARC** (recommended, start lenient): TXT `_dmarc` → `v=DMARC1; p=none; rua=mailto:corporate@sibanyeengineering.com`.
 - **Rate limiting**: file-based above the document root; one submission per IP per 30 s window (ADR-016). No database.
-- **Failure path**: if `mail()` fails the endpoint returns a visible error directing visitors to `info@sibanyeengineering.com` / WhatsApp.
+- **Failure path**: if `mail()` fails the endpoint returns a visible error directing visitors to `corporate@sibanyeengineering.com` / WhatsApp.
 
 ## 4. Post-deploy verification checklist
 

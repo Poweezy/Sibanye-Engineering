@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-const RECIPIENT = 'info@sibanyeengineering.com';
+const RECIPIENT = 'corporate@sibanyeengineering.com';
 const SUBJECT_PREFIX = '[Website enquiry]';
 const RATE_WINDOW_SECONDS = 30;
 // Rate-limit state lives ABOVE the document root (the cPanel home directory
@@ -121,4 +121,4 @@ if ($sent) {
 
 http_response_code(500);
 error_log('SES enquiry: mail() failed for ' . $email);
-respond(false, 'Sorry — the message could not be sent right now. Please email info@sibanyeengineering.com or use WhatsApp.', $asJson);
+respond(false, 'Sorry — the message could not be sent right now. Please email corporate@sibanyeengineering.com or use WhatsApp.', $asJson);

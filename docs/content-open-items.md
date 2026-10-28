@@ -60,7 +60,7 @@ Discrepancies and ambiguities found during transcription — **do not resolve by
 
 The old site is itself an Ander-styled rebuild carrying **unverified marketing copy**. Per Phase 4, only statement-corroborated items may be adopted:
 
-- ✅ **Corroborated by the capability statement:** phone +268 7906 1000 (statement p17 also lists it — candidate third number, SES to confirm placement), email info@sibanyeengineering.com, Mbabane location, the four statistics *labels*.
+- ✅ **Corroborated by the capability statement:** phone +268 7906 1000 (statement p17 also lists it — candidate third number, SES to confirm placement), email info@sibanyeengineering.com (website enquiry/contact address updated to corporate@sibanyeengineering.com per user direction 2026-10-28), Mbabane location, the four statistics *labels*.
 - 🚫 **Not adopted (unverified):** taglines ("Engineering progress. Building possibility.", "Engineering solutions for a brighter Africa"), footer motto "We are one · Innovation · Inspire", Geotechnical Engineering as a service, "digital capability / BIM / GIS / data" claims, generic project cards, and the "0+" statistics values.
 - 🚫 **Out of initial scope:** the old site's "Sibanye AI Assist" chatbot — a future enhancement per the commercial constraints.
 
