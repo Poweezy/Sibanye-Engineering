@@ -89,12 +89,13 @@ const { projects, sectorTitles } = Astro.props;
 </section>
 
 <script>
-  const carousel = document.querySelector<HTMLElement>('[data-carousel]');
-  const prev = document.querySelector('[data-carousel-prev]');
-  const next = document.querySelector('[data-carousel-next]');
-  const count = document.querySelector('[data-carousel-count]');
+  document.addEventListener('astro:page-load', () => {
+    const carousel = document.querySelector<HTMLElement>('[data-carousel]');
+    const prev = document.querySelector('[data-carousel-prev]');
+    const next = document.querySelector('[data-carousel-next]');
+    const count = document.querySelector('[data-carousel-count]');
+    if (!carousel) return;
 
-  if (carousel) {
     const cards = Array.from(carousel.children) as HTMLElement[];
     const step = () => (cards[0]?.offsetWidth ?? 0) + 24;
 
@@ -108,5 +109,6 @@ const { projects, sectorTitles } = Astro.props;
     prev?.addEventListener('click', () => carousel.scrollBy({ left: -step(), behavior: 'smooth' }));
     next?.addEventListener('click', () => carousel.scrollBy({ left: step(), behavior: 'smooth' }));
     carousel.addEventListener('scroll', update, { passive: true });
-  }
+    update();
+  });
 </script>

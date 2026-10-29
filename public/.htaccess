@@ -21,7 +21,7 @@ Options -Indexes
   # verifies each production module against this policy. Inline style
   # attributes support per-item CSS custom properties. No third-party script,
   # frame, API, image or font origins are allow-listed.
-  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'sha256-Rkesk0jZPJFb/KwwbytZzp7zVn3OJFvA/mkek/1JDkk=' 'sha256-KtCJ3NHYzV9wvyEy7m0JtspbKGLkjxD1jAYmFwTEQk0=' 'sha256-Vc3mB2Jrg/ia7c2BpLOTqfqJEE+LX3Mqecvkc06YXhc=' 'sha256-JWlsSV9VAezGb6XmZu1IpAzoWB25cJLVgMy+Pu7eQnw=' 'sha256-mSxIbDsei8ROKBZK+CT/VD26+L2jOHQFS9sLu+zPP5s='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; manifest-src 'self'; media-src 'self'; upgrade-insecure-requests"
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'sha256-Rkesk0jZPJFb/KwwbytZzp7zVn3OJFvA/mkek/1JDkk=' 'sha256-KtCJ3NHYzV9wvyEy7m0JtspbKGLkjxD1jAYmFwTEQk0=' 'sha256-Vc3mB2Jrg/ia7c2BpLOTqfqJEE+LX3Mqecvkc06YXhc=' 'sha256-JWlsSV9VAezGb6XmZu1IpAzoWB25cJLVgMy+Pu7eQnw=' 'sha256-mSxIbDsei8ROKBZK+CT/VD26+L2jOHQFS9sLu+zPP5s=' 'sha256-rtd6GwgQuJbfjqMp7Ikw5Xe1c50xNvuiJZDLcQBbtmI='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; manifest-src 'self'; media-src 'self'; upgrade-insecure-requests"
 </IfModule>
 
 # Long-lived caching for fingerprinted build assets
