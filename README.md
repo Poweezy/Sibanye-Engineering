@@ -12,6 +12,7 @@ Built by **Analytical Sigma (Pty) Ltd**.
 - Tailwind CSS v4 (design tokens in `src/styles/global.css` via `@theme`)
 - Self-hosted variable fonts (Space Grotesk display / Inter text) via Fontsource
 - Typed content collections (JSON) for services, sectors, projects, leadership, clients
+- Optional Storyblok build-time content source; see `docs/STORYBLOK-SETUP.md`
 - One small PHP endpoint (`public/api/enquiry.php`) for the project-enquiry form on cPanel-style hosting
 
 ## Commands

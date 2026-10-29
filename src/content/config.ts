@@ -1,5 +1,14 @@
 import { defineCollection, z } from 'astro:content';
 import { file } from 'astro/loaders';
+import { storyblokLoader } from './storyblok-loader';
+
+const contentSource = import.meta.env.CONTENT_SOURCE || 'json';
+if (contentSource !== 'json' && contentSource !== 'storyblok') {
+  throw new Error('CONTENT_SOURCE must be either "json" or "storyblok".');
+}
+
+const collectionLoader = (filename: string, collection: Parameters<typeof storyblokLoader>[0]) =>
+  contentSource === 'storyblok' ? storyblokLoader(collection) : file(filename);
 
 /**
  * Typed content collections.
@@ -11,7 +20,7 @@ import { file } from 'astro/loaders';
  */
 
 const services = defineCollection({
-  loader: file('src/content/services.json'),
+  loader: collectionLoader('src/content/services.json', 'services'),
   schema: z.object({
     id: z.string(),
     order: z.number(),
@@ -22,7 +31,7 @@ const services = defineCollection({
 });
 
 const sectors = defineCollection({
-  loader: file('src/content/sectors.json'),
+  loader: collectionLoader('src/content/sectors.json', 'sectors'),
   schema: z.object({
     id: z.string(),
     order: z.number(),
@@ -33,7 +42,7 @@ const sectors = defineCollection({
 });
 
 const projects = defineCollection({
-  loader: file('src/content/projects.json'),
+  loader: collectionLoader('src/content/projects.json', 'projects'),
   schema: z.object({
     id: z.string(),
     order: z.number(),
@@ -49,7 +58,7 @@ const projects = defineCollection({
 });
 
 const leadership = defineCollection({
-  loader: file('src/content/leadership.json'),
+  loader: collectionLoader('src/content/leadership.json', 'leadership'),
   schema: z.object({
     id: z.string(),
     name: z.string(),
@@ -62,7 +71,7 @@ const leadership = defineCollection({
 });
 
 const clients = defineCollection({
-  loader: file('src/content/clients.json'),
+  loader: collectionLoader('src/content/clients.json', 'clients'),
   schema: z.object({
     id: z.string(),
     order: z.number(),

@@ -6,6 +6,7 @@ dist/
 # environment / secrets
 .env
 .env.*
+!.env.example
 *.local
 
 # runtime state (enquiry rate limiting — written next to the web root at runtime, ADR-016)
