@@ -151,3 +151,11 @@ SES approved the homepage statistics section. The 2026 capability statement cont
 4. Smoke guards updated: check 9a asserts the C2 backdrop; a new check asserts the dolly animation and its reduced-motion off-switch; check 8's leak scan is unchanged (derivative names stay free of register/CDN tokens).
 
 **Consequences.** The hero's centre-right subject and quiet left zone are baked into the approved frame; the calibrated grade/overlay/copy-shield stack is retained for headline contrast. Any future people-depicting generative asset must repeat the register → class + per-asset approval → derivative → guard path.
+
+## ADR-024 — Evidence-led corporate copy pass (2026-10-29)
+
+**Decision.** Replace generic marketing slogans and unsupported claims in public-facing copy with direct descriptions of SES services, locations and published project references. Preserve mission, vision and values wording copied verbatim from the SES capability statement. Expand the smoke-test vocabulary guard to catch the removed phrases and common corporate filler.
+
+**Why.** The client requested a review for corporate AI slop. Specific, attributable copy is clearer and avoids implying unverified outcomes, standards or guarantees.
+
+**Status.** Implemented; `npm test` re-verified.

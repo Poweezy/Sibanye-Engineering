@@ -264,6 +264,15 @@ const slopPatterns = [
   ['revolutionize', /revolutioniz/i],
   ['world-class', /world-class/i],
   ['award-winning', /award-winning/i],
+  ['comprehensive', /\bcomprehensive\b/i],
+  ['full suite', /\bfull suite\b/i],
+  ['proven processes', /\bproven processes\b/i],
+  ['global standards', /\bglobal standards\b/i],
+  ['lasting impact', /\blast(ing)? impact\b/i],
+  ['progress forward', /\bprogress forward\b/i],
+  ["engineered for what's next", /engineered for what.s next/i],
+  ['driving development across key sectors', /driving development across key sectors/i],
+  ['build something enduring', /build something enduring/i],
 ];
 const pageHtmls = indexPages.map((p) => [p, readFileSync(p, 'utf8')]);
 for (const [label, re] of slopPatterns) {
@@ -507,13 +516,13 @@ check(
 );
 
 // 9g. Approach workflow diagram — connected five-phase timeline with the
-//     lessons-learned feedback connector and the continuous-disciplines band.
+//     handover connector and the continuous-disciplines band.
 //     Copy on the page is simultaneously covered by the section 7 slop guard.
 const approachHtml = readFileSync(join(DIST, 'approach', 'index.html'), 'utf8');
 check(
   'approach workflow: five phases + feedback connector + continuous band',
   ['Advise', 'Plan', 'structure', 'Deliver', 'Control', 'Sustain'].every((t) => approachHtml.includes(t)) &&
-    approachHtml.includes('Lessons inform future projects') &&
+    approachHtml.includes('Review at handover') &&
     approachHtml.includes('Continuous Disciplines') &&
     approachHtml.includes('Applies throughout the engagement'),
 );
