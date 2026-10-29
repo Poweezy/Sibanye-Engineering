@@ -71,10 +71,6 @@ const related = projects
           is delivered alongside our engineering advisory, project management and construction
           supervision capabilities.
         </p>
-        <p class="mt-4 text-sm text-muted">
-          Detailed scope wording for this discipline is pending SES sign-off and will replace this
-          summary — no unverified claims are published.
-        </p>
       </div>
 
       <div class="lg:col-span-5">
@@ -102,17 +98,17 @@ const related = projects
     </div>
   </section>
 
-  <section class="bg-paper-2">
-    <div class="container-x py-20 sm:py-24">
-      <div class="reveal flex flex-wrap items-end justify-between gap-6">
-        <div>
-          <p class="eyebrow">Related Projects</p>
-          <h2 class="mt-4 text-3xl font-semibold">Selected project references</h2>
-        </div>
-        <a href="/projects/" class="btn-outline-dark">View all projects</a>
-      </div>
-      {
-        related.length > 0 ? (
+  {
+    related.length > 0 && (
+      <section class="bg-paper-2">
+        <div class="container-x py-20 sm:py-24">
+          <div class="reveal flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p class="eyebrow">Related Projects</p>
+              <h2 class="mt-4 text-3xl font-semibold">Selected project references</h2>
+            </div>
+            <a href="/projects/" class="btn-outline-dark">View all projects</a>
+          </div>
           <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((p) => (
               <li class="reveal">
@@ -120,15 +116,10 @@ const related = projects
               </li>
             ))}
           </ul>
-        ) : (
-          <p class="mt-8 text-sm text-muted">
-            Project references for this discipline are being prepared with SES. In the meantime,
-            <a href="/projects/" class="font-semibold text-accent-700 hover:text-accent-600">browse the full portfolio</a>.
-          </p>
-        )
-      }
-    </div>
-  </section>
+        </div>
+      </section>
+    )
+  }
 
   <CtaBand />
 </BaseLayout>

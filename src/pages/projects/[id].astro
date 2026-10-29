@@ -27,11 +27,11 @@ const heroImage =
   project.data.sectors.map((sector) => sectorBackgrounds[sector]).find(Boolean);
 
 const facts = [
-  { label: 'Client', value: project.data.client || 'To be confirmed' },
-  { label: 'Location', value: project.data.location || 'To be confirmed' },
-  { label: 'Contract value', value: project.data.value || 'To be confirmed' },
+  { label: 'Client', value: project.data.client },
+  { label: 'Location', value: project.data.location },
+  { label: 'Contract value', value: project.data.value },
   { label: 'Sectors', value: project.data.sectors.map((s) => sectorTitles[s] ?? s).join(' · ') },
-];
+].filter((fact) => fact.value);
 ---
 
 <BaseLayout title={project.data.title} description={project.data.summary}>
@@ -46,15 +46,12 @@ const facts = [
           class="aspect-[16/9]"
           loading="eager"
         />
-        <h2 class="mt-10 text-2xl font-semibold">Scope & role</h2>
-        <p class="mt-4 text-base leading-relaxed text-body">{project.data.summary}</p>
-        <p class="mt-6 border-l-2 border-accent-500 pl-4 text-sm leading-relaxed text-muted">
-          {project.data.image
-            ? 'Full case study — including programme detail and outcomes — is in preparation and subject to SES confirmation and project-owner permissions.'
-            : 'Full case study — including imagery, programme detail and outcomes — is in preparation and subject to SES confirmation and project-owner permissions.'}
-          Where a field above reads "To be confirmed", the capability statement does not publish
-          that detail.
-        </p>
+        {project.data.summary && (
+          <>
+            <h2 class="mt-10 text-2xl font-semibold">Scope & role</h2>
+            <p class="mt-4 text-base leading-relaxed text-body">{project.data.summary}</p>
+          </>
+        )}
       </div>
 
       <aside class="lg:col-span-4">
@@ -67,10 +64,6 @@ const facts = [
               </div>
             ))
           }
-          <div class="p-6">
-            <dt class="text-xs font-semibold uppercase tracking-[0.18em] text-muted">Source</dt>
-            <dd class="mt-1.5 text-sm text-body">SES 2026 capability statement</dd>
-          </div>
         </div>
       </aside>
     </div>

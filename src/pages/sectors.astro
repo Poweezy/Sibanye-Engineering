@@ -18,7 +18,7 @@ const projects = await getCollection('projects');
   <PageHero
     eyebrow="Market Sectors"
     title="Sectors covered by SES"
-    intro="SES lists experience across the sectors below. Published project references are linked where available."
+    intro="Engineering, project management and advisory services across Eswatini and Southern Africa."
     image="/images/hero/sectors-hero.webp"
   />
 
@@ -53,13 +53,11 @@ const projects = await getCollection('projects');
                       <p class="mt-2 text-sm leading-relaxed text-muted">{s.data.blurb}</p>
                     </div>
                   </div>
-                  <div class="mt-5">
-                    <p class="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted">
-                      {related.length > 0
-                        ? `${related.length} project reference${related.length === 1 ? '' : 's'}`
-                        : 'References being prepared with SES'}
-                    </p>
-                    {related.length > 0 && (
+                  {related.length > 0 && (
+                    <div class="mt-5">
+                      <p class="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+                        {related.length} project reference{related.length === 1 ? '' : 's'}
+                      </p>
                       <ul class="mt-3 flex flex-wrap gap-2">
                         {related.slice(0, 3).map((p) => (
                           <li>
@@ -75,8 +73,8 @@ const projects = await getCollection('projects');
                           <li class="px-1 py-1.5 text-xs text-muted">+{related.length - 3} more</li>
                         )}
                       </ul>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
               </section>
             );

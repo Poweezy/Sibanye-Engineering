@@ -66,6 +66,27 @@ const apacheConfig = readFileSync(join(DIST, '.htaccess'), 'utf8');
 const csp = apacheConfig.match(/Content-Security-Policy\s+"([^"]+)"/i)?.[1] ?? '';
 const scriptSrc = csp.match(/(?:^|;)\s*script-src\s+([^;]+)/i)?.[1] ?? '';
 const htmlFiles = [...indexPages, join(DIST, '404.html')];
+const editorialNotes = [
+  'Full company profile, history and team composition are being finalised with SES',
+  'Detailed scope wording for this discipline is pending SES sign-off',
+  'References being prepared with SES',
+  'awaiting SES imagery',
+  'To be confirmed',
+  'Full case study — including',
+  'pending confirmation',
+  'Details on the project page',
+];
+const pagesWithEditorialNotes = htmlFiles
+  .filter((file) => {
+    const html = readFileSync(file, 'utf8');
+    return editorialNotes.some((note) => html.includes(note));
+  })
+  .map((file) => file.replace(DIST, ''));
+check(
+  'visitor pages omit internal content-status notes',
+  pagesWithEditorialNotes.length === 0,
+  pagesWithEditorialNotes.join(', '),
+);
 const inlineModuleHashes = new Set();
 for (const file of htmlFiles) {
   const html = readFileSync(file, 'utf8');
