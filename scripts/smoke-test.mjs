@@ -107,6 +107,40 @@ check(
     !capabilitiesHtml.includes('Published copy pending SES approval'),
 );
 
+// 3b. The About-page affiliations reproduce only marks and accreditation
+//     claims listed in the approved SES capability statement.
+const aboutHtml = readFileSync(join(DIST, 'about', 'index.html'), 'utf8');
+const affiliationSection =
+  aboutHtml.match(/<section\b[^>]*id="affiliations"[\s\S]*?<\/section>/)?.[0] ?? '';
+const affiliationAssets = [
+  ['NHBRC', 'nhbrc.svg', 'https://www.nhbrc.org.za/'],
+  ['SARF', 'sarf.jpg', 'https://sarf.org.za/'],
+  ['SANCOLD', 'sancold.png', 'https://sancold.org.za/'],
+  ['Sabita', 'sabita.png', 'https://www.sabita.co.za/'],
+  ['ECSA', 'ecsa-logo-white.png', 'https://www.ecsa.co.za/'],
+  ['SAICE', 'saice.png', 'https://www.saice.org.za/'],
+  ['CESA', 'cesa.jpg', 'https://www.cesa.co.za/'],
+];
+check(
+  'About page lists all seven statement affiliations with official links',
+  affiliationSection.length > 0 &&
+    affiliationAssets.every(
+      ([name, asset, href]) =>
+        affiliationSection.includes(`alt="${name}"`) &&
+        affiliationSection.includes(`/images/affiliations/${asset}`) &&
+        affiliationSection.includes(`href="${href}"`),
+  ),
+);
+for (const [, asset] of affiliationAssets) {
+  const path = join(DIST, 'images', 'affiliations', asset);
+  check(`affiliation logo ${asset}`, existsSync(path) && statSync(path).size > 1024);
+}
+check(
+  'About page shows the capability-statement accreditation wording',
+  affiliationSection.includes('Level 1 B-BBEE contributor') &&
+    affiliationSection.includes('ISO 9001:2015 accredited'),
+);
+
 // 4. SEO meta on key pages — one core page, one service, one case study, contact.
 const firstDir = (parent) =>
   readdirSync(join(DIST, parent), { withFileTypes: true }).find((e) => e.isDirectory())?.name;
@@ -333,12 +367,26 @@ check(
 //     resurrected deleted raws into public/images once — raw source
 //     photographs must never ship from there, WebP derivatives only.
 const rawSrc = [];
+const approvedLogoFiles = new Set([
+  'cesa.jpg',
+  'ecsa-logo-white.png',
+  'sabita.png',
+  'saice.png',
+  'sancold.png',
+  'sarf.jpg',
+]);
+const affiliationLogoDir = join(ROOT, 'public', 'images', 'affiliations');
 const walkRaw = (dir) => {
   if (!existsSync(dir)) return;
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const p = join(dir, entry.name);
     if (entry.isDirectory()) walkRaw(p);
-    else if (/\.(jpe?g|png|tiff?|bmp)$/i.test(entry.name)) rawSrc.push(p.replace(ROOT, ''));
+    else if (
+      /\.(jpe?g|png|tiff?|bmp)$/i.test(entry.name) &&
+      !(p.startsWith(affiliationLogoDir) && approvedLogoFiles.has(entry.name))
+    ) {
+      rawSrc.push(p.replace(ROOT, ''));
+    }
   }
 };
 walkRaw(join(ROOT, 'public', 'images'));

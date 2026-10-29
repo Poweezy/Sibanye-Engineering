@@ -37,6 +37,51 @@ const facts = [
   { label: 'Disciplines', value: 'Civil · Water · Transportation · Energy · Structural · Mining' },
   { label: 'Engagement models', value: 'Advisory · Project & programme management · Design & supervision' },
 ];
+
+const affiliations = [
+  {
+    name: 'NHBRC',
+    fullName: 'National Home Builders Registration Council',
+    logo: '/images/affiliations/nhbrc.svg',
+    href: 'https://www.nhbrc.org.za/',
+  },
+  {
+    name: 'SARF',
+    fullName: 'South African Road Federation',
+    logo: '/images/affiliations/sarf.jpg',
+    href: 'https://sarf.org.za/',
+  },
+  {
+    name: 'SANCOLD',
+    fullName: 'South African National Committee on Large Dams',
+    logo: '/images/affiliations/sancold.png',
+    href: 'https://sancold.org.za/',
+  },
+  {
+    name: 'Sabita',
+    fullName: 'Southern African Bitumen Association',
+    logo: '/images/affiliations/sabita.png',
+    href: 'https://www.sabita.co.za/',
+  },
+  {
+    name: 'ECSA',
+    fullName: 'Engineering Council of South Africa',
+    logo: '/images/affiliations/ecsa-logo-white.png',
+    href: 'https://www.ecsa.co.za/',
+  },
+  {
+    name: 'SAICE',
+    fullName: 'South African Institution of Civil Engineering',
+    logo: '/images/affiliations/saice.png',
+    href: 'https://www.saice.org.za/',
+  },
+  {
+    name: 'CESA',
+    fullName: 'Consulting Engineers South Africa',
+    logo: '/images/affiliations/cesa.jpg',
+    href: 'https://www.cesa.co.za/',
+  },
+];
 ---
 
 <BaseLayout
@@ -131,6 +176,54 @@ const facts = [
           back to society and communities through programmes including: Young engineers initiative
           providing mentorship and training to graduates; social upliftment and development projects
           across various communities focusing on education; young talent and development.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="affiliations" class="bg-paper-2">
+    <div class="container-x py-16 sm:py-20">
+      <div class="reveal max-w-3xl">
+        <p class="eyebrow">Our Affiliations</p>
+        <h2 class="mt-4 text-3xl font-semibold">Professional affiliations and accreditations</h2>
+        <p class="mt-4 text-base leading-relaxed text-muted">
+          The organizations and accreditations below are listed in the SES 2026 capability statement.
+        </p>
+      </div>
+      <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Professional affiliations">
+        {
+          affiliations.map((affiliation) => (
+            <li class="reveal">
+              <a
+                class:list={[
+                  'card flex h-full min-h-40 flex-col items-center justify-center gap-4 p-5 text-center transition-colors hover:border-ink-300',
+                  affiliation.name === 'ECSA' && 'bg-ink-900',
+                ]}
+                href={affiliation.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src={affiliation.logo}
+                  alt={affiliation.name}
+                  class="h-20 w-full object-contain"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class:list={['text-sm font-semibold', affiliation.name === 'ECSA' ? 'text-white' : 'text-ink-900']}>
+                  {affiliation.fullName}
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mt-6 grid gap-4 sm:grid-cols-2">
+        <p class="reveal card p-5 text-sm font-semibold text-ink-900">
+          Level 1 B-BBEE contributor
+        </p>
+        <p class="reveal card p-5 text-sm font-semibold text-ink-900">
+          ISO 9001:2015 accredited
         </p>
       </div>
     </div>
