@@ -82,7 +82,7 @@
   }
   .eyebrow::before {
     content: "";
-    @apply h-px w-8 shrink-0 bg-accent-500;
+    @apply h-px w-12 shrink-0 bg-accent-500;
   }
   .eyebrow--light {
     @apply text-accent-400;
@@ -198,6 +198,8 @@
 --------------------------------------------------------------------------- */
 .marquee {
   overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
 }
 .marquee-track {
   display: flex;

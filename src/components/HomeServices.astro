@@ -31,7 +31,7 @@ const { services } = Astro.props;
           <li class="reveal group relative isolate bg-white" style={`--reveal-delay: ${Math.min(i * 60, 360)}ms`}>
             <a
               href={`/services/${s.id}/`}
-              class="block h-full transition-colors group-hover:bg-ink-950"
+              class="block h-full transition-colors duration-300 group-hover:bg-ink-950"
             >
               {serviceBackgrounds[s.id] && (
                 <span class="block aspect-[16/9] overflow-hidden">
