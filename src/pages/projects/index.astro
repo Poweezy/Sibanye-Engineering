@@ -64,27 +64,31 @@ const sectorTitles = Object.fromEntries(sectors.map((s) => [s.id, s.data.title])
 </BaseLayout>
 
 <script>
-  document.addEventListener('click', (event) => {
-    if (!(event.target instanceof Element)) return;
-    const btn = event.target.closest<HTMLButtonElement>('[data-filter]');
-    const bar = btn?.closest('[data-filter-bar]');
+  document.addEventListener('astro:page-load', () => {
+    const bar = document.querySelector('[data-filter-bar]');
     const grid = document.querySelector('[data-project-grid]');
-    if (!btn || !bar || !grid) return;
+    if (!bar || !grid) return;
 
-    const filter = btn.dataset.filter ?? 'all';
-    for (const button of bar.querySelectorAll('[data-filter]')) {
-      const active = button === btn;
-      button.setAttribute('aria-pressed', String(active));
-      button.classList.toggle('bg-ink-900', active);
-      button.classList.toggle('text-white', active);
-      button.classList.toggle('border-ink-900', active);
-      button.classList.toggle('bg-white', !active);
-      button.classList.toggle('border-line', !active);
-    }
-    for (const item of grid.children) {
-      if (!(item instanceof HTMLElement)) continue;
-      const show = filter === 'all' || (item.dataset.sectors ?? '').split(' ').includes(filter);
-      item.classList.toggle('hidden', !show);
-    }
+    bar.addEventListener('click', (event) => {
+      if (!(event.target instanceof Element)) return;
+      const btn = event.target.closest<HTMLButtonElement>('[data-filter]');
+      if (!btn) return;
+
+      const filter = btn.dataset.filter ?? 'all';
+      for (const button of bar.querySelectorAll('[data-filter]')) {
+        const active = button === btn;
+        button.setAttribute('aria-pressed', String(active));
+        button.classList.toggle('bg-ink-900', active);
+        button.classList.toggle('text-white', active);
+        button.classList.toggle('border-ink-900', active);
+        button.classList.toggle('bg-white', !active);
+        button.classList.toggle('border-line', !active);
+      }
+      for (const item of grid.children) {
+        if (!(item instanceof HTMLElement)) continue;
+        const show = filter === 'all' || (item.dataset.sectors ?? '').split(' ').includes(filter);
+        item.classList.toggle('hidden', !show);
+      }
+    });
   });
 </script>

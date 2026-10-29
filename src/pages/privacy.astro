@@ -1,20 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
 ---
 
 <BaseLayout
   title="Privacy Notice"
   description="How Sibanye Engineering Solutions uses and retains information submitted through its project enquiry form."
 >
-  <section class="bg-paper-2">
-    <div class="container-x py-16 sm:py-20">
-      <p class="eyebrow">Privacy</p>
-      <h1 class="mt-4 max-w-3xl text-4xl font-semibold tracking-tight text-ink-950 sm:text-5xl">
-        Privacy notice
-      </h1>
-      <p class="mt-5 text-sm text-muted">Last updated: 28 October 2026</p>
-    </div>
-  </section>
+  <PageHero
+    eyebrow="Legal"
+    title="Privacy notice"
+    intro="Last updated: 28 October 2026"
+  />
 
   <article class="container-x max-w-3xl py-12 sm:py-16">
     <div class="space-y-10 text-base leading-relaxed text-body">

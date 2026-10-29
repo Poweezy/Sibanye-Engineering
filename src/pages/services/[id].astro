@@ -16,7 +16,6 @@ export async function getStaticPaths() {
 }
 
 const { service } = Astro.props;
-const services = await getCollection('services');
 const projects = await getCollection('projects');
 const sectorTitles = Object.fromEntries((await getCollection('sectors')).map((s) => [s.id, s.data.title]));
 

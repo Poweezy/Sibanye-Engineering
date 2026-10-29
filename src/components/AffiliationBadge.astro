@@ -5,6 +5,7 @@ interface OrganizationBadge {
   fullName: string;
   logo: string;
   href: string;
+  darkBackground?: boolean;
 }
 
 interface AccreditationBadge {
@@ -30,7 +31,7 @@ const { badge } = Astro.props;
   <a
     class:list={[
       'affiliation-mark card flex h-16 w-36 shrink-0 items-center justify-center rounded-lg border border-line px-4 transition-colors',
-      badge.name === 'ECSA' && 'bg-ink-900',
+      badge.darkBackground && 'bg-ink-900',
     ]}
     href={badge.href}
     target="_blank"
