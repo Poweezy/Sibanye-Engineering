@@ -107,8 +107,8 @@ check(
     !capabilitiesHtml.includes('Published copy pending SES approval'),
 );
 
-// 3b. The About-page affiliations reproduce only marks and accreditation
-//     claims listed in the approved SES capability statement.
+// 3b. The About-page affiliations reproduce statement-listed marks and
+//     additional organizations identified by SES.
 const aboutHtml = readFileSync(join(DIST, 'about', 'index.html'), 'utf8');
 const affiliationSection =
   aboutHtml.match(/<section\b[^>]*id="affiliations"[\s\S]*?<\/section>/)?.[0] ?? '';
@@ -120,9 +120,11 @@ const affiliationAssets = [
   ['ECSA', 'ecsa-logo-white.png', 'https://www.ecsa.co.za/'],
   ['SAICE', 'saice.png', 'https://www.saice.org.za/'],
   ['CESA', 'cesa.jpg', 'https://www.cesa.co.za/'],
+  ['AESAP', 'aesap.jpg', 'https://aesap.net/'],
+  ['CIC Eswatini', 'cic.png', 'https://www.cic.co.sz/'],
 ];
 check(
-  'About page lists all seven statement affiliations with official links',
+  'About page lists all nine SES affiliations with official links',
   affiliationSection.length > 0 &&
     affiliationAssets.every(
       ([name, asset, href]) =>
@@ -136,10 +138,15 @@ for (const [, asset] of affiliationAssets) {
   check(`affiliation logo ${asset}`, existsSync(path) && statSync(path).size > 1024);
 }
 check(
-  'About page shows the capability-statement accreditation wording',
-  affiliationSection.includes('Level 1 B-BBEE contributor') &&
-    affiliationSection.includes('ISO 9001:2015 accredited'),
+  'About page shows the capability-statement accreditation badges',
+  affiliationSection.includes('B-BBEE contributor') &&
+    affiliationSection.includes('text-3xl font-bold leading-none">1</span>') &&
+    affiliationSection.includes('ISO 9001:2015 accredited') &&
+    affiliationSection.includes('alt="ISO 9001:2015"') &&
+    affiliationSection.includes('/images/affiliations/iso-9001-2015.svg'),
 );
+const isoBadge = join(DIST, 'images', 'affiliations', 'iso-9001-2015.svg');
+check('ISO 9001:2015 badge asset', existsSync(isoBadge) && statSync(isoBadge).size > 1024);
 
 // 4. SEO meta on key pages — one core page, one service, one case study, contact.
 const firstDir = (parent) =>
@@ -368,7 +375,9 @@ check(
 //     photographs must never ship from there, WebP derivatives only.
 const rawSrc = [];
 const approvedLogoFiles = new Set([
+  'aesap.jpg',
   'cesa.jpg',
+  'cic.png',
   'ecsa-logo-white.png',
   'sabita.png',
   'saice.png',

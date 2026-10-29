@@ -162,10 +162,10 @@ SES approved the homepage statistics section. The 2026 capability statement cont
 
 ## ADR-025 — Capability-statement affiliations on About (2026-10-29)
 
-**Decision.** Add an About-page affiliations and accreditations section matching the seven organizations and two accreditation claims listed in the SES 2026 capability statement. Use locally hosted logo files sourced from the organizations' official websites, link each mark to its official organization, and document asset provenance in `docs/affiliation-logo-sources.md`. Keep these distinct from the client-logo wall.
+**Decision.** Add an About-page affiliations and accreditations section matching the seven organizations and two accreditation claims listed in the SES 2026 capability statement. On 2026-10-29, add AESAP and CIC Eswatini at the client's direction as additional current affiliations, beyond that statement's list. Use locally hosted logo files sourced from the organizations' official websites, link each mark to its official organization, and document asset provenance in `docs/affiliation-logo-sources.md`. Keep these distinct from the client-logo wall.
 
 **Why.** SES directed that the existing capability-statement affiliations be represented on the website. Sourcing marks from the organizations themselves preserves quality and avoids using cropped, low-resolution statement artwork.
 
-**Constraint.** Present the claims as listed in the 2026 statement; do not imply any additional endorsement or affiliation. Reconfirm current status and usage permission if the statement or marks change.
+**Constraint.** Present accreditations as listed in the 2026 statement; the Level 1 B-BBEE design is a site-styled text badge, not an official certification mark. Do not imply any additional endorsement. Reconfirm current status and usage permission if the statement or marks change.
 
 **Status.** Implemented; build smoke checks cover the affiliation names, official links, local assets, and accreditation wording.

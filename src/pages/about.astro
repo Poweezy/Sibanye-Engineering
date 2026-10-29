@@ -81,6 +81,18 @@ const affiliations = [
     logo: '/images/affiliations/cesa.jpg',
     href: 'https://www.cesa.co.za/',
   },
+  {
+    name: 'AESAP',
+    fullName: 'Architects, Engineers, Surveyors and Allied Professionals Council',
+    logo: '/images/affiliations/aesap.jpg',
+    href: 'https://aesap.net/',
+  },
+  {
+    name: 'CIC Eswatini',
+    fullName: 'Construction Industry Council Eswatini',
+    logo: '/images/affiliations/cic.png',
+    href: 'https://www.cic.co.sz/',
+  },
 ];
 ---
 
@@ -187,7 +199,8 @@ const affiliations = [
         <p class="eyebrow">Our Affiliations</p>
         <h2 class="mt-4 text-3xl font-semibold">Professional affiliations and accreditations</h2>
         <p class="mt-4 text-base leading-relaxed text-muted">
-          The organizations and accreditations below are listed in the SES 2026 capability statement.
+          Organizations identified by SES as professional affiliations, alongside the accreditations in
+          the 2026 capability statement.
         </p>
       </div>
       <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Professional affiliations">
@@ -219,12 +232,30 @@ const affiliations = [
         }
       </ul>
       <div class="mt-6 grid gap-4 sm:grid-cols-2">
-        <p class="reveal card p-5 text-sm font-semibold text-ink-900">
-          Level 1 B-BBEE contributor
-        </p>
-        <p class="reveal card p-5 text-sm font-semibold text-ink-900">
+        <div class="reveal card flex items-center justify-center gap-5 p-5">
+          <div
+            class="flex h-20 w-20 shrink-0 flex-col items-center justify-center rounded-full border-4 border-amber-500 bg-ink-900 text-white outline outline-1 outline-offset-2 outline-amber-500"
+            aria-label="Level 1"
+          >
+            <span class="text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-amber-300">Level</span>
+            <span class="text-3xl font-bold leading-none">1</span>
+          </div>
+          <p class="max-w-40 text-base font-semibold leading-snug text-ink-900">
+            B-BBEE contributor
+          </p>
+        </div>
+        <div class="reveal card flex flex-col items-center justify-center gap-3 p-5 text-center">
+          <img
+            src="/images/affiliations/iso-9001-2015.svg"
+            alt="ISO 9001:2015"
+            class="h-20 w-full object-contain"
+            loading="lazy"
+            decoding="async"
+          />
+          <p class="text-sm font-semibold text-ink-900">
           ISO 9001:2015 accredited
-        </p>
+          </p>
+        </div>
       </div>
     </div>
   </section>
