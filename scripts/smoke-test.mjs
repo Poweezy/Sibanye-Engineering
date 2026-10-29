@@ -110,6 +110,11 @@ check(
 // 3b. The About-page affiliations reproduce statement-listed marks and
 //     additional organizations identified by SES.
 const aboutHtml = readFileSync(join(DIST, 'about', 'index.html'), 'utf8');
+const aboutSource = readFileSync(join(ROOT, 'src', 'pages', 'about.astro'), 'utf8');
+const affiliationBadgeSource = readFileSync(
+  join(ROOT, 'src', 'components', 'AffiliationBadge.astro'),
+  'utf8',
+);
 const affiliationSection =
   aboutHtml.match(/<section\b[^>]*id="affiliations"[\s\S]*?<\/section>/)?.[0] ?? '';
 const affiliationAssets = [
@@ -128,7 +133,7 @@ check(
   affiliationSection.length > 0 &&
     affiliationAssets.every(
       ([name, asset, href]) =>
-        affiliationSection.includes(`alt="${name}"`) &&
+        affiliationSection.includes(`aria-label="${name}:`) &&
         affiliationSection.includes(`/images/affiliations/${asset}`) &&
         affiliationSection.includes(`href="${href}"`),
   ),
@@ -139,14 +144,36 @@ for (const [, asset] of affiliationAssets) {
 }
 check(
   'About page shows the capability-statement accreditation badges',
-  affiliationSection.includes('B-BBEE contributor') &&
-    affiliationSection.includes('text-3xl font-bold leading-none">1</span>') &&
+  affiliationSection.includes('aria-label="Level 1 B-BBEE contributor"') &&
+    /<span class="text-xl font-bold leading-none"[^>]*>1<\/span>/.test(affiliationSection) &&
     affiliationSection.includes('ISO 9001:2015 accredited') &&
-    affiliationSection.includes('alt="ISO 9001:2015"') &&
+    affiliationSection.includes('aria-label="ISO 9001:2015"') &&
     affiliationSection.includes('/images/affiliations/iso-9001-2015.svg'),
 );
 const isoBadge = join(DIST, 'images', 'affiliations', 'iso-9001-2015.svg');
 check('ISO 9001:2015 badge asset', existsSync(isoBadge) && statSync(isoBadge).size > 1024);
+check(
+  'affiliation mark rows continuously scroll without exposing duplicate links',
+  affiliationSection.includes('class="affiliation-marquee__track"') &&
+    affiliationSection.includes('aria-hidden="true" inert') &&
+    affiliationSection.includes('role="region"') &&
+    aboutSource.includes('animation: affiliation-marquee 38s linear infinite') &&
+    aboutSource.includes('animation-direction: reverse'),
+);
+check(
+  'affiliation marquees pause on interaction and respect reduced motion',
+  aboutSource.includes('.affiliation-marquee:hover .affiliation-marquee__track') &&
+    aboutSource.includes('.affiliation-marquee:focus-within .affiliation-marquee__track') &&
+    aboutSource.includes('@media (prefers-reduced-motion: reduce)') &&
+    aboutSource.includes('Affiliation marks move continuously. Hover or focus a mark to pause.'),
+);
+check(
+  'affiliation logos are muted by default and regain color on hover or focus',
+  affiliationBadgeSource.includes('filter: grayscale(1)') &&
+    affiliationBadgeSource.includes('.affiliation-mark:hover img') &&
+    affiliationBadgeSource.includes('.affiliation-mark:focus-visible img') &&
+    affiliationBadgeSource.includes('transition: none'),
+);
 
 // 4. SEO meta on key pages — one core page, one service, one case study, contact.
 const firstDir = (parent) =>

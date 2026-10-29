@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Icon from '../components/Icon.astro';
 import HomeStats from '../components/HomeStats.astro';
+import AffiliationBadge from '../components/AffiliationBadge.astro';
 
 /* All copy grounded in the SES 2026 capability statement. VERBATIM CLIENT COPY
    (ADR-019): the mission text — including "cutting-edge and innovative" — and
@@ -93,6 +94,25 @@ const affiliations = [
     logo: '/images/affiliations/cic.png',
     href: 'https://www.cic.co.sz/',
   },
+];
+
+const affiliationBadges = [
+  ...affiliations.map((affiliation) => ({ ...affiliation, kind: 'organization' as const })),
+  {
+    name: 'ISO 9001:2015',
+    fullName: 'ISO 9001:2015 accredited',
+    logo: '/images/affiliations/iso-9001-2015.svg',
+    kind: 'accreditation' as const,
+  },
+  {
+    name: 'Level 1 B-BBEE contributor',
+    kind: 'bbee' as const,
+  },
+];
+
+const affiliationRows = [
+  affiliationBadges.filter((_, index) => index % 2 === 0),
+  affiliationBadges.filter((_, index) => index % 2 === 1),
 ];
 ---
 
@@ -199,67 +219,110 @@ const affiliations = [
         <p class="eyebrow">Our Affiliations</p>
         <h2 class="mt-4 text-3xl font-semibold">Professional affiliations and accreditations</h2>
         <p class="mt-4 text-base leading-relaxed text-muted">
-          Organizations identified by SES as professional affiliations, alongside the accreditations in
-          the 2026 capability statement.
+          These marks represent the organizations identified by SES and the accreditations in its
+          2026 capability statement.
         </p>
       </div>
-      <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Professional affiliations">
+      <div class="mt-8 -mx-5 space-y-4 overflow-hidden py-1 sm:mx-0">
         {
-          affiliations.map((affiliation) => (
-            <li class="reveal">
-              <a
-                class:list={[
-                  'card flex h-full min-h-40 flex-col items-center justify-center gap-4 p-5 text-center transition-colors hover:border-ink-300',
-                  affiliation.name === 'ECSA' && 'bg-ink-900',
-                ]}
-                href={affiliation.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src={affiliation.logo}
-                  alt={affiliation.name}
-                  class="h-20 w-full object-contain"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <span class:list={['text-sm font-semibold', affiliation.name === 'ECSA' ? 'text-white' : 'text-ink-900']}>
-                  {affiliation.fullName}
-                </span>
-              </a>
-            </li>
+          affiliationRows.map((row, rowIndex) => (
+            <div
+              class="affiliation-marquee"
+              data-affiliation-row={rowIndex}
+              role="region"
+              tabindex="0"
+              aria-label={`Affiliation marks, row ${rowIndex + 1}`}
+              aria-describedby="affiliation-instructions"
+            >
+              <div class="affiliation-marquee__track">
+                <ul class="affiliation-marquee__set" aria-label="Professional affiliations and accreditations">
+                  {row.map((badge) => (
+                    <li>
+                      <AffiliationBadge badge={badge} />
+                    </li>
+                  ))}
+                </ul>
+                <ul
+                  class="affiliation-marquee__set"
+                  aria-hidden="true"
+                  inert
+                >
+                  {row.map((badge) => (
+                    <li>
+                      <AffiliationBadge badge={badge} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           ))
         }
-      </ul>
-      <div class="mt-6 grid gap-4 sm:grid-cols-2">
-        <div class="reveal card flex items-center justify-center gap-5 p-5">
-          <div
-            class="flex h-20 w-20 shrink-0 flex-col items-center justify-center rounded-full border-4 border-amber-500 bg-ink-900 text-white outline outline-1 outline-offset-2 outline-amber-500"
-            aria-label="Level 1"
-          >
-            <span class="text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-amber-300">Level</span>
-            <span class="text-3xl font-bold leading-none">1</span>
-          </div>
-          <p class="max-w-40 text-base font-semibold leading-snug text-ink-900">
-            B-BBEE contributor
-          </p>
-        </div>
-        <div class="reveal card flex flex-col items-center justify-center gap-3 p-5 text-center">
-          <img
-            src="/images/affiliations/iso-9001-2015.svg"
-            alt="ISO 9001:2015"
-            class="h-20 w-full object-contain"
-            loading="lazy"
-            decoding="async"
-          />
-          <p class="text-sm font-semibold text-ink-900">
-          ISO 9001:2015 accredited
-          </p>
-        </div>
       </div>
+      <p id="affiliation-instructions" class="sr-only">
+        Affiliation marks move continuously. Hover or focus a mark to pause. Animation stops when reduced motion is preferred.
+      </p>
     </div>
   </section>
 
   <HomeStats />
   <CtaBand title="Want to work with us?" />
 </BaseLayout>
+
+<style>
+  .affiliation-marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .affiliation-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: affiliation-marquee 38s linear infinite;
+  }
+
+  [data-affiliation-row='1'] .affiliation-marquee__track {
+    animation-duration: 44s;
+    animation-direction: reverse;
+  }
+
+  .affiliation-marquee:hover .affiliation-marquee__track,
+  .affiliation-marquee:focus-within .affiliation-marquee__track {
+    animation-play-state: paused;
+  }
+
+  .affiliation-marquee__set {
+    display: flex;
+    flex: none;
+    gap: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .affiliation-mark {
+    background-color: white;
+  }
+
+  @keyframes affiliation-marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .affiliation-marquee {
+      overflow-x: auto;
+      mask-image: none;
+      -webkit-mask-image: none;
+    }
+
+    .affiliation-marquee__track {
+      animation: none;
+      transform: none;
+    }
+
+    .affiliation-marquee__set[aria-hidden='true'] {
+      display: none;
+    }
+
+  }
+</style>
