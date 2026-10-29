@@ -163,17 +163,24 @@ const affiliationRows = [
     </div>
   </section>
 
-  <section class="bg-paper-2">
-    <div class="container-x grid gap-px overflow-hidden border border-line bg-line py-20 sm:grid-cols-2 sm:py-24">
-      {
-        pillars.map((p) => (
-          <div class="reveal bg-white p-8 sm:p-10">
-            <Icon name={p.icon} class="h-7 w-7 text-accent-500" />
-            <h3 class="mt-5 text-2xl font-semibold">{p.title}</h3>
-            <p class="mt-3 text-base leading-relaxed text-body">{p.text}</p>
-          </div>
-        ))
-      }
+  <section class="relative isolate overflow-hidden bg-ink-950 blueprint">
+    <div class="flare-bar absolute top-0 inset-x-0" aria-hidden="true"></div>
+    <div class="container-x py-20 sm:py-24">
+      <div class="grid gap-12 sm:grid-cols-2">
+        {
+          pillars.map((p, i) => (
+            <div class="reveal flex flex-col" style={`--reveal-delay:${i * 120}ms`}>
+              <div class="mb-6 flex h-12 w-12 items-center justify-center bg-accent-500/10 ring-1 ring-accent-500/30">
+                <Icon name={p.icon} class="h-6 w-6 text-accent-400" />
+              </div>
+              <p class="eyebrow eyebrow--light mb-4">{p.title}</p>
+              <p class="font-display text-2xl font-semibold leading-snug text-white sm:text-3xl">
+                {p.text}
+              </p>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </section>
 

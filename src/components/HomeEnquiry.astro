@@ -151,7 +151,7 @@ const email = 'corporate@sibanyeengineering.com';
         </div>
 
         <!-- Honeypot: hidden from users, catches naive spam bots -->
-        <div class="hidden" aria-hidden="true">
+        <div class="hidden" aria-hidden="true" inert>
           <label for="website_url">Leave this field empty</label>
           <input id="website_url" name="website_url" type="text" tabindex="-1" autocomplete="off" />
         </div>
@@ -175,25 +175,27 @@ const email = 'corporate@sibanyeengineering.com';
 </section>
 
 <script>
-  const form = document.querySelector<HTMLFormElement>('[data-enquiry-form]');
-  const message = form?.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
-  const note = form?.querySelector('[data-char-note]');
+  document.addEventListener('astro:page-load', () => {
+    const form = document.querySelector<HTMLFormElement>('[data-enquiry-form]');
+    const message = form?.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
+    const note = form?.querySelector('[data-char-note]');
 
-  if (message && note) {
-    const update = () => {
-      const len = message.value.trim().length;
-      note.textContent = len === 0 ? 'Minimum 20 characters.' : `${len} character${len === 1 ? '' : 's'}.`;
-    };
-    message.addEventListener('input', update);
-  }
+    if (message && note) {
+      const update = () => {
+        const len = message.value.trim().length;
+        note.textContent = len === 0 ? 'Minimum 20 characters.' : `${len} character${len === 1 ? '' : 's'}.`;
+      };
+      message.addEventListener('input', update);
+    }
 
-  if (form) {
-    form.addEventListener('submit', (event) => {
-      // Front-end validation only; submission handling is server-side (PHP endpoint).
-      if (!form.checkValidity()) {
-        event.preventDefault();
-        form.reportValidity();
-      }
-    });
-  }
+    if (form) {
+      form.addEventListener('submit', (event) => {
+        // Front-end validation only; submission handling is server-side (PHP endpoint).
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          form.reportValidity();
+        }
+      });
+    }
+  });
 </script>
